@@ -19,6 +19,7 @@ use App\Http\Controllers\AmazonController;
 
 //------------------------------------------------------------------\\
 
+
 Route::get('/amazon/products', [AmazonController::class, 'getProductList']);
 
 

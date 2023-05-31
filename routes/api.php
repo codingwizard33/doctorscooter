@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
+
+
+
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -31,6 +35,7 @@ Route::group([
     Route::post('create', 'PasswordResetController@create');
     Route::post('reset', 'PasswordResetController@reset');
 });
+
 
 Route::post('getAccessToken', 'AuthController@getAccessToken');
 Route::middleware(['auth:api', 'Is_Active'])->group(function () {
@@ -416,6 +421,23 @@ Route::middleware(['auth:api', 'Is_Active'])->group(function () {
     Route::get("generate_new_backup", "BackupController@Generate_Backup");
     Route::delete("delete_backup/{name}", "BackupController@Delete_Backup");
 
+
+
+    //---------------------------- Repair order -----------------------------\\
+   //-------------------------------------------------------------------------\\
+    Route::group([ 'prefix' => '/reaper/order'], function () { //   /api/reaper/order
+        Route::get('/', 'RepairOrderController@index');
+        Route::post('/store', 'RepairOrderController@store');
+        Route::post('/update/{id}', 'RepairOrderController@update');
+        Route::get('/delete/one/image/{id}', 'RepairOrderController@deleteOneImage');
+
+        Route::get('/show/{id}', 'RepairOrderController@show');
+        Route::post('/change/status/{id}', 'RepairOrderController@changeStatus');
+
+        Route::post('/bar/code/{id}', 'RepairOrderController@barCode');
+    });
+
+
 });
 
     //-------------------------------  Print & PDF ------------------------\\
@@ -434,3 +456,5 @@ Route::middleware(['auth:api', 'Is_Active'])->group(function () {
 
 
     Route::get("report/epos_sales", "ReportController@eposSales");
+
+
