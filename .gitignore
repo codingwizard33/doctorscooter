@@ -1,5 +1,6 @@
 .idea
 /public/hot
+/storage
 /public/images/vendor
 /node_modules
 /public/hot

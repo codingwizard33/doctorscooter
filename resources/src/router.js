@@ -336,6 +336,34 @@ const routes = [
                 ]
             },
 
+            //Repair
+            {
+                path: "/app/repairs",
+                component: () =>
+                    import(
+                        /* webpackChunkName: "repair" */ "./views/app/pages/repairs/index"
+                        ),
+                redirect: "/app/repairs/system",
+                children: [
+                    {
+                        path: "system",
+                        name: "RepairSystem",
+                        component: () =>
+                            import(
+                                /* webpackChunkName: "repair" */ "./views/app/pages/repairs/RepairSystem"
+                                )
+                    },
+                    {
+                        path: "order",
+                        name: "CreateOrder",
+                        component: () =>
+                            import(
+                                /* webpackChunkName: "order" */ "./views/app/pages/repairs/CreateOrder"
+                                )
+                    }
+                ],
+            },
+
             //Sale
             {
                 path: "/app/sales",

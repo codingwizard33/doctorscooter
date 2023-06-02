@@ -296,12 +296,12 @@
 
                                 <b-col md="12" class="mb-2">
                                     <b-form-group :label="$t('Description')">
-                    <textarea
-                        rows="4"
-                        class="form-control"
-                        :placeholder="$t('Afewwords')"
-                        v-model="product.note"
-                    ></textarea>
+                                        <textarea
+                                            rows="4"
+                                            class="form-control"
+                                            :placeholder="$t('Afewwords')"
+                                            v-model="product.note"
+                                        ></textarea>
                                     </b-form-group>
                                 </b-col>
 

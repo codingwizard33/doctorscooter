@@ -230,58 +230,6 @@ class ReportController extends BaseController
 
     }
 
-    public function SalesChartByDate($day)
-    {
-        $day = $day == 0 ? 6 : $day;
-        $role = Auth::user()->roles()->first();
-        $view_records = Role::findOrFail($role->id)->inRole('record_view');
-
-        // Build an array of the dates we want to show, oldest first
-        $dates = collect();
-        foreach (range(-$day, 0) as $i) {
-            $date = Carbon::now()->addDays($i)->format('Y-m-d');
-            $dates->put($date, 0);
-        }
-
-        $date_range = \Carbon\Carbon::today()->subDays($day);
-        // Get the sales counts
-        $sales = Sale::where('date', '>=', $date_range)
-            ->where('deleted_at', '=', null)
-            ->where(function ($query) use ($view_records) {
-                if (!$view_records) {
-                    return $query->where('user_id', '=', Auth::user()->id);
-                }
-            })
-            ->groupBy(DB::raw("DATE_FORMAT(date,'%Y-%m-%d')"))
-            ->orderBy('date', 'asc')
-            ->get([
-                DB::raw(DB::raw("DATE_FORMAT(date,'%Y-%m-%d') as date")),
-                DB::raw('SUM(GrandTotal) AS count'),
-            ])
-            ->pluck('count', 'date');
-
-        // Merge the two collections;
-        $dates = $dates->merge($sales);
-
-        $data = [];
-        $days = [];
-        foreach ($dates as $key => $value) {
-            $data[] = $value;
-            $days[] = $key;
-        }
-
-        return response()->json(['data' => $data, 'days' => $days]);
-    }
-
-    public function sales_report(Request $request)
-    {
-        $dataSales = $this->SalesChartByDate($request->days);
-
-        return response()->json([
-            'sales' => $dataSales
-        ]);
-    }
-
     //----------------- Payment Chart js -----------------------\\
 
     public function Payment_chart()

@@ -3,6 +3,19 @@
   <div class="main-content">
     <div v-if="loading" class="loading_page spinner spinner-primary mr-3"></div>
     <div v-else-if="!loading && currentUserPermissions && currentUserPermissions.includes('dashboard')">
+        <b-row>
+            <b-col>
+                <button  class="btn btn-outline-primary mb-3 mr-5" @click="daySalesReport(0)">
+                    Today
+                </button>
+                <button  class="btn btn-outline-primary mb-3 mr-5" @click="daySalesReport(7)">
+                    7 days
+                </button>
+                <button  class="btn btn-outline-primary mb-3 mr-5" @click="daySalesReport(30)">
+                    30 days
+                </button>
+            </b-col>
+        </b-row>
       <b-row>
         <!-- ICON BG -->
 
@@ -380,6 +393,18 @@ export default {
     }
   },
   methods: {
+      daySalesReport(day) {
+          axios
+          .post(`sales-report`, {
+              days: day,
+          }).then(function (response) {
+              console.log(response, 'ressss')
+          })["catch"](function (error) {
+              console.log(error, 'error')
+              // _this4.SubmitProcessing = false;
+              // _this4.makeToast("danger", _this4.$t("InvalidData"), _this4.$t("Failed"));
+          });
+      },
     //---------------------------------- Report Dashboard With Echart
     report_with_echart() {
       axios

@@ -13,6 +13,7 @@
     >
       <div>
         <ul class="navigation-left">
+
           <li
             @mouseenter="toggleSubMenu"
             :class="{ active: selectedParentMenu == 'dashboard' }"
@@ -24,6 +25,8 @@
               <span class="nav-text">{{ $t("dashboard") }}</span>
             </router-link>
           </li>
+
+
           <li
             v-show="currentUserPermissions
             && (currentUserPermissions.includes('products_add')
@@ -64,21 +67,21 @@
 
 
 
-          <li
-            v-show="currentUserPermissions && (currentUserPermissions.includes('Quotations_view')
-                      || currentUserPermissions.includes('Quotations_add'))"
-            @mouseenter="toggleSubMenu"
-            class="nav-item"
-            :class="{ active: selectedParentMenu == 'quotations' }"
-            data-item="quotations"
-            :data-submenu="true"
-          >
-            <a class="nav-item-hold" href="#">
-              <i class="nav-icon i-Checkout-Basket"></i>
-              <span class="nav-text">{{$t('Quotations')}}</span>
-            </a>
-            <div class="triangle"></div>
-          </li>
+<!--          <li-->
+<!--            v-show="currentUserPermissions && (currentUserPermissions.includes('Quotations_view')-->
+<!--                      || currentUserPermissions.includes('Quotations_add'))"-->
+<!--            @mouseenter="toggleSubMenu"-->
+<!--            class="nav-item"-->
+<!--            :class="{ active: selectedParentMenu == 'quotations' }"-->
+<!--            data-item="quotations"-->
+<!--            :data-submenu="true"-->
+<!--          >-->
+<!--            <a class="nav-item-hold" href="#">-->
+<!--              <i class="nav-icon i-Checkout-Basket"></i>-->
+<!--              <span class="nav-text">{{$t('Quotations')}}</span>-->
+<!--            </a>-->
+<!--            <div class="triangle"></div>-->
+<!--          </li>-->
           <li
             v-show="currentUserPermissions && (currentUserPermissions.includes('Purchases_view')
                         || currentUserPermissions.includes('Purchases_add'))"
@@ -94,6 +97,21 @@
             </a>
             <div class="triangle"></div>
           </li>
+<!--            Repair-->
+            <li class="nav-item"
+                @mouseenter="toggleSubMenu"
+                :class="{ active: selectedParentMenu == 'repairs' }"
+                data-item="repairs"
+                :data-submenu="true"
+            >
+                <router-link tag="a" class="nav-item-hold" to="/app/repairs">
+                    <i class="nav-icon i-Wrench"></i>
+                    <span class="nav-text">Repair</span>
+                </router-link>
+                <div class="triangle"></div>
+            </li>
+<!--            Repair-->
+
           <li
             v-show="currentUserPermissions && (currentUserPermissions.includes('Sales_view')
                         || currentUserPermissions.includes('Sales_add')
@@ -112,6 +130,7 @@
             <div class="triangle"></div>
           </li>
 
+
             <li
             v-if="currentUserPermissions && currentUserPermissions.includes('Sale_Returns_view')"
             @mouseenter="toggleSubMenu"
@@ -119,7 +138,6 @@
             class="nav-item"
             data-item="sale_return"
           >
-
            <router-link tag="a" class="nav-item-hold" to="/app/sale_return/list">
               <i class="nav-icon i-Right"></i>
               <span class="nav-text">{{ $t("SalesReturn") }}</span>
@@ -276,6 +294,27 @@
       class="sidebar-left-secondary ps rtl-ps-none"
     >
       <div ref="sidebarChild">
+          <ul
+              class="childNav d-none"
+              data-parent="repairs"
+              :class="{ 'd-block': selectedParentMenu == 'repairs' }"
+          >
+              <li
+                  class="nav-item"
+              >
+                  <router-link tag="a" class to="/app/repairs/order">
+                      <i class="nav-icon i-Add-File"></i>
+                      <span class="item-name">Create Repair Order</span>
+                  </router-link>
+              </li>
+              <li class="nav-item"
+              >
+                  <router-link tag="a" class to="/app/repairs/system">
+                      <i class="nav-icon i-Wrench"></i>
+                      <span class="item-name">Repair System</span>
+                  </router-link>
+              </li>
+          </ul>
         <ul
           class="childNav d-none"
           data-parent="products"
@@ -513,9 +552,6 @@
             </router-link>
           </li>
         </ul>
-
-
-
 
       <!-- hrm -->
         <ul
@@ -926,9 +962,6 @@
               <span class="item-name">{{$t('Users_Report')}}</span>
             </router-link>
           </li>
-
-
-
 
         </ul>
       </div>

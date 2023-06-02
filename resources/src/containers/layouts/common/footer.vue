@@ -5,7 +5,7 @@
     <div class="app-footer">
       <div class="row">
         <div class="col-md-9">
-          <p><strong>{{currentUser.footer}}</strong></p>
+<!--          <p><strong>{{currentUser.footer}}</strong></p>-->
         </div>
       </div>
       <div
@@ -25,7 +25,7 @@
       <!-- fotter end -->
     </div>
   </div>
-</template> 
+</template>
 <script>
 import { mapGetters, mapActions } from "vuex";
 
@@ -45,4 +45,4 @@ export default {
 
 
 <style lang="scss" scoped>
-</style> 
+</style>
