@@ -35,7 +35,7 @@ class CreateRequest extends FormRequest
             'payment_option' => 'required',
             'payment_warranty' => 'required',
             'payment_status' => 'nullable',
-            'images' =>'array',
+            'images' =>'nullable',
         ];
     }
 }

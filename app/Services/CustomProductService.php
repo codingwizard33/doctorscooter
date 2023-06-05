@@ -43,7 +43,8 @@ class CustomProductService
                 );
                 if (!empty($data['images'])){
                     foreach ($data['images'] as $image){
-                        $filePath =  UploadFile::upload($image, '/repair/order/');
+//                        $filePath =  UploadFile::upload($image, '/repair/order/');
+                        $filePath =  UploadFile::base64($image, 'image');
                         $product->images()->create(
                             [
                                 'path' => $filePath,

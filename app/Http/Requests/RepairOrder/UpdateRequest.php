@@ -36,7 +36,7 @@ class UpdateRequest extends FormRequest
             'payment_comment' => 'required',
             'payment_option' => 'required',
             'payment_warranty' => 'required',
-            'images' =>'array',
+            'images' =>'nullable',
         ];
     }
 }
