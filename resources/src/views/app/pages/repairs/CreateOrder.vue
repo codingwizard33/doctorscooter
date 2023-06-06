@@ -126,14 +126,30 @@
                                         v-model="order.custom_services"
                                         :tag-placeholder="$t('Add_Tag')"
                                         :placeholder="$t('Search_Custom_Service')"
+                                        :custom-label="serviceType"
                                         label="name"
-                                        track-by="code"
+                                        track-by="name"
                                         :options="custom_services_options"
                                         :multiple="true"
                                         :taggable="true"
-                                        @tag="addTag">
+                                    >
                                     </multiselect>
                                 </div>
+                            </b-col>
+                            <b-col md="12">
+                                <b-button class="add_new-service" id="service_btn" @click="serviceModal()">
+                                    <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g clip-path="url(#clip0_1_2881)">
+                                            <path d="M8 0.5C3.58853 0.5 0 4.08853 0 8.5C0 12.9115 3.58853 16.5 8 16.5C12.4115 16.5 16 12.9108 16 8.5C16 4.08916 12.4115 0.5 8 0.5ZM8 15.2607C4.27266 15.2607 1.23934 12.228 1.23934 8.5C1.23934 4.77203 4.27266 1.73934 8 1.73934C11.7273 1.73934 14.7607 4.77203 14.7607 8.5C14.7607 12.228 11.728 15.2607 8 15.2607Z" fill="white"/>
+                                            <path d="M11.0984 7.82457H8.61973V5.34588C8.61973 5.00382 8.34273 4.7262 8.00004 4.7262C7.65736 4.7262 7.38036 5.00382 7.38036 5.34588V7.82457H4.90167C4.55898 7.82457 4.28198 8.1022 4.28198 8.44426C4.28198 8.78632 4.55898 9.06395 4.90167 9.06395H7.38036V11.5426C7.38036 11.8847 7.65736 12.1623 8.00004 12.1623C8.34273 12.1623 8.61973 11.8847 8.61973 11.5426V9.06395H11.0984C11.4411 9.06395 11.7181 8.78632 11.7181 8.44426C11.7181 8.1022 11.4411 7.82457 11.0984 7.82457Z" fill="white"/>
+                                        </g>
+                                        <defs>
+                                            <clipPath id="clip0_1_2881">
+                                                <rect width="16" height="16" fill="white" transform="translate(0 0.5)"/>
+                                            </clipPath>
+                                        </defs>
+                                    </svg>&nbsp;
+                                    Add New Service</b-button>
                             </b-col>
                             <hr>
                             <h1 class="page_title">Issue information</h1>
@@ -160,7 +176,7 @@
                                         </div>
                                         <div class="issue_images-btn">
                                             <div class="camera_icon"></div>
-                                            <div class="upload_text">Upload Images from Device (PNG, JPG)</div>
+                                            <div class="upload_text">Upload from Camera</div>
                                         </div>
                                     </div>
                                     <div class="issue_images-items">
@@ -180,8 +196,8 @@
                 <b-col md="5" class="mb-2 mt-4">
                     <b-card>
                         <b-row>
-                            <h4 class="page_subtitle">Payment Comment</h4>
-                            <b-col md="12" class="mb-2">
+                            <b-col md="12">
+                                <h4 class="page_subtitle">Payment Comment</h4>
                                 <b-form-group>
                                         <textarea
                                             rows="4"
@@ -199,9 +215,9 @@
                                 </div>
                             </b-col>
                             <hr>
-                            <b-col >
-                                <h4 class="page_subtitle">Payment Comment</h4>
-                                <b-form-group class="mx-3" v-slot="{ ariaDescribedby }">
+                            <b-col md="12">
+                                <h4 class="page_subtitle">Select Payment Option</h4>
+                                <b-form-group class="mx-1" v-slot="{ ariaDescribedby }">
                                     <b-form-radio-group
                                         v-model="order.selectedPayment"
                                         :options="paymentOptions"
@@ -211,9 +227,9 @@
                                 </b-form-group>
                             </b-col>
                             <hr>
-                            <div >
+                            <b-col md="12">
                                 <h4 class="page_subtitle">Do you have Warranty?</h4>
-                                <b-form-group class="mx-3" v-slot="{ ariaDescribedby }">
+                                <b-form-group class="mx-1" v-slot="{ ariaDescribedby }">
                                     <b-form-checkbox-group
                                         v-model="order.selectedWarranty"
                                         :options="warrantyOptions"
@@ -221,7 +237,7 @@
                                         name="flavour-1"
                                     ></b-form-checkbox-group>
                                 </b-form-group>
-                            </div>
+                            </b-col>
                             <hr>
                             <b-col md="12">
                                 <div class="payment_total due_amount">
@@ -242,6 +258,44 @@
             </b-row>
         </b-form>
     </validation-observer>
+
+    <!--change password modal-->
+    <b-modal ref="add_service-modal" centered size="md" hide-header hide-footer>
+        <div class="modal_content">
+            <div class="modal_title">
+                Add Service
+            </div>
+            <form @submit.prevent="addNewService()">
+
+                <div class="modal_input">
+                    <div class="input_item">
+                        <label>Enter Service Name</label>
+                        <b-form-input
+                            v-model="new_service.name"
+                            trim
+                        ></b-form-input>
+                        <div class="service_icon"></div>
+
+                    </div>
+                    <div class="input_item">
+                        <label>Enter Amount</label>
+                        <b-form-input
+                            v-model="new_service.amount"
+                            type="number"
+                            trim
+                        ></b-form-input>
+                        <div class="amount_icon"></div>
+                    </div>
+                </div>
+                <div class="modal_btn">
+                    <b-button class="cancel_btn mx-2" @click="serviceModal()">Cancel</b-button>
+                    <b-button class="change_btn mx-2" type="submit">Save</b-button>
+                </div>
+            </form>
+        </div>
+    </b-modal>
+    <!--change password modal-->
+
 </div>
 </template>
 
@@ -265,16 +319,17 @@
                     selectedPayment: [],
                     selectedWarranty: [],
                 },
+                new_service: {
+                    id: null,
+                    name: null,
+                    amount: null
+                },
                 services_options: [
                     { name: 'Oil/Filter changed', code: 'of' },
                     { name: 'Break Work', code: 'bw' },
                     { name: 'Suspension', code: 'su' }
                 ],
-                custom_services_options: [
-                    { name: 'Car Wash', code: 'cw' },
-                    { name: 'Oil Change', code: 'oc' },
-                    { name: 'Breaks', code: 'b' }
-                ],
+                custom_services_options: [],
                 paymentOptions: [
                     { text: 'Full Payment', value: 'full' },
                     { text: 'Partial Payment', value: 'partial' },
@@ -286,111 +341,58 @@
                 ],
                 uploadFiles: [],
                 images: []
-
             }
         },
         methods: {
+            serviceType({name, amount}) {
+              return  `${name} - ($${amount})`
+            },
             Submit_Order() {
-               // var self = this;
-               // console.log(self.order, 'gggggggg')
-               // const token = '4|ESe2xmLq94ECUxQE9IjooZqLLYJg9s9p0lvjRs8J'
-               // const config = {
-               //     headers: { Authorization: `Bearer ${token}` }
-               // };
-               // let formData = new FormData()
-               // formData.append('full_name', self.order.full_name)
-               // formData.append('phone', self.order.mobile)
-               // formData.append('email', self.order.email)
-               // formData.append('model', self.order.model)
-               // formData.append('price', 123)
-               // formData.append('serial_number', 32423423)
-               // formData.append('is_sold', true)
-               // formData.append('images[]', self.uploadFiles)
-               // formData.append('information', self.order.information)
-               // formData.append('payment_comment', self.order.payment_comment)
-               // formData.append('payment_option', self.order.selectedPayment[0])
-               // formData.append('warranty', self.order.selectedWarranty)
-               // axios
-               //     .post("https://it5241.freelancedeveloper.site/api/0.3.3/admin/custom-products", formData, config)
-               // .then(response => {
-               //     console.log(response, 'aaaaaaaaaaaaaaaaaa')
-               // })
-               // .catch(error => {
-               //     console.log(error)
-               // })
-
-
-               // const axios = require('axios');
-               // const FormData = require('form-data');
-               // const fs = require('fs');
-               // let data = new FormData();
-               // data.append('full_name', 'aaa');
-               // data.append('phone', '11111');
-               // data.append('email', 'asd@gmail.com');
-               // data.append('model', 'asd');
-               // data.append('price', '123');
-               // data.append('serial_number', '32423423');
-               // data.append('is_sold', 'true');
-               // data.append('images[]', this.uploadFiles);
-               // data.append('images[]', fs.createReadStream('/C:/Users/WPPC 0009/Desktop/test/watch/a2.jpg'));
-               // data.append('images[]', fs.createReadStream('/C:/Users/WPPC 0009/Desktop/test/watch/a3.png'));
-               // data.append('images[]', fs.createReadStream('/C:/Users/WPPC 0009/Desktop/test/watch/a4.jpg'));
-               // data.append('information', '123');
-               // data.append('payment_comment', '346');
-               // data.append('payment_option', '5678');
-               // data.append('warranty', '7809');
-
-               // axios
-               //     .post("https://it5241.freelancedeveloper.site/api/0.3.3/admin/custom-products", formData, config)
-               // .then(response => {
-               //     console.log(response, 'aaaaaaaaaaaaaaaaaa')
-               // })
-               // .catch(error => {
-               //     console.log(error)
-               // })
-
-               // let url = 'https://5918.freelancedeveloper.site/api/run/payment';
-               // return axios(url, {
-               //     method: 'GET',
-               //     mode: 'no-cors',
-               //     headers: {
-               //         'Access-Control-Allow-Origin': '*',
-               //         'Content-Type': 'application/json',
-               //     },
-               // }).then(response => {
-               //     console.log(response);
-               // })
-               // console.log(axios, 'axios')
-
-               // axios.get('https://it5241.freelancedeveloper.site/api/0.3.3/test', {
-               //     headers: {
-               //         'Access-Control-Allow-Origin': '*',
-               //     }
-               // })
-               //     .then(response => {
-               //         console.log(response)
-               //     })
-               //     .catch(error => {
-               //         console.log(error)
-               //     })
-                // const token = '4|ESe2xmLq94ECUxQE9IjooZqLLYJg9s9p0lvjRs8J'
-                // const config = {
-                //     headers: { Authorization: `Bearer ${token}` }
-                // };
-
-               // $.ajax({
-               //     type: 'GET',
-               //     url: "https://it5241.freelancedeveloper.site/api/0.3.3/admin/custom-products",
-               //         headers: {
-               //             'Access-Control-Allow-Origin': '*',
-               //             'Authorization': `Bearer 11|Pj6ZX0LWqUHrhIhMdApVwVvg8Ha9VJRWQmr8GC4C`
-               //         },
-               //     success: function(result){
-               //         console.log(result);
-               //     }
-               // });
                 console.log('order')
+               axios
+                   .post("/reaper/order/store", {
+                       full_name: this.order.full_name,
+                       phone: this.order.mobile,
+                       email: this.order.email,
+                       model: this.order.model,
+                       price: 40,
+                       serial_number: 32423423,
+                       information: this.order.information,
+                       payment_comment: this.order.payment_comment,
+                       payment_option: this.order.selectedPayment[0],
+                       payment_warranty: 'waranty',
+                       images: this.images,
+                       services: [
+                           {
+                               id: null,
+                               service_id: 1
+                           }
+                       ],
+                       custom_services: this.order.custom_services
+                   })
+               .then(response => {
+                   console.log(response, 'aaaaaaaaaaaaaaaaaa')
+               })
+               .catch(error => {
+                   console.log(error)
+               })
+
            },
+            serviceModal() {
+                this.new_service.name = null
+                this.new_service.amount = null
+                this.$refs['add_service-modal'].toggle('#service_btn')
+            },
+            addNewService() {
+                if(this.new_service.name !== null && this.new_service.amount !== null ) {
+                    this.custom_services_options.push({
+                        id: null,
+                        name: this.new_service.name,
+                        amount: this.new_service.amount,
+                    })
+                    this.serviceModal()
+                }
+            },
 
             //------ Validation State
             getValidationState({dirty, validated, valid = null}) {
@@ -401,8 +403,6 @@
                     name: newTag,
                     code: newTag.substring(0, 2) + Math.floor((Math.random() * 10000000))
                 }
-                // this.options.push(tag)
-                // this.value.push(tag)
             },
             uploadImg() {
                 this.$refs.upload_image.click()
@@ -423,6 +423,7 @@
             },
             removeImage(item, index) {
                 this.images.splice(index, 1)
+                this.uploadFiles.splice(index, 1)
             }
         },
 
@@ -438,7 +439,7 @@
     color: #000000;
 }
 .page_subtitle {
-    padding: 0 15px;
+    padding: 0;
     font-weight: 700;
     font-size: 13px;
     line-height: 20px;
@@ -626,6 +627,24 @@
                  }
              }
          }
+         & .add_new-service {
+             background: #FF9900 !important;
+             border-radius: 28px;
+             border: none;
+             font-weight: 700;
+             font-size: 13px;
+             line-height: 16px;
+             color: #FFFFFF !important;
+             display: flex;
+             align-items: center;
+             justify-content: center;
+             &:focus {
+                 box-shadow: none;
+                 outline: none;
+                 border: none;
+             }
+         }
+
     }
     .form-control {
         background: transparent;
@@ -637,5 +656,122 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none !important;
     margin: 0 !important;
+}
+::v-deep .modal-content {
+    border-radius: 30px;
+}
+.modal {
+    &_content {
+        padding: 10px;
+    }
+
+    &_title {
+        font-weight: 400;
+        font-size: 28px;
+        line-height: 39px;
+        color: #5C5C5C;
+    }
+
+    &_input {
+        padding: 25px 0;
+
+        & .input_item {
+            margin-bottom: 10px;
+            position: relative;
+
+            & label {
+                font-weight: 400;
+                font-size: 20px;
+                line-height: 38px;
+                color: #767676;
+                margin-bottom: 0;
+            }
+
+            & input {
+                height: 50px;
+                border: 1.5px solid #AEB4C2;
+                border-radius: 16px;
+                padding-left: 50px;
+                font-size: 18px;
+
+                &:focus {
+                    border: 1.5px solid #FF9900;
+                    box-shadow: none;
+                }
+            }
+            & .amount_icon {
+                width: 28px;
+                height: 28px;
+                position: absolute;
+                top: 50px;
+                left: 13px;
+                background: url('/images/amount.svg');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: contain;
+            }
+            & .service_icon {
+                width: 28px;
+                height: 28px;
+                position: absolute;
+                top: 50px;
+                left: 13px;
+                background: url('/images/screwdriver_wrench.svg');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: contain;
+            }
+
+        }
+    }
+
+    &_btn {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+
+        & .cancel_btn {
+            border: 1.5px solid #FF9900;
+            border-radius: 28px;
+            padding: 8px 26px;
+            background: #fff;
+            color: #FF9900 !important;
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 16px;
+
+
+            &:hover {
+                filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+            }
+
+            &:focus {
+                border: 1.5px solid #FF9900;
+                color: #FF9900;
+            }
+        }
+
+        & .change_btn {
+            background: #FF9900 !important;
+            border-radius: 28px;
+            padding: 8px 26px;
+            border: none;
+            color: #ffffff !important;
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 16px;
+
+            &:hover {
+                filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+            }
+
+            &:focus {
+                background: #FF9900;
+                box-shadow: none;
+            }
+
+        }
+    }
+
 }
 </style>
