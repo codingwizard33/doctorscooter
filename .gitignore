@@ -3,7 +3,7 @@
 /storage
 /public/images/vendor
 /node_modules
-/public/hot
+/public/js
 /vendor
 .env
 .env.backup
@@ -14,3 +14,4 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+package-lock.json
