@@ -133,7 +133,19 @@
                 ]
             }
         },
+        created() {
+            this.getOrders()
+        },
         methods: {
+            getOrders() {
+                axios.get('/reaper/order')
+                .then(response => {
+                    console.log(response.data.items)
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+            }
 
         }
 
