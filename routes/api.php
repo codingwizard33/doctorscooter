@@ -424,21 +424,50 @@ Route::middleware(['auth:api', 'Is_Active'])->group(function () {
 
 
     //---------------------------- Repair order -----------------------------\\
-   //-------------------------------------------------------------------------\\
-    Route::group([ 'prefix' => '/reaper/order'], function () { //   /api/reaper/order
-        Route::get('/', 'RepairOrderController@index');
-        Route::post('/store', 'RepairOrderController@store');
-        Route::post('/update/{id}', 'RepairOrderController@update');
-        Route::get('/delete/one/image/{id}', 'RepairOrderController@deleteOneImage');
+    //-------------------------------------------------------------------------\\
+        Route::group([ 'prefix' => '/reaper/order'], function () { //   /api/reaper/order
+            Route::get('/', 'RepairOrderController@index');
+            Route::post('/store', 'RepairOrderController@store');
+            Route::post('/update/{id}', 'RepairOrderController@update');
+            Route::get('/delete/one/image/{id}', 'RepairOrderController@deleteOneImage');
 
-        Route::get('/show/{id}', 'RepairOrderController@show');
-        Route::post('/change/status/{id}', 'RepairOrderController@changeStatus');
+            Route::group([ 'prefix' => '/details'], function () {//   /api/reaper/order/details
+                Route::post('/store', 'RepairOrderController@repairOrderDetailsCreate');
+                Route::post('/update/{id}', 'RepairOrderController@repairOrderDetailsUpdate');
+                Route::get('/delete/{id}', 'RepairOrderController@repairOrderDetailsDelete');
+            });
 
-        Route::post('/bar/code/{id}', 'RepairOrderController@barCode');
-    });
+            Route::get('/show/{id}', 'RepairOrderController@show');
+            Route::post('/change/status/{id}', 'RepairOrderController@changeStatus');
+
+            Route::post('/bar/code/{id}', 'RepairOrderController@barCode');
+        });
+
+    //------------------------------- Service --------------------------------\\
+    //-------------------------------------------------------------------------\\
+        Route::group([ 'prefix' => '/service'], function () { //   /api/service
+            Route::get('/', 'ServiceController@index');
+            Route::post('/store', 'ServiceController@store');
+            Route::post('/update/{id}', 'ServiceController@update');
+            Route::get('/delete/{id}', 'ServiceController@destroy');
+        });
+
+    //---------------------------- Sub Service -----------------------------\\
+    //-------------------------------------------------------------------------\\
+        Route::group([ 'prefix' => '/sub/service'], function () { //   /api/service
+            Route::get('/', 'SubServiceController@index');
+            Route::get('/show/{id}', 'SubServiceController@show');
+            Route::post('/store', 'SubServiceController@store');
+            Route::post('/update/{id}', 'SubServiceController@update');
+            Route::get('/delete/{id}', 'SubServiceController@destroy');
+        });
 
 
 });
+
+
+
+
 
     //-------------------------------  Print & PDF ------------------------\\
     //------------------------------------------------------------------\\
