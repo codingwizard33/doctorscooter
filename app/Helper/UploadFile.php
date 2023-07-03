@@ -6,6 +6,7 @@ namespace App\Helper;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Picqer\Barcode\BarcodeGeneratorPNG;
 
 class UploadFile
 {
@@ -67,6 +68,50 @@ class UploadFile
             return null;
         }
 
+        return $req;
+    }
+
+
+    public static function barCode($data)
+    {
+        //  https://github.com/picqer/php-barcode-generator
+
+        $random = Str::random(40);
+        $redColor = [0, 0, 0];
+        $generator = new BarcodeGeneratorPNG();
+        $bar = $generator->getBarcode($data, $generator::TYPE_CODE_128, 3, 50, $redColor);
+
+
+
+//        $pathArray = explode('/', $path);
+//        $pathArray = array_filter($pathArray);
+//        $path = implode('/', $pathArray);
+//
+//        if (!is_dir(storage_path("/app/public/". $path))) {
+//            $namePath = '';
+//            foreach ($pathArray as $item){
+//                $namePath = $namePath.'/'.$item;
+//                if(!is_dir(storage_path("/app/public".$namePath))) {
+//                    File::makeDirectory(storage_path("app/public".$namePath));
+//                }
+//            }
+//        }
+
+
+        if (!is_dir(storage_path("/app/public/repair/order/barcode"))) {
+            if(!is_dir(storage_path("/app/public/repair"))) {
+                File::makeDirectory(storage_path("app/public/repair"));
+            }
+            if(!is_dir(storage_path("/app/public/repair/order"))) {
+                File::makeDirectory(storage_path("app/public/repair/order"));
+            }
+            File::makeDirectory(storage_path("app/public/repair/order/barcode"));
+        }
+
+
+
+        file_put_contents(storage_path('app/public/repair/order/barcode/'.$random.'.png'), $bar);
+        $req = 'storage/repair/order/barcode/'.$random.'.png';
         return $req;
     }
 
