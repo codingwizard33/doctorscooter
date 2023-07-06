@@ -70,7 +70,6 @@
             <span class="ul-btn__text ml-1">{{$t('Add')}}</span>
           </router-link>
         </div>
-
         <template slot="table-row" slot-scope="props">
           <span v-if="props.column.field == 'actions'">
             <router-link

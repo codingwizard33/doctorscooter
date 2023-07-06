@@ -360,7 +360,23 @@ const routes = [
                             import(
                                 /* webpackChunkName: "order" */ "./views/app/pages/repairs/CreateOrder"
                                 )
-                    }
+                    },
+                    {
+                        path: "repair_orders",
+                        name: "RepairOrders",
+                        component: () =>
+                            import(
+                                /* webpackChunkName: "repair_orders" */ "./views/app/pages/repairs/RepairOrders"
+                                )
+                    },
+                    {
+                        name: "OrderDetails",
+                        path: "order_details/:id",
+                        component: () =>
+                            import(
+                                /* webpackChunkName: "edit_sale" */ "./views/app/pages/repairs/OrderDetails"
+                                )
+                    },
                 ],
             },
 

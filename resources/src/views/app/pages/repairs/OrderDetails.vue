@@ -3,15 +3,18 @@
         <div class="head_btn-container">
             <b-form-select
                 v-model="order_details.status"
-                :class="{'done': order_details.status == 'done',
-                 'progress': order_details.status == 'progress',
-                 'collection': order_details.status == 'collection',
-                 'parts': order_details.status == 'parts',
-                 }">
+                @change="onChangeStatus"
+                :class="[{'done': order_details.status == 'done'},
+                 {'progress': order_details.status == 'pending'},
+                 {'collection': order_details.status == 'cancelled'},
+                 {'collection': order_details.status == 'waiting_for_collection'},
+                 {'parts': order_details.status == 'waiting_for_parts'}
+                 ]">
                 <b-form-select-option value="done">Done</b-form-select-option>
-                <b-form-select-option value="progress">In Progress</b-form-select-option>
-                <b-form-select-option value="collection">Waiting for Collection</b-form-select-option>
-                <b-form-select-option value="parts">Waiting for Parts</b-form-select-option>
+                <b-form-select-option value="pending">In Progress</b-form-select-option>
+                <b-form-select-option value="cancelled">Cancelled???</b-form-select-option>
+                <b-form-select-option value="waiting_for_parts">Waiting for Parts</b-form-select-option>
+                <b-form-select-option value="waiting_for_collection">Waiting for Collection</b-form-select-option>
             </b-form-select>
             <div class="back_btn" @click="goBack()"><i class="nav-icon i-Left"></i>&nbsp; Back</div>
         </div>
@@ -27,7 +30,7 @@
                         <b-row>
                             <b-col md="5" class="detail_item">
                                 <div class="detail_item-card">
-                                    <b-button class="detail_item-btn">Salesman</b-button>
+                                    <div class="detail_item-btn">Salesman</div>
                                     <div class="detail_item-text">
                                         <div class="detail_item-name">Name: &nbsp;</div>
                                         <div class="detail_item-value">{{order_details.full_name}}</div>
@@ -36,7 +39,7 @@
                             </b-col>
                             <b-col md="6" class="detail_item">
                                 <div class="detail_item-card">
-                                    <b-button class="detail_item-btn">Technician</b-button>
+                                    <div class="detail_item-btn">Technician</div>
                                     <div class="detail_item-text">
                                         <div class="detail_item-name">Name: &nbsp;</div>
                                         <div class="detail_item-value">{{order_details.full_name}}</div>
@@ -53,7 +56,7 @@
                         <b-row>
                             <b-col md="5" class="detail_item">
                                 <div class="detail_item-card">
-                                    <b-button class="detail_item-btn">Customer Details</b-button>
+                                    <div class="detail_item-btn">Customer Details</div>
                                     <div class="detail_item-text">
                                         <div class="detail_item-name">Full Name: &nbsp;</div>
                                         <div class="detail_item-value">{{order_details.full_name}}</div>
@@ -70,7 +73,7 @@
                             </b-col>
                             <b-col md="6" class="detail_item">
                                 <div class="detail_item-card">
-                                    <b-button class="detail_item-btn">Vehicle Details</b-button>
+                                    <div class="detail_item-btn">Vehicle Details</div>
                                     <div class="detail_item-text">
                                         <div class="detail_item-name">Model: &nbsp;</div>
                                         <div class="detail_item-value">{{order_details.model}}</div>
@@ -87,10 +90,11 @@
                         <b-row>
                             <b-col md="5" class="detail_item">
                                 <div class="detail_item-card">
-                                    <b-button class="detail_item-btn">Issue Information</b-button>
+                                    <div class="detail_item-btn">Issue Information</div>
                                     <div class="detail_item-text">
                                         <textarea
                                             rows="5"
+                                            disabled
                                             :placeholder="$t('Afewwords')"
                                             v-model="order_details.information"
                                         ></textarea>
@@ -105,12 +109,12 @@
                             </b-col>
                             <b-col md="6" class="detail_item">
                                 <div class="detail_item-card">
-                                    <b-button class="detail_item-btn">Comments & Images By Technician</b-button>
+                                    <div class="detail_item-btn">Comments & Images By Technician</div>
                                     <div class="detail_item-text">
                                         <textarea
                                             rows="5"
                                             :placeholder="$t('Afewwords')"
-                                            v-model="order_details.payment_comment"
+                                            v-model="order_details.text"
                                         ></textarea>
                                     </div>
                                     <div class="detail_item-text">
@@ -129,7 +133,7 @@
                         </b-row>
                         <b-row>
                             <b-col md="12" class="save_btn-container">
-                                <b-button class="save_btn">Save</b-button>
+                                <b-button class="save_btn" @click="saveOrderDetails()">Save</b-button>
                             </b-col>
                         </b-row>
                     </b-card>
@@ -154,9 +158,16 @@
                     <hr>
                     <div class="detail_tab-status">
                         <div class="detail_tab-status_name">Payment Status</div>
-                        <b-form-select v-model="order_details.payment_status" :class="{'done': order_details.payment_status == 'done', 'pending': order_details.payment_status == 'pending'}">
-                            <b-form-select-option value="done">Paid</b-form-select-option>
-                            <b-form-select-option value="pending">Not Paid</b-form-select-option>
+                        <b-form-select v-model="order_details.payment_status" @change="onChangePaymentStatus" :class="[
+                            {'done': order_details.payment_status == 'paid'},
+                            {'pending': order_details.payment_status == 'not_paid'},
+                            {'pending': order_details.payment_status == 'pending'},
+                            {'pending': order_details.payment_status == 'cancelled'}
+                            ]">
+                            <b-form-select-option value="paid">Paid</b-form-select-option>
+                            <b-form-select-option value="not_paid">Not Paid</b-form-select-option>
+                            <b-form-select-option value="pending">Pending</b-form-select-option>
+                            <b-form-select-option value="cancelled">Cancelled </b-form-select-option>
                         </b-form-select>
                     </div>
 
@@ -209,7 +220,7 @@
                 )
                 .then(response => {
                     this.order_details = response.data.product
-                    console.log(response.data.product, 'res')
+                    console.log(response.data.product, 'getDetails')
                     this.isLoading = false;
                     NProgress.done();
                 })
@@ -230,6 +241,46 @@
                 }
 
             },
+            onChangePaymentStatus(ev) {
+                NProgress.start();
+                NProgress.set(0.1);
+                axios
+                    .post(
+                        `reaper/order/change/status/${this.getId}`, {
+                            payment_status: ev,
+                        }
+                    )
+                    .then(response => {
+                        this.isLoading = false;
+                        NProgress.done();
+                    })
+                    .catch(error => {
+                        NProgress.done();
+                        setTimeout(() => {
+                            this.isLoading = false;
+                        }, 500);
+                    })
+            },
+            onChangeStatus(ev) {
+                NProgress.start();
+                NProgress.set(0.1);
+                axios
+                    .post(
+                        `reaper/order/change/status/${this.getId}`, {
+                            status: ev
+                        }
+                    )
+                    .then(response => {
+                        this.isLoading = false;
+                        NProgress.done();
+                    })
+                    .catch(error => {
+                        NProgress.done();
+                        setTimeout(() => {
+                            this.isLoading = false;
+                        }, 500);
+                    })
+            },
             createImage(file) {
                 var reader = new FileReader()
                 reader.onload = event => {
@@ -237,6 +288,28 @@
                 }
                 reader.readAsDataURL(file)
             },
+            saveOrderDetails() {
+                NProgress.start();
+                NProgress.set(0.1);
+                axios
+                    .post(
+                        `reaper/order/details/update/${this.getId}`, {
+                            order_id: this.getId,
+                            text: this.order_details.text,
+                            image: this.images
+                        }
+                    )
+                    .then(response => {
+                        this.isLoading = false;
+                        NProgress.done();
+                    })
+                    .catch(error => {
+                        NProgress.done();
+                        setTimeout(() => {
+                            this.isLoading = false;
+                        }, 500);
+                    })
+            }
         }, //end Methods
         //-----------------------------Created function-------------------
 
@@ -303,12 +376,12 @@
                 }
                 &.parts {
                     width: 140px;
-                    color: #40D1FD;
+                    color: #A958FC;
                     background: url("/images/blue_arrow_down.svg");
                     background-repeat: no-repeat;
                     background-position: right;
                     background-position-x: 90%;
-                    background-color: rgba(64, 209, 253, 0.20);
+                    background-color: rgba(169, 88, 252, 0.2);
                     position: relative;
                 }
             }
@@ -363,7 +436,7 @@
                 background: rgba(255, 153, 0, 0.20) !important;
                 border: none;
                 color: #FF9900 !important;
-                display: flex;
+                display: initial;
                 justify-content: center;
                 align-items: center;
             }
@@ -511,7 +584,7 @@
                         position: relative;
                     }
                     &.pending {
-                        width: 90px;
+                        width: 95px;
                         color: #FF9900;
                         background: url("/images/orange_arrow_down.svg");
                         background-repeat: no-repeat;
