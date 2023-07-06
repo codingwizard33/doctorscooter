@@ -22,15 +22,14 @@ class RepairOrderDetailsService
      * @param null $id
      * @return array
      */
-    public function repairOrderDetails($data, $id = null)
+    public function repairOrderDetails($data)
     {
         try {
             DB::beginTransaction();
-
                 $details = RepairOrderDetails::query()->updateOrCreate(
-                    ['id' => $id],
+                    ['order_id' => $data['order_id']], //, 'user_id' => Auth::user()->id
                     [
-                        'user_id' => Auth::user()->id,
+                        'user_id' => Auth::user()->id, //Auth::user()->id
                         'order_id' => $data['order_id'],
                         'text' => $data['text'],
                     ]
@@ -49,7 +48,7 @@ class RepairOrderDetailsService
 
             DB::commit();
             return [
-                'message' => $this->MessageUpdateCreate($id),
+                'message' => $this->MessageUpdateCreate('data'),
                 'details' => $details,
                 'code' => 200,
             ];

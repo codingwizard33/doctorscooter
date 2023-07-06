@@ -11,7 +11,9 @@ use App\Http\Resources\CustomProductResource;
 use App\Mail\RepairOrderMail;
 use App\Models\Image;
 use App\Models\RepairOrder;
+use App\Models\RepairOrderCustomService;
 use App\Models\RepairOrderDetails;
+use App\Models\RepairOrderService;
 use App\Services\CustomProductService;
 use App\Services\RepairOrderDetailsService;
 use Illuminate\Http\Request;
@@ -92,9 +94,9 @@ class RepairOrderController extends Controller
      */
     public function show($id)
     {
-        $product = RepairOrder::query()->findOrFail($id)->load('images', 'customService', 'service');
+        $order = RepairOrder::query()->findOrFail($id)->load('images', 'customService', 'service', 'details');
         return response()->json([
-            'product' => new CustomProductResource($product),
+            'product' => new CustomProductResource($order),
         ], 200);
     }
 
@@ -105,23 +107,52 @@ class RepairOrderController extends Controller
      */
     public function changeStatus(Request $request, $id)
     {
+        DB::beginTransaction();
         $product = RepairOrder::query()->findOrFail($id);
 
+        // Repair order status
+        if (isset($request->status)){
+            $product->update([
+                'status' => $request->status
+            ]);
+        }
+
+        // pay status
         if (isset($request->payment_status)){
             $product->update([
                 'payment_status' => $request->payment_status
             ]);
         }
-        if (isset($request->status)){
-            $product->update([
-                'status' => $request->status
+
+        // pay service status
+        if (isset($request['service']['id'])){
+            $service = RepairOrderService::query()->findOrFail($request['service']['id']);
+            $service->update([
+                'status' => $request['service']['status']
             ]);
-        }else {
-            return response()->json([
-                'message' => __('oops invalid request'),
-            ], 503);
         }
 
+        // pay custom service status
+        if (isset($request['custom_service']['id'])){
+            $customService = RepairOrderCustomService::query()->findOrFail($request['custom_service']['id']);
+            $customService->update([
+                'status' => $request['custom_service']['status']
+            ]);
+        }
+
+
+        // an error will come if not no parameter
+        if (isset($request->payment_status) &&
+            isset($request->status) &&
+            isset($request->custom_service->id) &&
+            isset($request->service->id)) {
+                DB::rollBack();
+                return response()->json([
+                    'message' => __('oops invalid request'),
+                ], 503);
+        }
+
+        DB::commit();
         return response()->json([
             'message' => __('Updated status successfully'),
             'product' => new CustomProductResource($product),
@@ -168,26 +199,13 @@ class RepairOrderController extends Controller
      */
     public function repairOrderDetailsCreate(CreateUpdateDetailRequest $request)
     {
+        // create and update in one function
         $details = $this->repairOrderDetailsService->repairOrderDetails($request->all());
+
         if ($details['code'] == 200){
             Hellper::sendSMS($details['details']->repairOrder->phone, $this->MessageForMail('repair_order_finish'));
             Mail::to($details['details']->repairOrder->email)->send(new RepairOrderMail($this->MessageForMail('repair_order_finish')));
         }
-        return response()->json([
-            'message' => $details['message'],
-            'details' => $details['details'],
-            'error' => $details['error'] ?? '',
-        ], $details['code']);
-    }
-
-    /**
-     * @param Request $request
-     * @param $id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function repairOrderDetailsUpdate(CreateUpdateDetailRequest $request, $id)
-    {
-        $details = $this->repairOrderDetailsService->repairOrderDetails($request->all(), $id);
         return response()->json([
             'message' => $details['message'],
             'details' => $details['details'],

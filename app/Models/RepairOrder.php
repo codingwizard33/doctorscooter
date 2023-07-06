@@ -36,6 +36,7 @@ class RepairOrder extends Model
         return [
             'pending',
             'waiting_for_parts',
+            'waiting_for_collection',
             'in_progress',
             'completed',
             'cancelled',
@@ -69,7 +70,7 @@ class RepairOrder extends Model
 
     public function details()
     {
-        return $this->hasMany(RepairOrderDetails::class, 'repair_order_id', 'id');
+        return $this->hasMany(RepairOrderDetails::class, 'order_id', 'id');
     }
 
     public function user()
