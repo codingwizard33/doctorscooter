@@ -140,18 +140,6 @@ class RepairOrderController extends Controller
             ]);
         }
 
-
-        // an error will come if not no parameter
-        if (isset($request->payment_status) &&
-            isset($request->status) &&
-            isset($request->custom_service->id) &&
-            isset($request->service->id)) {
-                DB::rollBack();
-                return response()->json([
-                    'message' => __('oops invalid request'),
-                ], 503);
-        }
-
         DB::commit();
         return response()->json([
             'message' => __('Updated status successfully'),
