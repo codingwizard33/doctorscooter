@@ -127,7 +127,7 @@
                 // this.Get_Products(this.serverParams.page);
             },
             newOrder() {
-
+                this.$router.push({path: `/app/repairs/order`})
             },
             orderDetails(props) {
                 this.$router.push({path: `/app/repairs/order_details/${props.row.id}`, query: { id: props.row.id }})

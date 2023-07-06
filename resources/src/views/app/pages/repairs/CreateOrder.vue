@@ -9,6 +9,33 @@
                 <b-col md="8" class="mb-2">
                     <b-card>
                         <b-row>
+                            <b-col md="12">
+                                <div class="d-flex">
+                                    <div class="today_date"><span class="date_name">Date: </span> &nbsp;{{getDate}}</div>
+                                    <div class="today_date">
+                                        <span class="date_name">Serial Number:  </span>
+                                        <validation-provider
+                                            name="SerialNumber"
+                                            :rules="{required:true , min:3 , max:55}"
+                                            v-slot="validationContext"
+                                        >
+                                            <b-form-group>
+                                                <b-form-input
+                                                    :state="getValidationState(validationContext)"
+                                                    aria-describedby="Serial-feedback"
+                                                    type="number"
+                                                    :placeholder="$t('Enter_Your_Serial_Number')"
+                                                    v-model="order.serial_number"
+                                                ></b-form-input>
+                                                <b-form-invalid-feedback id="Serial-feedback">
+                                                    {{ validationContext.errors[0] }}
+                                                </b-form-invalid-feedback>
+                                            </b-form-group>
+                                        </validation-provider>
+                                    </div>
+                                </div>
+                                <hr />
+                            </b-col>
                             <h1 class="page_title">Customer Details</h1>
                             <!-- Name -->
                             <b-col md="12" class="mb-2">
@@ -240,6 +267,18 @@
                             </b-col>
                             <hr>
                             <b-col md="12">
+                                <h4 class="page_subtitle">Payment Status</h4>
+                                <b-form-group class="mx-1" v-slot="{ ariaDescribedby }">
+                                    <b-form-radio-group
+                                        v-model="order.payment_status"
+                                        :options="paymentStatus"
+                                        :aria-describedby="ariaDescribedby"
+                                        name="radio-inline"
+                                    ></b-form-radio-group>
+                                </b-form-group>
+                            </b-col>
+                            <hr>
+                            <b-col md="12">
                                 <div class="payment_total due_amount">
                                     <div class="payment_total-text">Due amount:</div>
                                     <div class="payment_total-value">$40.00</div>
@@ -314,6 +353,8 @@
                     model: "",
                     information: "",
                     payment_comment: "",
+                    serial_number: "",
+                    payment_status: [],
                     services: [],
                     custom_services: [],
                     selectedPayment: [],
@@ -335,12 +376,22 @@
                     { text: 'Partial Payment', value: 'partial' },
                     { text: 'Deposit', value: 'deposit' }
                 ],
+                paymentStatus: [
+                    { text: 'Paid', value: 'paid' },
+                    { text: 'Not Paid', value: 'not_paid' },
+                ],
                 warrantyOptions: [
                     { text: 'Warranty', value: 'warranty' },
                     { text: 'Membership (10% Discount)   ', value: 'membership' }
                 ],
                 uploadFiles: [],
                 images: []
+            }
+        },
+        computed: {
+            getDate() {
+                let date = new Date()
+                return date.toLocaleString("en-US", {day: "numeric", month: "long", year: "numeric",})
             }
         },
         methods: {
@@ -356,10 +407,11 @@
                        email: this.order.email,
                        model: this.order.model,
                        price: 40,
-                       serial_number: 32423423,
+                       serial_number: this.order.serial_number,
                        information: this.order.information,
                        payment_comment: this.order.payment_comment,
                        payment_option: this.order.selectedPayment[0],
+                       payment_status: this.order.payment_status,
                        payment_warranty: 'waranty',
                        images: this.images,
                        services: [
@@ -371,7 +423,7 @@
                        custom_services: this.order.custom_services
                    })
                .then(response => {
-                   console.log(response, 'aaaaaaaaaaaaaaaaaa')
+                   console.log(response, 'response')
                })
                .catch(error => {
                    console.log(error)
@@ -432,7 +484,7 @@
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style scoped lang="scss">
 .page_title {
-    padding: 0 15px 5px;
+    padding: 0 15px 10px;
     font-weight: 500;
     font-size: 18px;
     line-height: 27px;
@@ -446,8 +498,29 @@
     color: #000000;
 }
      ::v-deep .order_content {
+         & .today_date {
+             font-weight: 700;
+             font-size: 14px;
+             line-height: 27px;
+             color: #575757;
+             margin-right: 40px;
+             display: flex;
+             align-items: center;
+             & .form-group {
+                 margin-bottom: 0;
+                 margin-left: 20px;
+             }
+
+             & .date_name {
+                 font-weight: 600;
+                 font-size: 14px;
+                 line-height: 27px;
+                 color: #A5A5A5;
+             }
+         }
         & hr {
             width: 100%;
+            margin-top: 1rem;
         }
          & textarea {
              resize: none;
