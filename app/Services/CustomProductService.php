@@ -35,7 +35,7 @@ class CustomProductService
                     [
                         'key' => $data['key'],
                         'uuid' => $data['uuid']->toString(),
-                        'user_id' => Auth::user()->id,
+                        'user_id' => 1, //Auth::user()->id
                         'full_name' => $data['full_name'],
                         'phone' => $data['phone'],
                         'email' => $data['email'],

@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\RepairOrder\GetServiceNameInRepairOrder;
 use App\Http\Resources\User\GetUserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -43,11 +44,11 @@ class CustomProductResource extends JsonResource
             'payment_status' => $this->payment_status,
             'status' => $this->status,
             'images' => $path,
-            'service' => $this->service,
+            'service' => GetServiceNameInRepairOrder::collection($this->service), // sub_service
             'custom_service' => $this->customService,
             'details' => [
-                'text' => $detail->text,
-                'images' => $detail->first()->images
+                'text' => $detail->text ?? '',
+                'images' => $detail->images ?? []
             ],
 
             'created_at' => $this->created_at->format(config('app.app_date_format')),

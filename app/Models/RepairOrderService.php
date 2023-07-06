@@ -32,4 +32,10 @@ class RepairOrderService extends Model
         return $this->belongsTo(RepairOrder::class);
     }
 
+    public function subService()
+    {
+        return $this->hasOne(SubService::class,'id','service_id');
+    }
+
+
 }
