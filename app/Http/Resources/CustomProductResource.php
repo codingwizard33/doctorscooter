@@ -23,6 +23,8 @@ class CustomProductResource extends JsonResource
             }
         }
 
+        $detail = $this->details->first();
+
         return [
             'id' => $this->id,
             'uuid' => $this->uuid,
@@ -43,6 +45,10 @@ class CustomProductResource extends JsonResource
             'images' => $path,
             'service' => $this->service,
             'custom_service' => $this->customService,
+            'details' => [
+                'text' => $detail->text,
+                'images' => $detail->first()->images
+            ],
 
             'created_at' => $this->created_at->format(config('app.app_date_format')),
             'updated_at' => $this->updated_at->format(config('app.app_date_format')),

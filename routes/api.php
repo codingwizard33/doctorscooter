@@ -425,23 +425,22 @@ Route::middleware(['auth:api', 'Is_Active'])->group(function () {
 
     //---------------------------- Repair order -----------------------------\\
     //-------------------------------------------------------------------------\\
-        Route::group([ 'prefix' => '/reaper/order'], function () { //   /api/reaper/order
-            Route::get('/', 'RepairOrderController@index');
-            Route::post('/store', 'RepairOrderController@store');
-            Route::post('/update/{id}', 'RepairOrderController@update');
-            Route::get('/delete/one/image/{id}', 'RepairOrderController@deleteOneImage');
+    Route::group([ 'prefix' => '/reaper/order'], function () { //   /api/reaper/order
+        Route::get('/', 'RepairOrderController@index');
+        Route::post('/store', 'RepairOrderController@store');
+        Route::post('/update/{id}', 'RepairOrderController@update');
+        Route::get('/delete/one/image/{id}', 'RepairOrderController@deleteOneImage');
 
-            Route::group([ 'prefix' => '/details'], function () {//   /api/reaper/order/details
-                Route::post('/store', 'RepairOrderController@repairOrderDetailsCreate');
-                Route::post('/update/{id}', 'RepairOrderController@repairOrderDetailsUpdate');
-                Route::get('/delete/{id}', 'RepairOrderController@repairOrderDetailsDelete');
-            });
-
-            Route::get('/show/{id}', 'RepairOrderController@show');
-            Route::post('/change/status/{id}', 'RepairOrderController@changeStatus');
-
-            Route::post('/bar/code/{id}', 'RepairOrderController@barCode');
+        Route::group([ 'prefix' => '/details'], function () {//   /api/reaper/order/details
+            Route::post('/store', 'RepairOrderController@repairOrderDetailsCreate');
+            Route::get('/delete/{id}', 'RepairOrderController@repairOrderDetailsDelete');
         });
+
+        Route::get('/show/{id}', 'RepairOrderController@show');
+        Route::post('/change/status/{id}', 'RepairOrderController@changeStatus');
+
+        Route::post('/bar/code/{id}', 'RepairOrderController@barCode');
+    });
 
     //------------------------------- Service --------------------------------\\
     //-------------------------------------------------------------------------\\

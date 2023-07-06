@@ -8,10 +8,14 @@ trait MessageHellper
 {
     public static function MessageUpdateCreate($id)
     {
-        if ($id){
+        if ($id > 0){
             $message = 'Data updated successfully';
-        }else{
+        }
+        else if(!$id){
             $message = 'Data created successfully';
+        }
+        else{
+            $message = 'Successfully';
         }
         return $message;
     }
