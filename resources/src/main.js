@@ -77,8 +77,10 @@ window.Fire = new Vue();
 
 import Breadcumb from "./components/breadcumb";
 import { i18n } from "./plugins/i18n";
-
+import {Multiselect} from "vue-multiselect";
+Vue.component('multiselect', Multiselect)
 Vue.component("breadcumb", Breadcumb);
+
 
 Vue.config.productionTip = true;
 Vue.config.silent = true;

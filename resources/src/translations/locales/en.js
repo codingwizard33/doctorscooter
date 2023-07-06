@@ -882,5 +882,18 @@ export default {
     Total_Purchase_Return_Due:'Total Purchase Return Due',
     Purchase_return_due:'Purchase return due',
     Sell_return_due:'Sell return due',
-
+    Create_Repair_Order: 'Create Repair Order',
+    Orders: 'Orders',
+    Full_Name: 'Full Name',
+    Enter_Full_Name: 'Enter Full Name',
+    Mobile: 'Mobile',
+    Enter_Your_Mobile_Number: 'Enter Your Mobile Number',
+    Enter_Your_Email: 'Enter Your Email',
+    Model: 'Model',
+    Enter_Model: 'Enter Model',
+    Enter_Your_Issue: 'Enter Your Issue',
+    Add_Tag: 'Add this as new tag',
+    Search_Service: 'Search or add a service',
+    Search_Custom_Service: 'Search or add a custom service',
+    Payment_Comment: 'Payment Comment'
 };

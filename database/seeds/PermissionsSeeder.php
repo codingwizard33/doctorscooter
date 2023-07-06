@@ -468,11 +468,14 @@ class PermissionsSeeder extends Seeder
 			'id'    => 114,
 			'name'  => 'pay_purchase_return_due',
 		],
-		
+		[
+			'id'    => 115,
+			'name'  => 'all_repair',
+		]
 		)
 	);
 	}
-	
 
-	
+
+
 }

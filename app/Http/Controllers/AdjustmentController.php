@@ -636,7 +636,7 @@ class AdjustmentController extends BaseController
                     ->where('warehouse_id', $Adjustment_data->warehouse_id)
                     ->where('product_variant_id', '=', null)
                     ->first();
-
+                    
                     $data['id'] = $detail->id;
                     $data['detail_id'] = $detail_id += 1;
                     $data['quantity'] = $detail->quantity;
@@ -653,7 +653,7 @@ class AdjustmentController extends BaseController
             $details[] = $data;
         }
 
-
+       
         //get warehouses assigned to user
          $user_auth = auth()->user();
          if($user_auth->is_all_warehouses){
