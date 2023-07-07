@@ -18,6 +18,7 @@ class CreateRepairOrderServicesTable extends Migration
             $table->unsignedBigInteger('order_id');
             $table->foreign('order_id')->references('id')->on('repair_orders')->onDelete('cascade');
             $table->unsignedBigInteger('service_id');
+//            $table->foreign('service_id')->references('id')->on('sub_services')->onDelete('cascade');
             $table->string('status');
             $table->timestamps();
         });
