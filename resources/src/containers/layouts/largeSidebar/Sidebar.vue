@@ -314,6 +314,13 @@
                       <span class="item-name">Repair System</span>
                   </router-link>
               </li>
+              <li class="nav-item"
+              >
+                  <router-link tag="a" class to="/app/repairs/repair_orders">
+                      <i class="nav-icon i-Files"></i>
+                      <span class="item-name">Repair Orders</span>
+                  </router-link>
+              </li>
           </ul>
         <ul
           class="childNav d-none"
