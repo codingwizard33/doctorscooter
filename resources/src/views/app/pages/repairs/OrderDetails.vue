@@ -6,13 +6,13 @@
                 @change="onChangeStatus"
                 :class="[{'done': order_details.status == 'done'},
                  {'progress': order_details.status == 'pending'},
-                 {'collection': order_details.status == 'cancelled'},
+                 {'cancelled': order_details.status == 'cancelled'},
                  {'collection': order_details.status == 'waiting_for_collection'},
                  {'parts': order_details.status == 'waiting_for_parts'}
                  ]">
                 <b-form-select-option value="done">Done</b-form-select-option>
                 <b-form-select-option value="pending">In Progress</b-form-select-option>
-                <b-form-select-option value="cancelled">Cancelled???</b-form-select-option>
+                <b-form-select-option value="cancelled">Cancelled</b-form-select-option>
                 <b-form-select-option value="waiting_for_parts">Waiting for Parts</b-form-select-option>
                 <b-form-select-option value="waiting_for_collection">Waiting for Collection</b-form-select-option>
             </b-form-select>
@@ -377,11 +377,21 @@
                 &.parts {
                     width: 140px;
                     color: #A958FC;
-                    background: url("/images/blue_arrow_down.svg");
+                    background: url("/images/purple_arrow_down.svg");
                     background-repeat: no-repeat;
                     background-position: right;
                     background-position-x: 90%;
                     background-color: rgba(169, 88, 252, 0.2);
+                    position: relative;
+                }
+                &.cancelled {
+                    width: 90px;
+                    color: #F00;
+                    background: url("/images/red_arrow_down.svg");
+                    background-repeat: no-repeat;
+                    background-position: right;
+                    background-position-x: 90%;
+                    background-color: rgba(255, 0, 0, 0.2);
                     position: relative;
                 }
             }
