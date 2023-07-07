@@ -62,8 +62,8 @@ class RepairOrderController extends Controller
     {
         $product = $this->customProductService->storeOrUpdateCustomProduct($request->all());
         if ($product['code'] == 200){
-            Hellper::sendSMS($product['phone'], $this->MessageForMail('repair_order_create'));
-            Mail::to($product['product']->email)->send(new RepairOrderMail($this->MessageForMail('repair_order_create')));
+            // Hellper::sendSMS($product['phone'], $this->MessageForMail('repair_order_create'));
+            // Mail::to($product['product']->email)->send(new RepairOrderMail($this->MessageForMail('repair_order_create')));
         }
         return response()->json([
             'message' => $product['message'],
