@@ -11,10 +11,20 @@ use App\Models\RepairOrderCustomService;
 use App\Models\RepairOrderService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+// use Picqer\Barcode\BarcodeGeneratorSVG;
 
 class CustomProductService
 { // RepairOrderService
     use MessageHellper;
+
+    // private function barCode($itemId)
+    // {
+    //     $generator = new BarcodeGeneratorSVG();
+
+    //     $barcode = $generator->getBarcode($itemId, $generator::TYPE_CODE_128);
+
+    //     return $barcode;
+    // }
 
     /**
      * @param $data
@@ -28,20 +38,20 @@ class CustomProductService
             $data['key'] = time();
             $data['uuid'] = \Str::orderedUuid();
 
-            $bar_code = UploadFile::barCode($data['serial_number']);
+            // $bar_code = UploadFile::barCode($data['serial_number']);
 
                 $product = RepairOrder::query()->updateOrCreate(
                     ['id' => $id],
                     [
                         'key' => $data['key'],
                         'uuid' => $data['uuid']->toString(),
-                        'user_id' => 1, //Auth::user()->id
+                        'user_id' => Auth::user()->id,
                         'full_name' => $data['full_name'],
                         'phone' => $data['phone'],
                         'email' => $data['email'],
                         'model' => $data['model'],
                         'price' => $data['price'],
-                        'bar_code' => $bar_code,
+                        'bar_code' => rand(5030000000001, 5099999999999),
                         'serial_number' => $data['serial_number'] ?? null,
                         'information' => $data['information'],
                         'payment_comment' => $data['payment_comment'],

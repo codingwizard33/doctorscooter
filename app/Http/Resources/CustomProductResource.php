@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use App\Http\Resources\RepairOrder\GetServiceNameInRepairOrder;
 use App\Http\Resources\User\GetUserResource;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Picqer\Barcode\BarcodeGeneratorSVG;
 
 class CustomProductResource extends JsonResource
 {
@@ -25,6 +26,7 @@ class CustomProductResource extends JsonResource
         }
 
         $detail = $this->details->first();
+        preg_match('/<svg.*<\/svg>/s', $this->barCode($this->bar_code), $matches);
 
         return [
             'id' => $this->id,
@@ -35,7 +37,7 @@ class CustomProductResource extends JsonResource
             'email' => $this->email,
             'model' => $this->model,
             'price' => $this->price,
-            'bar_code' => asset($this->bar_code),
+            'bar_code' => $matches[0] . "<p style='letter-spacing: 12px;'>$this->bar_code</p>",
             'serial_number' => $this->serial_number,
             'information' => $this->information,
             'payment_comment' => $this->payment_comment,
@@ -54,5 +56,14 @@ class CustomProductResource extends JsonResource
             'created_at' => $this->created_at->format(config('app.app_date_format')),
             'updated_at' => $this->updated_at->format(config('app.app_date_format')),
         ];
+    }
+
+    private function barCode($itemId)
+    {
+        $generator = new BarcodeGeneratorSVG();
+
+        $barcode = $generator->getBarcode($itemId, $generator::TYPE_CODE_128);
+
+        return $barcode;
     }
 }
