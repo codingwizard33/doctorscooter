@@ -130,3 +130,1169 @@
 #44 /var/www/scooter.local/public/index.php(54): Illuminate\\Foundation\\Http\\Kernel->handle()
 #45 {main}
 "} 
+[2023-07-20 07:06:03] local.ERROR: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '22765830' for key 'products.PRIMARY' (SQL: insert into `products` (`id`, `code`, `name`, `slug`, `description`, `cost`, `price`, `out_price`, `category_id`, `Type_barcode`, `tax_rate_id`, `eat_out_tax_rate_id`, `brand_id`, `popup_note_id`, `unit_of_sale`, `volume_of_sale`, `multi_choice_id`, `colour_id`, `size`, `sku`, `image`, `sell_on_web`, `order_code`, `button_colour_id`, `sort_position`, `magento_attribute_set_id`, `r_r_price`, `cost_price_tax_rate_id`, `product_type`, `unit_id`, `unit_sale_id`, `unit_purchase_id`, `stock_alert`, `tare_weight`, `article_code`, `updated_at`, `created_at`) values (22765830, 7646883058, Ultron T103 Electric Scooter 1200W 48V , ultron-t103-electric-scooter-1200w-48v-2, ULTRON T103 1200W, 350, 949, 0, 1392105, 7646883058, 88054, 88054, 402858, ?, ?, ?, ?, ?, ?, S008, no-image.png, 1, DSS008, ?, ?, ?, ?, ?, 0, 1, 1, 1, 0, ?, 2819, 2023-07-20 07:06:03, 2023-07-20 07:06:03)) {"exception":"[object] (Illuminate\\Database\\QueryException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '22765830' for key 'products.PRIMARY' (SQL: insert into `products` (`id`, `code`, `name`, `slug`, `description`, `cost`, `price`, `out_price`, `category_id`, `Type_barcode`, `tax_rate_id`, `eat_out_tax_rate_id`, `brand_id`, `popup_note_id`, `unit_of_sale`, `volume_of_sale`, `multi_choice_id`, `colour_id`, `size`, `sku`, `image`, `sell_on_web`, `order_code`, `button_colour_id`, `sort_position`, `magento_attribute_set_id`, `r_r_price`, `cost_price_tax_rate_id`, `product_type`, `unit_id`, `unit_sale_id`, `unit_purchase_id`, `stock_alert`, `tare_weight`, `article_code`, `updated_at`, `created_at`) values (22765830, 7646883058, Ultron T103 Electric Scooter 1200W 48V , ultron-t103-electric-scooter-1200w-48v-2, ULTRON T103 1200W, 350, 949, 0, 1392105, 7646883058, 88054, 88054, 402858, ?, ?, ?, ?, ?, ?, S008, no-image.png, 1, DSS008, ?, ?, ?, ?, ?, 0, 1, 1, 1, 0, ?, 2819, 2023-07-20 07:06:03, 2023-07-20 07:06:03)) at /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php:712)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php(672): Illuminate\\Database\\Connection->runQueryCallback()
+#1 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php(502): Illuminate\\Database\\Connection->run()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php(454): Illuminate\\Database\\Connection->statement()
+#3 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Query/Processors/Processor.php(32): Illuminate\\Database\\Connection->insert()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php(3028): Illuminate\\Database\\Query\\Processors\\Processor->processInsertGetId()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(1657): Illuminate\\Database\\Query\\Builder->insertGetId()
+#6 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1188): Illuminate\\Database\\Eloquent\\Builder->__call()
+#7 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1153): Illuminate\\Database\\Eloquent\\Model->insertAndSetId()
+#8 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(994): Illuminate\\Database\\Eloquent\\Model->performInsert()
+#9 /var/www/scooter.local/app/Console/Commands/Products.php(106): Illuminate\\Database\\Eloquent\\Model->save()
+#10 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(36): App\\Console\\Commands\\Products->handle()
+#11 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/Util.php(40): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#12 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(93): Illuminate\\Container\\Util::unwrapIfClosure()
+#13 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(37): Illuminate\\Container\\BoundMethod::callBoundMethod()
+#14 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/Container.php(653): Illuminate\\Container\\BoundMethod::call()
+#15 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Console/Command.php(136): Illuminate\\Container\\Container->call()
+#16 /var/www/scooter.local/vendor/symfony/console/Command/Command.php(298): Illuminate\\Console\\Command->execute()
+#17 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Console/Command.php(121): Symfony\\Component\\Console\\Command\\Command->run()
+#18 /var/www/scooter.local/vendor/symfony/console/Application.php(1040): Illuminate\\Console\\Command->run()
+#19 /var/www/scooter.local/vendor/symfony/console/Application.php(301): Symfony\\Component\\Console\\Application->doRunCommand()
+#20 /var/www/scooter.local/vendor/symfony/console/Application.php(171): Symfony\\Component\\Console\\Application->doRun()
+#21 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Console/Application.php(94): Symfony\\Component\\Console\\Application->run()
+#22 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(129): Illuminate\\Console\\Application->run()
+#23 /var/www/scooter.local/artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle()
+#24 {main}
+
+[previous exception] [object] (Doctrine\\DBAL\\Driver\\PDO\\Exception(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '22765830' for key 'products.PRIMARY' at /var/www/scooter.local/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDO/Exception.php:18)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php(119): Doctrine\\DBAL\\Driver\\PDO\\Exception::new()
+#1 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php(501): Doctrine\\DBAL\\Driver\\PDOStatement->execute()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php(705): Illuminate\\Database\\Connection->Illuminate\\Database\\{closure}()
+#3 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php(672): Illuminate\\Database\\Connection->runQueryCallback()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php(502): Illuminate\\Database\\Connection->run()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php(454): Illuminate\\Database\\Connection->statement()
+#6 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Query/Processors/Processor.php(32): Illuminate\\Database\\Connection->insert()
+#7 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php(3028): Illuminate\\Database\\Query\\Processors\\Processor->processInsertGetId()
+#8 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(1657): Illuminate\\Database\\Query\\Builder->insertGetId()
+#9 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1188): Illuminate\\Database\\Eloquent\\Builder->__call()
+#10 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1153): Illuminate\\Database\\Eloquent\\Model->insertAndSetId()
+#11 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(994): Illuminate\\Database\\Eloquent\\Model->performInsert()
+#12 /var/www/scooter.local/app/Console/Commands/Products.php(106): Illuminate\\Database\\Eloquent\\Model->save()
+#13 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(36): App\\Console\\Commands\\Products->handle()
+#14 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/Util.php(40): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#15 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(93): Illuminate\\Container\\Util::unwrapIfClosure()
+#16 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(37): Illuminate\\Container\\BoundMethod::callBoundMethod()
+#17 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/Container.php(653): Illuminate\\Container\\BoundMethod::call()
+#18 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Console/Command.php(136): Illuminate\\Container\\Container->call()
+#19 /var/www/scooter.local/vendor/symfony/console/Command/Command.php(298): Illuminate\\Console\\Command->execute()
+#20 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Console/Command.php(121): Symfony\\Component\\Console\\Command\\Command->run()
+#21 /var/www/scooter.local/vendor/symfony/console/Application.php(1040): Illuminate\\Console\\Command->run()
+#22 /var/www/scooter.local/vendor/symfony/console/Application.php(301): Symfony\\Component\\Console\\Application->doRunCommand()
+#23 /var/www/scooter.local/vendor/symfony/console/Application.php(171): Symfony\\Component\\Console\\Application->doRun()
+#24 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Console/Application.php(94): Symfony\\Component\\Console\\Application->run()
+#25 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(129): Illuminate\\Console\\Application->run()
+#26 /var/www/scooter.local/artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle()
+#27 {main}
+
+[previous exception] [object] (PDOException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '22765830' for key 'products.PRIMARY' at /var/www/scooter.local/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php:117)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php(117): PDOStatement->execute()
+#1 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php(501): Doctrine\\DBAL\\Driver\\PDOStatement->execute()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php(705): Illuminate\\Database\\Connection->Illuminate\\Database\\{closure}()
+#3 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php(672): Illuminate\\Database\\Connection->runQueryCallback()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php(502): Illuminate\\Database\\Connection->run()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php(454): Illuminate\\Database\\Connection->statement()
+#6 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Query/Processors/Processor.php(32): Illuminate\\Database\\Connection->insert()
+#7 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php(3028): Illuminate\\Database\\Query\\Processors\\Processor->processInsertGetId()
+#8 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(1657): Illuminate\\Database\\Query\\Builder->insertGetId()
+#9 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1188): Illuminate\\Database\\Eloquent\\Builder->__call()
+#10 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1153): Illuminate\\Database\\Eloquent\\Model->insertAndSetId()
+#11 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(994): Illuminate\\Database\\Eloquent\\Model->performInsert()
+#12 /var/www/scooter.local/app/Console/Commands/Products.php(106): Illuminate\\Database\\Eloquent\\Model->save()
+#13 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(36): App\\Console\\Commands\\Products->handle()
+#14 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/Util.php(40): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#15 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(93): Illuminate\\Container\\Util::unwrapIfClosure()
+#16 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(37): Illuminate\\Container\\BoundMethod::callBoundMethod()
+#17 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/Container.php(653): Illuminate\\Container\\BoundMethod::call()
+#18 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Console/Command.php(136): Illuminate\\Container\\Container->call()
+#19 /var/www/scooter.local/vendor/symfony/console/Command/Command.php(298): Illuminate\\Console\\Command->execute()
+#20 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Console/Command.php(121): Symfony\\Component\\Console\\Command\\Command->run()
+#21 /var/www/scooter.local/vendor/symfony/console/Application.php(1040): Illuminate\\Console\\Command->run()
+#22 /var/www/scooter.local/vendor/symfony/console/Application.php(301): Symfony\\Component\\Console\\Application->doRunCommand()
+#23 /var/www/scooter.local/vendor/symfony/console/Application.php(171): Symfony\\Component\\Console\\Application->doRun()
+#24 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Console/Application.php(94): Symfony\\Component\\Console\\Application->run()
+#25 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(129): Illuminate\\Console\\Application->run()
+#26 /var/www/scooter.local/artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle()
+#27 {main}
+"} 
+[2023-07-20 07:10:09] local.ERROR: There are no commands defined in the "cmmand" namespace.
+
+Did you mean this?
+    command {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"cmmand\" namespace.
+
+Did you mean this?
+    command at /var/www/scooter.local/vendor/symfony/console/Application.php:650)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/symfony/console/Application.php(701): Symfony\\Component\\Console\\Application->findNamespace()
+#1 /var/www/scooter.local/vendor/symfony/console/Application.php(259): Symfony\\Component\\Console\\Application->find()
+#2 /var/www/scooter.local/vendor/symfony/console/Application.php(171): Symfony\\Component\\Console\\Application->doRun()
+#3 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Console/Application.php(94): Symfony\\Component\\Console\\Application->run()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(129): Illuminate\\Console\\Application->run()
+#5 /var/www/scooter.local/artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle()
+#6 {main}
+"} 
+[2023-07-20 07:10:26] local.ERROR: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '1391923' for key 'categories.PRIMARY' (SQL: insert into `categories` (`id`, `name`, `description`, `parent_id`, `show_on_till`, `wet`, `button_colour_id`, `sort_position`, `reporting_category_id`, `nominal_code`, `updated_at`, `created_at`) values (1391923, Electric Scooters, ?, ?, 1, 0, ?, 2, ?, ?, 2023-07-20 07:10:26, 2023-07-20 07:10:26)) {"exception":"[object] (Illuminate\\Database\\QueryException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '1391923' for key 'categories.PRIMARY' (SQL: insert into `categories` (`id`, `name`, `description`, `parent_id`, `show_on_till`, `wet`, `button_colour_id`, `sort_position`, `reporting_category_id`, `nominal_code`, `updated_at`, `created_at`) values (1391923, Electric Scooters, ?, ?, 1, 0, ?, 2, ?, ?, 2023-07-20 07:10:26, 2023-07-20 07:10:26)) at /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php:712)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php(672): Illuminate\\Database\\Connection->runQueryCallback()
+#1 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php(502): Illuminate\\Database\\Connection->run()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php(454): Illuminate\\Database\\Connection->statement()
+#3 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Query/Processors/Processor.php(32): Illuminate\\Database\\Connection->insert()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php(3028): Illuminate\\Database\\Query\\Processors\\Processor->processInsertGetId()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(1657): Illuminate\\Database\\Query\\Builder->insertGetId()
+#6 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1188): Illuminate\\Database\\Eloquent\\Builder->__call()
+#7 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1153): Illuminate\\Database\\Eloquent\\Model->insertAndSetId()
+#8 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(994): Illuminate\\Database\\Eloquent\\Model->performInsert()
+#9 /var/www/scooter.local/app/Console/Commands/Categories.php(75): Illuminate\\Database\\Eloquent\\Model->save()
+#10 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(36): App\\Console\\Commands\\Categories->handle()
+#11 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/Util.php(40): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#12 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(93): Illuminate\\Container\\Util::unwrapIfClosure()
+#13 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(37): Illuminate\\Container\\BoundMethod::callBoundMethod()
+#14 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/Container.php(653): Illuminate\\Container\\BoundMethod::call()
+#15 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Console/Command.php(136): Illuminate\\Container\\Container->call()
+#16 /var/www/scooter.local/vendor/symfony/console/Command/Command.php(298): Illuminate\\Console\\Command->execute()
+#17 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Console/Command.php(121): Symfony\\Component\\Console\\Command\\Command->run()
+#18 /var/www/scooter.local/vendor/symfony/console/Application.php(1040): Illuminate\\Console\\Command->run()
+#19 /var/www/scooter.local/vendor/symfony/console/Application.php(301): Symfony\\Component\\Console\\Application->doRunCommand()
+#20 /var/www/scooter.local/vendor/symfony/console/Application.php(171): Symfony\\Component\\Console\\Application->doRun()
+#21 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Console/Application.php(94): Symfony\\Component\\Console\\Application->run()
+#22 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(129): Illuminate\\Console\\Application->run()
+#23 /var/www/scooter.local/artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle()
+#24 {main}
+
+[previous exception] [object] (Doctrine\\DBAL\\Driver\\PDO\\Exception(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '1391923' for key 'categories.PRIMARY' at /var/www/scooter.local/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDO/Exception.php:18)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php(119): Doctrine\\DBAL\\Driver\\PDO\\Exception::new()
+#1 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php(501): Doctrine\\DBAL\\Driver\\PDOStatement->execute()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php(705): Illuminate\\Database\\Connection->Illuminate\\Database\\{closure}()
+#3 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php(672): Illuminate\\Database\\Connection->runQueryCallback()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php(502): Illuminate\\Database\\Connection->run()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php(454): Illuminate\\Database\\Connection->statement()
+#6 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Query/Processors/Processor.php(32): Illuminate\\Database\\Connection->insert()
+#7 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php(3028): Illuminate\\Database\\Query\\Processors\\Processor->processInsertGetId()
+#8 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(1657): Illuminate\\Database\\Query\\Builder->insertGetId()
+#9 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1188): Illuminate\\Database\\Eloquent\\Builder->__call()
+#10 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1153): Illuminate\\Database\\Eloquent\\Model->insertAndSetId()
+#11 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(994): Illuminate\\Database\\Eloquent\\Model->performInsert()
+#12 /var/www/scooter.local/app/Console/Commands/Categories.php(75): Illuminate\\Database\\Eloquent\\Model->save()
+#13 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(36): App\\Console\\Commands\\Categories->handle()
+#14 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/Util.php(40): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#15 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(93): Illuminate\\Container\\Util::unwrapIfClosure()
+#16 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(37): Illuminate\\Container\\BoundMethod::callBoundMethod()
+#17 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/Container.php(653): Illuminate\\Container\\BoundMethod::call()
+#18 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Console/Command.php(136): Illuminate\\Container\\Container->call()
+#19 /var/www/scooter.local/vendor/symfony/console/Command/Command.php(298): Illuminate\\Console\\Command->execute()
+#20 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Console/Command.php(121): Symfony\\Component\\Console\\Command\\Command->run()
+#21 /var/www/scooter.local/vendor/symfony/console/Application.php(1040): Illuminate\\Console\\Command->run()
+#22 /var/www/scooter.local/vendor/symfony/console/Application.php(301): Symfony\\Component\\Console\\Application->doRunCommand()
+#23 /var/www/scooter.local/vendor/symfony/console/Application.php(171): Symfony\\Component\\Console\\Application->doRun()
+#24 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Console/Application.php(94): Symfony\\Component\\Console\\Application->run()
+#25 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(129): Illuminate\\Console\\Application->run()
+#26 /var/www/scooter.local/artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle()
+#27 {main}
+
+[previous exception] [object] (PDOException(code: 23000): SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '1391923' for key 'categories.PRIMARY' at /var/www/scooter.local/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php:117)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOStatement.php(117): PDOStatement->execute()
+#1 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php(501): Doctrine\\DBAL\\Driver\\PDOStatement->execute()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php(705): Illuminate\\Database\\Connection->Illuminate\\Database\\{closure}()
+#3 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php(672): Illuminate\\Database\\Connection->runQueryCallback()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php(502): Illuminate\\Database\\Connection->run()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php(454): Illuminate\\Database\\Connection->statement()
+#6 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Query/Processors/Processor.php(32): Illuminate\\Database\\Connection->insert()
+#7 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php(3028): Illuminate\\Database\\Query\\Processors\\Processor->processInsertGetId()
+#8 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(1657): Illuminate\\Database\\Query\\Builder->insertGetId()
+#9 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1188): Illuminate\\Database\\Eloquent\\Builder->__call()
+#10 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1153): Illuminate\\Database\\Eloquent\\Model->insertAndSetId()
+#11 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(994): Illuminate\\Database\\Eloquent\\Model->performInsert()
+#12 /var/www/scooter.local/app/Console/Commands/Categories.php(75): Illuminate\\Database\\Eloquent\\Model->save()
+#13 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(36): App\\Console\\Commands\\Categories->handle()
+#14 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/Util.php(40): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#15 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(93): Illuminate\\Container\\Util::unwrapIfClosure()
+#16 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(37): Illuminate\\Container\\BoundMethod::callBoundMethod()
+#17 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/Container.php(653): Illuminate\\Container\\BoundMethod::call()
+#18 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Console/Command.php(136): Illuminate\\Container\\Container->call()
+#19 /var/www/scooter.local/vendor/symfony/console/Command/Command.php(298): Illuminate\\Console\\Command->execute()
+#20 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Console/Command.php(121): Symfony\\Component\\Console\\Command\\Command->run()
+#21 /var/www/scooter.local/vendor/symfony/console/Application.php(1040): Illuminate\\Console\\Command->run()
+#22 /var/www/scooter.local/vendor/symfony/console/Application.php(301): Symfony\\Component\\Console\\Application->doRunCommand()
+#23 /var/www/scooter.local/vendor/symfony/console/Application.php(171): Symfony\\Component\\Console\\Application->doRun()
+#24 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Console/Application.php(94): Symfony\\Component\\Console\\Application->run()
+#25 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(129): Illuminate\\Console\\Application->run()
+#26 /var/www/scooter.local/artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle()
+#27 {main}
+"} 
+[2023-07-20 07:18:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:18:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:19:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:19:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:20:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:20:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:21:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:21:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:22:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:22:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:22:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:23:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:23:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:24:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:24:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:25:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:25:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:26:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:26:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:27:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:27:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:28:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:28:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:29:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:29:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:30:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:30:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:31:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:31:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:32:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:32:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:32:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:33:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:33:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:34:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:34:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:35:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:35:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:36:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:36:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:37:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:37:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:38:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:38:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:39:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:39:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:40:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:40:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:41:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:41:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:42:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:42:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:42:02] local.ERROR: syntax error, unexpected token "return", expecting variable or "{" or "$" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\", expecting variable or \"{\" or \"$\" at /var/www/scooter.local/app/Console/Commands/Services.php:41)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:43:02] local.ERROR: syntax error, unexpected token "return" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\" at /var/www/scooter.local/app/Console/Commands/Services.php:42)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:43:02] local.ERROR: syntax error, unexpected token "return" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\" at /var/www/scooter.local/app/Console/Commands/Services.php:42)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:44:02] local.ERROR: syntax error, unexpected token "return" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\" at /var/www/scooter.local/app/Console/Commands/Services.php:42)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:44:02] local.ERROR: syntax error, unexpected token "return" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\" at /var/www/scooter.local/app/Console/Commands/Services.php:42)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:45:02] local.ERROR: syntax error, unexpected token "return" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\" at /var/www/scooter.local/app/Console/Commands/Services.php:42)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:45:02] local.ERROR: syntax error, unexpected token "return" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\" at /var/www/scooter.local/app/Console/Commands/Services.php:42)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:46:02] local.ERROR: syntax error, unexpected token "return" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\" at /var/www/scooter.local/app/Console/Commands/Services.php:42)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:46:02] local.ERROR: syntax error, unexpected token "return" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\" at /var/www/scooter.local/app/Console/Commands/Services.php:42)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:47:02] local.ERROR: syntax error, unexpected token "return" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\" at /var/www/scooter.local/app/Console/Commands/Services.php:42)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:47:02] local.ERROR: syntax error, unexpected token "return" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\" at /var/www/scooter.local/app/Console/Commands/Services.php:42)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:48:02] local.ERROR: syntax error, unexpected token "return" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\" at /var/www/scooter.local/app/Console/Commands/Services.php:42)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:48:02] local.ERROR: syntax error, unexpected token "return" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\" at /var/www/scooter.local/app/Console/Commands/Services.php:42)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:49:02] local.ERROR: syntax error, unexpected token "return" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\" at /var/www/scooter.local/app/Console/Commands/Services.php:42)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:49:02] local.ERROR: syntax error, unexpected token "return" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\" at /var/www/scooter.local/app/Console/Commands/Services.php:42)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:50:02] local.ERROR: syntax error, unexpected token "return" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\" at /var/www/scooter.local/app/Console/Commands/Services.php:42)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:50:02] local.ERROR: syntax error, unexpected token "return" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\" at /var/www/scooter.local/app/Console/Commands/Services.php:42)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:51:02] local.ERROR: syntax error, unexpected token "return" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\" at /var/www/scooter.local/app/Console/Commands/Services.php:42)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:51:02] local.ERROR: syntax error, unexpected token "return" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\" at /var/www/scooter.local/app/Console/Commands/Services.php:42)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:52:02] local.ERROR: syntax error, unexpected token "return" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\" at /var/www/scooter.local/app/Console/Commands/Services.php:42)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:52:02] local.ERROR: syntax error, unexpected token "return" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\" at /var/www/scooter.local/app/Console/Commands/Services.php:42)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:52:02] local.ERROR: syntax error, unexpected token "return" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\" at /var/www/scooter.local/app/Console/Commands/Services.php:42)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:53:02] local.ERROR: syntax error, unexpected token "return" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\" at /var/www/scooter.local/app/Console/Commands/Services.php:42)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 07:53:02] local.ERROR: syntax error, unexpected token "return" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"return\" at /var/www/scooter.local/app/Console/Commands/Services.php:42)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 08:11:02] local.ERROR: syntax error, unexpected token "}" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"}\" at /var/www/scooter.local/app/Console/Commands/SubServices.php:50)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 08:11:02] local.ERROR: syntax error, unexpected token "}" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"}\" at /var/www/scooter.local/app/Console/Commands/SubServices.php:50)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 08:20:02] local.ERROR: syntax error, unexpected token "}" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"}\" at /var/www/scooter.local/app/Console/Commands/SubServices.php:53)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 08:20:02] local.ERROR: syntax error, unexpected token "}" {"exception":"[object] (ParseError(code: 0): syntax error, unexpected token \"}\" at /var/www/scooter.local/app/Console/Commands/SubServices.php:53)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile()
+#1 [internal function]: Composer\\Autoload\\ClassLoader->loadClass()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(229): is_subclass_of()
+#3 /var/www/scooter.local/app/Console/Kernel.php(42): Illuminate\\Foundation\\Console\\Kernel->load()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(316): App\\Console\\Kernel->commands()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(127): Illuminate\\Foundation\\Console\\Kernel->bootstrap()
+#6 Command line code(1): Illuminate\\Foundation\\Console\\Kernel->handle()
+#7 {main}
+"} 
+[2023-07-20 08:22:16] local.ERROR: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'category_id' in 'field list' (SQL: insert into `sub_services` (`name`, `price`, `category_id`, `updated_at`, `created_at`) values (8 inch inner-tube replacement, 25, 1, 2023-07-20 08:22:16, 2023-07-20 08:22:16)) {"exception":"[object] (Illuminate\\Database\\QueryException(code: 42S22): SQLSTATE[42S22]: Column not found: 1054 Unknown column 'category_id' in 'field list' (SQL: insert into `sub_services` (`name`, `price`, `category_id`, `updated_at`, `created_at`) values (8 inch inner-tube replacement, 25, 1, 2023-07-20 08:22:16, 2023-07-20 08:22:16)) at /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php:712)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php(672): Illuminate\\Database\\Connection->runQueryCallback()
+#1 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php(502): Illuminate\\Database\\Connection->run()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php(454): Illuminate\\Database\\Connection->statement()
+#3 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Query/Processors/Processor.php(32): Illuminate\\Database\\Connection->insert()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php(3028): Illuminate\\Database\\Query\\Processors\\Processor->processInsertGetId()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(1657): Illuminate\\Database\\Query\\Builder->insertGetId()
+#6 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1188): Illuminate\\Database\\Eloquent\\Builder->__call()
+#7 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1153): Illuminate\\Database\\Eloquent\\Model->insertAndSetId()
+#8 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(994): Illuminate\\Database\\Eloquent\\Model->performInsert()
+#9 /var/www/scooter.local/app/Console/Commands/SubServices.php(57): Illuminate\\Database\\Eloquent\\Model->save()
+#10 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(36): App\\Console\\Commands\\SubServices->handle()
+#11 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/Util.php(40): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#12 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(93): Illuminate\\Container\\Util::unwrapIfClosure()
+#13 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(37): Illuminate\\Container\\BoundMethod::callBoundMethod()
+#14 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/Container.php(653): Illuminate\\Container\\BoundMethod::call()
+#15 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Console/Command.php(136): Illuminate\\Container\\Container->call()
+#16 /var/www/scooter.local/vendor/symfony/console/Command/Command.php(298): Illuminate\\Console\\Command->execute()
+#17 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Console/Command.php(121): Symfony\\Component\\Console\\Command\\Command->run()
+#18 /var/www/scooter.local/vendor/symfony/console/Application.php(1040): Illuminate\\Console\\Command->run()
+#19 /var/www/scooter.local/vendor/symfony/console/Application.php(301): Symfony\\Component\\Console\\Application->doRunCommand()
+#20 /var/www/scooter.local/vendor/symfony/console/Application.php(171): Symfony\\Component\\Console\\Application->doRun()
+#21 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Console/Application.php(94): Symfony\\Component\\Console\\Application->run()
+#22 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(129): Illuminate\\Console\\Application->run()
+#23 /var/www/scooter.local/artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle()
+#24 {main}
+
+[previous exception] [object] (Doctrine\\DBAL\\Driver\\PDO\\Exception(code: 42S22): SQLSTATE[42S22]: Column not found: 1054 Unknown column 'category_id' in 'field list' at /var/www/scooter.local/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDO/Exception.php:18)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOConnection.php(87): Doctrine\\DBAL\\Driver\\PDO\\Exception::new()
+#1 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php(495): Doctrine\\DBAL\\Driver\\PDOConnection->prepare()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php(705): Illuminate\\Database\\Connection->Illuminate\\Database\\{closure}()
+#3 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php(672): Illuminate\\Database\\Connection->runQueryCallback()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php(502): Illuminate\\Database\\Connection->run()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php(454): Illuminate\\Database\\Connection->statement()
+#6 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Query/Processors/Processor.php(32): Illuminate\\Database\\Connection->insert()
+#7 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php(3028): Illuminate\\Database\\Query\\Processors\\Processor->processInsertGetId()
+#8 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(1657): Illuminate\\Database\\Query\\Builder->insertGetId()
+#9 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1188): Illuminate\\Database\\Eloquent\\Builder->__call()
+#10 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1153): Illuminate\\Database\\Eloquent\\Model->insertAndSetId()
+#11 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(994): Illuminate\\Database\\Eloquent\\Model->performInsert()
+#12 /var/www/scooter.local/app/Console/Commands/SubServices.php(57): Illuminate\\Database\\Eloquent\\Model->save()
+#13 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(36): App\\Console\\Commands\\SubServices->handle()
+#14 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/Util.php(40): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#15 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(93): Illuminate\\Container\\Util::unwrapIfClosure()
+#16 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(37): Illuminate\\Container\\BoundMethod::callBoundMethod()
+#17 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/Container.php(653): Illuminate\\Container\\BoundMethod::call()
+#18 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Console/Command.php(136): Illuminate\\Container\\Container->call()
+#19 /var/www/scooter.local/vendor/symfony/console/Command/Command.php(298): Illuminate\\Console\\Command->execute()
+#20 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Console/Command.php(121): Symfony\\Component\\Console\\Command\\Command->run()
+#21 /var/www/scooter.local/vendor/symfony/console/Application.php(1040): Illuminate\\Console\\Command->run()
+#22 /var/www/scooter.local/vendor/symfony/console/Application.php(301): Symfony\\Component\\Console\\Application->doRunCommand()
+#23 /var/www/scooter.local/vendor/symfony/console/Application.php(171): Symfony\\Component\\Console\\Application->doRun()
+#24 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Console/Application.php(94): Symfony\\Component\\Console\\Application->run()
+#25 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(129): Illuminate\\Console\\Application->run()
+#26 /var/www/scooter.local/artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle()
+#27 {main}
+
+[previous exception] [object] (PDOException(code: 42S22): SQLSTATE[42S22]: Column not found: 1054 Unknown column 'category_id' in 'field list' at /var/www/scooter.local/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOConnection.php:82)
+[stacktrace]
+#0 /var/www/scooter.local/vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOConnection.php(82): PDO->prepare()
+#1 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php(495): Doctrine\\DBAL\\Driver\\PDOConnection->prepare()
+#2 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php(705): Illuminate\\Database\\Connection->Illuminate\\Database\\{closure}()
+#3 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php(672): Illuminate\\Database\\Connection->runQueryCallback()
+#4 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php(502): Illuminate\\Database\\Connection->run()
+#5 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Connection.php(454): Illuminate\\Database\\Connection->statement()
+#6 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Query/Processors/Processor.php(32): Illuminate\\Database\\Connection->insert()
+#7 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php(3028): Illuminate\\Database\\Query\\Processors\\Processor->processInsertGetId()
+#8 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(1657): Illuminate\\Database\\Query\\Builder->insertGetId()
+#9 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1188): Illuminate\\Database\\Eloquent\\Builder->__call()
+#10 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(1153): Illuminate\\Database\\Eloquent\\Model->insertAndSetId()
+#11 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(994): Illuminate\\Database\\Eloquent\\Model->performInsert()
+#12 /var/www/scooter.local/app/Console/Commands/SubServices.php(57): Illuminate\\Database\\Eloquent\\Model->save()
+#13 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(36): App\\Console\\Commands\\SubServices->handle()
+#14 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/Util.php(40): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#15 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(93): Illuminate\\Container\\Util::unwrapIfClosure()
+#16 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(37): Illuminate\\Container\\BoundMethod::callBoundMethod()
+#17 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Container/Container.php(653): Illuminate\\Container\\BoundMethod::call()
+#18 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Console/Command.php(136): Illuminate\\Container\\Container->call()
+#19 /var/www/scooter.local/vendor/symfony/console/Command/Command.php(298): Illuminate\\Console\\Command->execute()
+#20 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Console/Command.php(121): Symfony\\Component\\Console\\Command\\Command->run()
+#21 /var/www/scooter.local/vendor/symfony/console/Application.php(1040): Illuminate\\Console\\Command->run()
+#22 /var/www/scooter.local/vendor/symfony/console/Application.php(301): Symfony\\Component\\Console\\Application->doRunCommand()
+#23 /var/www/scooter.local/vendor/symfony/console/Application.php(171): Symfony\\Component\\Console\\Application->doRun()
+#24 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Console/Application.php(94): Symfony\\Component\\Console\\Application->run()
+#25 /var/www/scooter.local/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(129): Illuminate\\Console\\Application->run()
+#26 /var/www/scooter.local/artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle()
+#27 {main}
+"} 
