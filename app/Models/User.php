@@ -73,4 +73,14 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Models\Warehouse');
     }
 
+    public function repairOrder()
+    {
+        return $this->hasOne(RepairOrder::class, 'id', 'user_id');
+    }
+
+    public function repairOrderDetails()
+    {
+        return $this->hasMany(RepairOrderDetails::class, 'id', 'user_id');
+    }
+
 }

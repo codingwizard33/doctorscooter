@@ -4,15 +4,33 @@
 namespace App\Services;
 
 
+use App\Helper\MessageHellper;
 use App\Helper\UploadFile;
 use App\Models\RepairOrder;
 use App\Models\RepairOrderCustomService;
 use App\Models\RepairOrderService;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+// use Picqer\Barcode\BarcodeGeneratorSVG;
 
 class CustomProductService
-{
+{ // RepairOrderService
+    use MessageHellper;
 
+    // private function barCode($itemId)
+    // {
+    //     $generator = new BarcodeGeneratorSVG();
+
+    //     $barcode = $generator->getBarcode($itemId, $generator::TYPE_CODE_128);
+
+    //     return $barcode;
+    // }
+
+    /**
+     * @param $data
+     * @param null $id
+     * @return array
+     */
     public function storeOrUpdateCustomProduct($data, $id = null)
     {
         try {
@@ -20,27 +38,32 @@ class CustomProductService
             $data['key'] = time();
             $data['uuid'] = \Str::orderedUuid();
 
+            // $bar_code = UploadFile::barCode($data['serial_number']);
+
                 $product = RepairOrder::query()->updateOrCreate(
                     ['id' => $id],
                     [
                         'key' => $data['key'],
                         'uuid' => $data['uuid']->toString(),
+                        'user_id' => Auth::user()->id,
                         'full_name' => $data['full_name'],
                         'phone' => $data['phone'],
                         'email' => $data['email'],
                         'model' => $data['model'],
                         'price' => $data['price'],
-                        'bar_code' => $data['bar_code'] ?? null,
+                        'bar_code' => rand(5030000000001, 5099999999999),
                         'serial_number' => $data['serial_number'] ?? null,
                         'information' => $data['information'],
                         'payment_comment' => $data['payment_comment'],
                         'payment_option' => $data['payment_option'],
-                        'payment_warranty' => $data['payment_warranty'],
+                        'payment_warranty' => json_encode($data['payment_warranty']),
 
                         'payment_status' => $data['payment_status'] ?? RepairOrder::paymentStatus()[2],
                         'status' => RepairOrder::status()[0],
                     ]
                 );
+
+
                 if (!empty($data['images'])){
                     foreach ($data['images'] as $image){
 //                        $filePath =  UploadFile::upload($image, '/repair/order/');
@@ -102,7 +125,7 @@ class CustomProductService
                 }
             DB::commit();
             return [
-                'message' => 'Data updated successfully',
+                'message' => $this->MessageUpdateCreate($id),
                 'product' => $product,
                 'code' => 200,
             ];

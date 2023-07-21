@@ -14,6 +14,7 @@ class RepairOrder extends Model
     protected $fillable = [
         'uuid',
         'key',
+        'user_id',
         'full_name',
         'phone',
         'email',
@@ -35,6 +36,7 @@ class RepairOrder extends Model
         return [
             'pending',
             'waiting_for_parts',
+            'waiting_for_collection',
             'in_progress',
             'completed',
             'cancelled',
@@ -64,5 +66,15 @@ class RepairOrder extends Model
     public function customService()
     {
         return $this->hasMany(RepairOrderCustomService::class, 'order_id', 'id');
+    }
+
+    public function details()
+    {
+        return $this->hasMany(RepairOrderDetails::class, 'order_id', 'id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }
