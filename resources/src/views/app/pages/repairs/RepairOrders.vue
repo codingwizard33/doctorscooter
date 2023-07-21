@@ -31,6 +31,15 @@
 
                 </div>
                 <template slot="table-row" slot-scope="props">
+                    <span v-if="props.column.field == 'bar_code'">
+                        <img class="bar_img" :src="props.formattedRow[props.column.field]" alt="">
+                    </span>
+                    <span v-else>
+                      {{ props.formattedRow[props.column.field] }}
+                    </span>
+<!--                    <b-button v-if="props.column.field == 'bar_code'">-->
+<!--                        rr-->
+<!--                    </b-button>-->
                     <b-button v-if="props.column.field == 'action'" class="open_order-btn" @click="orderDetails(props)">
                         Open Order <span class="ml-2 d-flex"><i class="i-Arrow-Right"></i></span>
                     </b-button>
@@ -60,7 +69,6 @@
                     {
                         label: this.$t("Reference"),
                         field: "bar_code",
-                        html: true,
                         tdClass: "text-left",
                         thClass: "text-left"
                     },
@@ -152,6 +160,9 @@
         color: #000000;
     }
 }
+::v-deep .vgt-table td {
+    vertical-align: initial;
+}
 ::v-deep .new_order-btn {
     border: none;
     padding: 8px 20px;
@@ -180,4 +191,8 @@
     display: flex;
     align-items: center
 }
+    ::v-deep .bar_img {
+        width: 100%;
+        height: 44px;
+    }
 </style>

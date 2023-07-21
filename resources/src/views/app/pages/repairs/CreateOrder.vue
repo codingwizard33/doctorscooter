@@ -388,6 +388,9 @@
                 images: []
             }
         },
+        created() {
+            this.getAllServices()
+        },
         computed: {
             getDate() {
                 let date = new Date()
@@ -476,6 +479,16 @@
             removeImage(item, index) {
                 this.images.splice(index, 1)
                 this.uploadFiles.splice(index, 1)
+            },
+            getAllServices() {
+                axios
+                    .get("/service")
+                    .then(response => {
+                        console.log(response, 'response')
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
             }
         },
 
