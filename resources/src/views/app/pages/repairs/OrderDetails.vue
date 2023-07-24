@@ -289,26 +289,28 @@
                 reader.readAsDataURL(file)
             },
             saveOrderDetails() {
-                NProgress.start();
-                NProgress.set(0.1);
-                axios
-                    .post(
-                        `reaper/order/details/update/${this.getId}`, {
-                            order_id: this.getId,
-                            text: this.order_details.text,
-                            image: this.images
-                        }
-                    )
-                    .then(response => {
-                        this.isLoading = false;
-                        NProgress.done();
-                    })
-                    .catch(error => {
-                        NProgress.done();
-                        setTimeout(() => {
-                            this.isLoading = false;
-                        }, 500);
-                    })
+                if(this.order_details.text && this.images.length) {
+                    NProgress.start();
+                        NProgress.set(0.1);
+                        axios
+                            .post(
+                                `reaper/order/details/update/${this.getId}`, {
+                                    order_id: this.getId,
+                                    text: this.order_details.text,
+                                    image: this.images
+                                }
+                            )
+                            .then(response => {
+                                this.isLoading = false;
+                                NProgress.done();
+                            })
+                            .catch(error => {
+                                NProgress.done();
+                                setTimeout(() => {
+                                    this.isLoading = false;
+                                }, 500);
+                            })
+                }
             }
         }, //end Methods
         //-----------------------------Created function-------------------

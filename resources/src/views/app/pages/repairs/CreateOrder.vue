@@ -138,7 +138,7 @@
                                         :tag-placeholder="$t('Add_Tag')"
                                         :placeholder="$t('Search_Service')"
                                         label="name"
-                                        track-by="code"
+                                        track-by="id"
                                         :options="services_options"
                                         :multiple="true"
                                         :taggable="true"
@@ -155,7 +155,7 @@
                                         :placeholder="$t('Search_Custom_Service')"
                                         :custom-label="serviceType"
                                         label="name"
-                                        track-by="name"
+                                        track-by="code"
                                         :options="custom_services_options"
                                         :multiple="true"
                                         :taggable="true"
@@ -366,9 +366,9 @@
                     amount: null
                 },
                 services_options: [
-                    { name: 'Oil/Filter changed', code: 'of' },
-                    { name: 'Break Work', code: 'bw' },
-                    { name: 'Suspension', code: 'su' }
+                    // { name: 'Oil/Filter changed', code: 'of' },
+                    // { name: 'Break Work', code: 'bw' },
+                    // { name: 'Suspension', code: 'su' }
                 ],
                 custom_services_options: [],
                 paymentOptions: [
@@ -387,6 +387,10 @@
                 uploadFiles: [],
                 images: []
             }
+        },
+        created() {
+            this.getAllServices()
+            this.getAllSubServices()
         },
         computed: {
             getDate() {
@@ -476,6 +480,26 @@
             removeImage(item, index) {
                 this.images.splice(index, 1)
                 this.uploadFiles.splice(index, 1)
+            },
+            getAllServices() {
+                axios
+                    .get("/service")
+                    .then(response => {
+                        this.services_options = response.data.service
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+            },
+            getAllSubServices() {
+                axios
+                    .get("/sub/service")
+                    .then(response => {
+                        console.log(response.data)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
             }
         },
 
