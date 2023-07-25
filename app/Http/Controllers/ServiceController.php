@@ -9,6 +9,7 @@ use App\Models\Service;
 use App\Services\ServiceService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\SubService;
 
 class ServiceController extends Controller
 {
@@ -32,10 +33,19 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $service = Service::all();
-        return response()->json([
-                'service' => GetServiceResource::collection($service),
-            ], 200);
+        $services = Service::all();
+        $data = [];
+        foreach ($services as $service) {
+            $subServices = SubService::where('service_id', $service->id)->get()->toArray();
+            $service->subService = $subServices;
+            array_push($data, $service);
+        }
+
+        return $data;
+
+        //return response()->json([
+        //        'service' => GetServiceResource::collection($service),
+        //    ], 200);
     }
 
     /**
