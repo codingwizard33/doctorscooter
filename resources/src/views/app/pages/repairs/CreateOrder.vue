@@ -12,27 +12,27 @@
                             <b-col md="12">
                                 <div class="d-flex">
                                     <div class="today_date"><span class="date_name">Date: </span> &nbsp;{{getDate}}</div>
-                                    <div class="today_date">
-                                        <span class="date_name">Serial Number:  </span>
-                                        <validation-provider
-                                            name="SerialNumber"
-                                            :rules="{required:true , min:3 , max:55}"
-                                            v-slot="validationContext"
-                                        >
-                                            <b-form-group>
-                                                <b-form-input
-                                                    :state="getValidationState(validationContext)"
-                                                    aria-describedby="Serial-feedback"
-                                                    type="number"
-                                                    :placeholder="$t('Enter_Your_Serial_Number')"
-                                                    v-model="order.serial_number"
-                                                ></b-form-input>
-                                                <b-form-invalid-feedback id="Serial-feedback">
-                                                    {{ validationContext.errors[0] }}
-                                                </b-form-invalid-feedback>
-                                            </b-form-group>
-                                        </validation-provider>
-                                    </div>
+<!--                                    <div class="today_date">-->
+<!--                                        <span class="date_name">Serial Number:  </span>-->
+<!--                                        <validation-provider-->
+<!--                                            name="SerialNumber"-->
+<!--                                            :rules="{required:true , min:3 , max:55}"-->
+<!--                                            v-slot="validationContext"-->
+<!--                                        >-->
+<!--                                            <b-form-group>-->
+<!--                                                <b-form-input-->
+<!--                                                    :state="getValidationState(validationContext)"-->
+<!--                                                    aria-describedby="Serial-feedback"-->
+<!--                                                    type="number"-->
+<!--                                                    :placeholder="$t('Enter_Your_Serial_Number')"-->
+<!--                                                    v-model="order.serial_number"-->
+<!--                                                ></b-form-input>-->
+<!--                                                <b-form-invalid-feedback id="Serial-feedback">-->
+<!--                                                    {{ validationContext.errors[0] }}-->
+<!--                                                </b-form-invalid-feedback>-->
+<!--                                            </b-form-group>-->
+<!--                                        </validation-provider>-->
+<!--                                    </div>-->
                                 </div>
                                 <hr />
                             </b-col>
@@ -133,17 +133,23 @@
                             <b-col md="12" class="md-12">
                                 <div class="multiselect_content">
                                     <label>Services</label>
-                                    <multiselect
-                                        v-model="order.services"
-                                        :tag-placeholder="$t('Add_Tag')"
-                                        :placeholder="$t('Search_Service')"
-                                        label="name"
-                                        track-by="id"
-                                        :options="services_options"
+                                    <treeselect
+                                        v-model="value"
                                         :multiple="true"
-                                        :taggable="true"
-                                        @tag="addTag">
-                                    </multiselect>
+                                        :normalizer="normalizer"
+                                        :options="services_options"
+                                    />
+<!--                                    <multiselect-->
+<!--                                        v-model="order.services"-->
+<!--                                        :tag-placeholder="$t('Add_Tag')"-->
+<!--                                        :placeholder="$t('Search_Service')"-->
+<!--                                        label="name"-->
+<!--                                        track-by="id"-->
+<!--                                        :options="services_options"-->
+<!--                                        :multiple="true"-->
+<!--                                        :taggable="true"-->
+<!--                                        @tag="addTag">-->
+<!--                                    </multiselect>-->
                                 </div>
                             </b-col>
                             <b-col md="12" class="md-12">
@@ -281,7 +287,7 @@
                             <b-col md="12">
                                 <div class="payment_total due_amount">
                                     <div class="payment_total-text">Due amount:</div>
-                                    <div class="payment_total-value">$40.00</div>
+                                    <div class="payment_total-value">$90.00</div>
                                 </div>
                             </b-col>
                             <b-col>
@@ -342,10 +348,15 @@
     import $ from 'jquery'
     import VueTagsInput from "@johmun/vue-tags-input";
     import NProgress from "nprogress";
+
+    import Treeselect from '@riophae/vue-treeselect'
+    // import the styles
+    import '@riophae/vue-treeselect/dist/vue-treeselect.css'
     export default {
         name: "CreateOrder",
         data() {
             return {
+                value: null,
                 order: {
                     full_name: "",
                     mobile : "",
@@ -388,9 +399,12 @@
                 images: []
             }
         },
+        components: {
+            Treeselect
+        },
         created() {
             this.getAllServices()
-            this.getAllSubServices()
+            // this.getAllSubServices()
         },
         computed: {
             getDate() {
@@ -485,22 +499,29 @@
                 axios
                     .get("/service")
                     .then(response => {
-                        this.services_options = response.data.service
+                        this.services_options = response.data
                     })
                     .catch(error => {
                         console.log(error)
                     })
             },
-            getAllSubServices() {
-                axios
-                    .get("/sub/service")
-                    .then(response => {
-                        console.log(response.data)
-                    })
-                    .catch(error => {
-                        console.log(error)
-                    })
-            }
+            normalizer(node) {
+                return {
+                    id: node.id,
+                    label: node.name,
+                    children: node.subService,
+                }
+            },
+            // getAllSubServices() {
+            //     axios
+            //         .get("/sub/service")
+            //         .then(response => {
+            //             console.log(response.data)
+            //         })
+            //         .catch(error => {
+            //             console.log(error)
+            //         })
+            // }
         },
 
     }
@@ -580,7 +601,15 @@
              padding-top: 8px;
          }
          & .multiselect_content {
-             padding-bottom: 16px;
+             margin-bottom: 16px;
+             & .vue-treeselect {
+                 width: 100%;
+                 height: 40px;
+             }
+             & .vue-treeselect__control {
+                 border: 1px solid #9CA3AF;
+                 height: 40px;
+             }
              & label {
 
              }

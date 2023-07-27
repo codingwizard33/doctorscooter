@@ -32,7 +32,7 @@
                 </div>
                 <template slot="table-row" slot-scope="props">
                     <span v-if="props.column.field == 'bar_code'">
-                        <img class="bar_img" :src="props.formattedRow[props.column.field]" alt="">
+                        <div v-html="props.formattedRow[props.column.field]"></div>
                     </span>
                     <span v-else>
                       {{ props.formattedRow[props.column.field] }}
