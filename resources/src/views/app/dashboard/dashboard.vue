@@ -3,17 +3,27 @@
   <div class="main-content">
     <div v-if="loading" class="loading_page spinner spinner-primary mr-3"></div>
     <div v-else-if="!loading && currentUserPermissions && currentUserPermissions.includes('dashboard')">
-        <b-row>
-            <b-col>
-                <button  class="btn btn-outline-primary mb-3 mr-5" @click="daySalesReport(0)">
+        <b-row class="align-items-center mb-2">
+            <b-col class="align-items-center">
+                <button  class="btn btn-outline-primary mr-5" @click="daySalesReport(0)">
                     Today
                 </button>
-                <button  class="btn btn-outline-primary mb-3 mr-5" @click="daySalesReport(7)">
+                <button  class="btn btn-outline-primary mr-5" @click="daySalesReport(7)">
                     7 days
                 </button>
-                <button  class="btn btn-outline-primary mb-3 mr-5" @click="daySalesReport(30)">
+                <button  class="btn btn-outline-primary mr-5" @click="daySalesReport(30)">
                     30 days
                 </button>
+            </b-col>
+            <b-col>
+                <b-form-group :label="$t('warehouse')">
+                    <v-select
+                        v-model="Filter_warehouse"
+                        :reduce="label => label.value"
+                        :placeholder="$t('Choose_Warehouse')"
+                        :options="warehouses.map(warehouses => ({label: warehouses.name, value: warehouses.id}))"
+                    />
+                </b-form-group>
             </b-col>
         </b-row>
       <b-row>
@@ -91,17 +101,42 @@
             </div>
           </b-card>
         </b-col>
-        <b-col col lg="4" md="12" sm="12">
-          <b-card class="mb-30">
-            <h4 class="card-title m-0">{{$t('Top_Selling_Products')}} ({{new Date().getFullYear()}})</h4>
-            <div class="chart-wrapper">
-              <div v-once class="typo__p text-right" v-if="loading">
-                <div class="spinner sm spinner-primary mt-3"></div>
+<!--        <b-col col lg="4" md="12" sm="12">-->
+<!--          <b-card class="mb-30">-->
+<!--            <h4 class="card-title m-0">{{$t('Top_Selling_Products')}} ({{new Date().getFullYear()}})</h4>-->
+<!--            <div class="chart-wrapper">-->
+<!--              <div v-once class="typo__p text-right" v-if="loading">-->
+<!--                <div class="spinner sm spinner-primary mt-3"></div>-->
+<!--              </div>-->
+<!--              <v-chart v-if="!loading" :options="echartProduct" :autoresize="true"></v-chart>-->
+<!--            </div>-->
+<!--          </b-card>-->
+<!--        </b-col>-->
+          <div class="col-md-4">
+              <div class="card mb-30">
+                  <div class="card-body p-3">
+                      <h5
+                          class="card-title border-bottom p-3 mb-2"
+                      >{{$t('Top_Selling_Products')}} (last week)</h5>
+
+                      <vue-good-table
+                          :columns="columns_products"
+                          styleClass="order-table vgt-table"
+                          row-style-class="text-left"
+                          :rows="products"
+                      >
+                          <template slot="table-row" slot-scope="props">
+                              <div v-if="props.column.field == 'quantity'">
+                                  <span>{{formatNumber(props.row.quantity ,2)}} {{props.row.unit_product}}</span>
+                              </div>
+                              <div v-else-if="props.column.field == 'total'">
+                                  <span>{{currentUser.currency}} {{formatNumber(props.row.total ,2)}}</span>
+                              </div>
+                          </template>
+                      </vue-good-table>
+                  </div>
               </div>
-              <v-chart v-if="!loading" :options="echartProduct" :autoresize="true"></v-chart>
-            </div>
-          </b-card>
-        </b-col>
+          </div>
       </b-row>
 
       <b-row>
@@ -126,32 +161,14 @@
             </div>
           </div>
         </div>
-
-        <div class="col-md-4">
-          <div class="card mb-30">
-            <div class="card-body p-3">
-              <h5
-                class="card-title border-bottom p-3 mb-2"
-              >{{$t('Top_Selling_Products')}} ({{CurrentMonth}})</h5>
-
-              <vue-good-table
-                :columns="columns_products"
-                styleClass="order-table vgt-table"
-                row-style-class="text-left"
-                :rows="products"
-              >
-                <template slot="table-row" slot-scope="props">
-                  <div v-if="props.column.field == 'quantity'">
-                    <span>{{formatNumber(props.row.quantity ,2)}} {{props.row.unit_product}}</span>
+          <b-col col lg="4" md="12" sm="12">
+              <b-card class="mb-30">
+                  <h4 class="card-title m-0">{{$t('TopCustomers')}} ({{CurrentMonth}})</h4>
+                  <div class="chart-wrapper">
+                      <v-chart :options="echartCustomer" :autoresize="true"></v-chart>
                   </div>
-                  <div v-else-if="props.column.field == 'total'">
-                    <span>{{currentUser.currency}} {{formatNumber(props.row.total ,2)}}</span>
-                  </div>
-                </template>
-              </vue-good-table>
-            </div>
-          </div>
-        </div>
+              </b-card>
+          </b-col>
       </b-row>
 
       <b-row>
@@ -163,14 +180,7 @@
             </div>
           </b-card>
         </b-col>
-        <b-col col lg="4" md="12" sm="12">
-          <b-card class="mb-30">
-            <h4 class="card-title m-0">{{$t('TopCustomers')}} ({{CurrentMonth}})</h4>
-            <div class="chart-wrapper">
-              <v-chart :options="echartCustomer" :autoresize="true"></v-chart>
-            </div>
-          </b-card>
-        </b-col>
+
       </b-row>
 
       <!-- Last Sales -->
@@ -258,6 +268,8 @@ export default {
         return_sales: 0,
         return_purchases: 0
       },
+      Filter_warehouse: "",
+      warehouses: [],
       products: [],
       CurrentMonth: "",
       loading: true,
@@ -659,11 +671,23 @@ export default {
         return `${value[0]}.${formated.substr(0, dec)}`;
       while (formated.length < dec) formated += "0";
       return `${value[0]}.${formated}`;
-    }
+    },
+      getWarehouses() {
+          // axios
+          //     .get(`/get-warehouses`)
+          //     .then(response => {
+          //         this.warehouses = response.data.warehouses;
+          //     })
+          //     .catch(error => {
+          //         console.log(error)
+          //     })
+
+      }
   },
   async mounted() {
     await this.report_with_echart();
     this.GetMonth();
+    this.getWarehouses()
   }
 };
 </script>
