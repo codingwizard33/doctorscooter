@@ -14,7 +14,7 @@ class CreateRepairOrdersTable extends Migration
     public function up()
     {
         Schema::create('repair_orders', function (Blueprint $table) {
-            $table->id();
+            $table->integer('id', true);
             $table->string('uuid');
             $table->string('key');
             $table->string('full_name');

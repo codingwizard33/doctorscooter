@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GetWarehousesController;
 use App\Models\Test;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -226,6 +227,7 @@ Route::middleware(['auth:api', 'Is_Active'])->group(function () {
 
 
     //------------------------------- Category --------------------------\\
+    Route::get('/get-warehouses', 'GetWarehousesController@getWarehouses');
     //------------------------------------------------------------------\\
 
     Route::resource('categories', 'CategorieController');
