@@ -18,7 +18,7 @@ class CustomProductResource extends JsonResource
     public function toArray($request)
     {
         $path = [];
-        dd($this->images());
+        // dd($this->images());
         if (!empty($this->images()->pluck('path'))){
             foreach ($this->images()->get() as $key => $image){
                 $path[$key]['id'] = $image->id;
