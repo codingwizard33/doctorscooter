@@ -33,7 +33,7 @@
                                     <div class="detail_item-btn">Salesman</div>
                                     <div class="detail_item-text">
                                         <div class="detail_item-name">Name: &nbsp;</div>
-                                        <div class="detail_item-value">{{order_details.full_name}}</div>
+                                        <div class="detail_item-value">{{order_details.sales_man.firstname}} {{order_details.sales_man.lastname}}</div>
                                     </div>
                                 </div>
                             </b-col>
@@ -139,15 +139,17 @@
                     </b-card>
                 </b-col>
                 <b-col md="3" class="detail_tab mb-2">
-                    <div class="detail_tab-title">Order Status</div>
+                    <div class="detail_tab-title mb-2">Order Status</div>
+                    <span>Services</span>
                     <div class="detail_tab-status" v-for="service of order_details.service">
-                        <div class="detail_tab-status_name">{{service.id}}</div>
+                        <div class="detail_tab-status_name">{{service.name}}</div>
                         <b-form-select v-model="service.status" :class="{'done': service.status == 'done', 'pending': service.status == 'pending'}">
                             <b-form-select-option value="done">Done</b-form-select-option>
                             <b-form-select-option value="pending">Pending</b-form-select-option>
                         </b-form-select>
                     </div>
                     <hr>
+                    <span>Custom Services</span>
                     <div class="detail_tab-status" v-for="service of order_details.custom_service">
                         <div class="detail_tab-status_name">{{service.name}}</div>
                         <b-form-select v-model="service.status" :class="{'done': service.status == 'done', 'pending': service.status == 'pending'}">

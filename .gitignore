@@ -4,6 +4,7 @@
 /public/images/vendor
 /node_modules
 /public/js
+public/mix-manifest.json
 /vendor
 .env
 .env.backup

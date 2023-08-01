@@ -16,6 +16,7 @@
                   enabled: true,
                   placeholder: $t('Search_this_table'),
                 }"
+                :row-style-class="rowStyleClassFn"
                 @on-search="onSearch"
                 styleClass="tableOne vgt-table"
             >
@@ -24,11 +25,10 @@
                         <span class="d-flex"><i class="i-Add"></i></span>
                         <span class="ul-btn__text ml-1">{{$t('New')}}</span>
                     </b-button>
-                    <b-button class="filter_btn" size="sm">
+                    <b-button class="filter_btn" size="sm" v-b-toggle.sidebar-right-f>
                         <span class="d-flex"><i class="i-Filter-2"></i></span>
                         <span class="ul-btn__text ml-1">{{ $t("Filter") }}</span>
                     </b-button>
-
                 </div>
                 <template slot="table-row" slot-scope="props">
                     <span v-if="props.column.field == 'bar_code'">
@@ -37,15 +37,89 @@
                     <span v-else>
                       {{ props.formattedRow[props.column.field] }}
                     </span>
-<!--                    <b-button v-if="props.column.field == 'bar_code'">-->
-<!--                        rr-->
-<!--                    </b-button>-->
+                    <div v-if="props.column.field == 'payment_status'">
+                        {{ upper(props.formattedRow[props.column.field])}}
+                    </div>
+                    <div v-if="props.column.field == 'status'">
+                        {{ upper(props.formattedRow[props.column.field])}}
+                    </div>
                     <b-button v-if="props.column.field == 'action'" class="open_order-btn" @click="orderDetails(props)">
                         Open Order <span class="ml-2 d-flex"><i class="i-Arrow-Right"></i></span>
                     </b-button>
                 </template>
 
             </vue-good-table>
+            <!-- Multiple filter -->
+            <b-sidebar id="sidebar-right-f" :title="$t('Filter')" bg-variant="white" right shadow>
+                <div class="px-3 py-2">
+                    <b-row>
+                        <!-- Code Product  -->
+<!--                        <b-col md="12">-->
+<!--                            <b-form-group :label="$t('CodeProduct')">-->
+<!--                                <b-form-input-->
+<!--                                    label="Code Product"-->
+<!--                                    :placeholder="$t('SearchByCode')"-->
+<!--                                    v-model="Filter_code"-->
+<!--                                ></b-form-input>-->
+<!--                            </b-form-group>-->
+<!--                        </b-col>-->
+
+                        <!-- Name  -->
+<!--                        <b-col md="12">-->
+<!--                            <b-form-group :label="$t('ProductName')">-->
+<!--                                <b-form-input-->
+<!--                                    label="Name Product"-->
+<!--                                    :placeholder="$t('SearchByName')"-->
+<!--                                    v-model="Filter_name"-->
+<!--                                ></b-form-input>-->
+<!--                            </b-form-group>-->
+<!--                        </b-col>-->
+
+                        <!-- Category  -->
+                        <b-col md="12">
+                            <b-form-group :label="$t('Categorie')">
+                                <v-select
+                                    :placeholder="$t('Choose_Category')"
+                                    v-model="Filter_category"
+                                    :options="categories.map(categories => ({label: categories.lavel, value: categories.name}))"
+                                />
+                            </b-form-group>
+                        </b-col>
+
+                        <!-- Brand  -->
+<!--                        <b-col md="12">-->
+<!--                            <b-form-group :label="$t('Brand')">-->
+<!--                                <v-select-->
+<!--                                    :reduce="label => label.value"-->
+<!--                                    :placeholder="$t('Choose_Brand')"-->
+<!--                                    v-model="Filter_brand"-->
+<!--                                    :options="brands.map(brands => ({label: brands.name, value: brands.id}))"-->
+<!--                                />-->
+<!--                            </b-form-group>-->
+<!--                        </b-col>-->
+
+<!--                        <b-col md="6" sm="12">-->
+<!--                            <b-button-->
+<!--                                @click="Get_Products(serverParams.page)"-->
+<!--                                variant="primary m-1"-->
+<!--                                size="sm"-->
+<!--                                block-->
+<!--                            >-->
+<!--                                <i class="i-Filter-2"></i>-->
+<!--                                {{ $t("Filter") }}-->
+<!--                            </b-button>-->
+<!--                        </b-col>-->
+
+<!--                        <b-col md="6" sm="12">-->
+<!--                            <b-button @click="Reset_Filter()" variant="danger m-1" size="sm" block>-->
+<!--                                <i class="i-Power-2"></i>-->
+<!--                                {{ $t("Reset") }}-->
+<!--                            </b-button>-->
+<!--                        </b-col>-->
+
+                    </b-row>
+                </div>
+            </b-sidebar>
         </div>
     </div>
 </template>
@@ -60,7 +134,26 @@
                 totalRows: "",
                 search: "",
                 isLoading: true,
-                orders: {}
+                orders: {},
+                Filter_category: '',
+                categories: [
+                    {
+                        label: 'Paid',
+                        name: 'paid'
+                    },
+                    {
+                        label: 'Not Paid',
+                        name: 'not_paid'
+                    },
+                    {
+                        label: 'Pending',
+                        name: 'pending'
+                    },
+                    {
+                        label: 'Cancelled',
+                        name: 'cancelled'
+                    }
+                ]
             }
         },
         computed: {
@@ -88,13 +181,13 @@
                     {
                         label: this.$t("PaymentStatus"),
                         field: "payment_status",
-                        tdClass: "text-left",
+                        tdClass: this.tdClassPaymentStatus,
                         thClass: "text-left"
                     },
                     {
                         label: this.$t("Status"),
                         field: "status",
-                        tdClass: "text-left",
+                        tdClass: this.tdClassStatus,
                         thClass: "text-left"
                     },
                     {
@@ -139,7 +232,32 @@
             },
             orderDetails(props) {
                 this.$router.push({path: `/app/repairs/order_details/${props.row.id}`, query: { id: props.row.id }})
+            },
+            tdClassPaymentStatus(row) {
+                if (row.payment_status === 'cancelled') {
+                    return 'cancelled';
+                } else if(row.payment_status === 'paid') {
+                    return 'paid';
+                } else if(row.payment_status === 'not_paid') {
+                    return 'not_paid'
+                }
+                return 'green-class';
+            },
+            tdClassStatus(row) {
+                if (row.status === 'waiting_for_collection') {
+                    return 'waiting_collection';
+                } else if(row.status === 'pending') {
+                    return 'pending';
+                } else if(row.status === 'done') {
+                    return 'done'
+                } else if(row.status === 'waiting_for_parts') {
+                    return 'waiting_parts'
+                }
+            },
+            upper(item) {
+                return item.charAt(0).toUpperCase() + item.replaceAll('_', ' ').slice(1);
             }
+
         }, //end Methods
 
         //-----------------------------Created function-------------------
@@ -195,4 +313,127 @@
         width: 100%;
         height: 44px;
     }
+    ::v-deep .vgt-table {
+        & .cancelled {
+            & span {
+                display: none;
+                width: 1px;
+            }
+            & div {
+                margin-top: 5px;
+                padding: 8px 12px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 120px;
+                color: #F00;
+                border-radius: 90px;
+                background-color: rgba(255, 0, 0, 0.2);
+            }
+        }
+        & .paid {
+            & span {
+                display: none;
+                width: 1px;
+            }
+            & div {
+                margin-top: 5px;
+                padding: 8px 12px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100px;
+                color: #309600;
+                border-radius: 90px;
+                background-color: #D6EACC;
+            }
+        }
+        & .not_paid {
+             & span {
+                 display: none;
+                 width: 1px;
+             }
+             & div {
+                 margin-top: 5px;
+                 padding: 8px 12px;
+                 display: flex;
+                 justify-content: center;
+                 align-items: center;
+                 width: 110px;
+                 color: #FF9900;
+                 border-radius: 90px;
+                 background-color: rgba(255, 153, 0, 0.20);
+             }
+         }
+        & .done {
+            & span {
+                display: none;
+                width: 1px;
+            }
+            & div {
+                margin-top: 5px;
+                padding: 8px 12px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 80px;
+                color: #309600;
+                border-radius: 90px;
+                background-color: #D6EACC;
+            }
+        }
+        & .pending {
+            & span {
+                display: none;
+                width: 1px;
+            }
+            & div {
+                margin-top: 5px;
+                padding: 8px 12px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100px;
+                color: #FF9900;
+                border-radius: 90px;
+                background-color: rgba(255, 153, 0, 0.20);
+            }
+        }
+        & .waiting_collection {
+            & span {
+                display: none;
+                width: 1px;
+            }
+            & div {
+                margin-top: 5px;
+                padding: 8px 12px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 180px;
+                color: #40D1FD;
+                border-radius: 90px;
+                background-color: rgba(207, 243, 255, 1);
+            }
+        }
+        & .waiting_parts {
+            & span {
+                display: none;
+                width: 1px;
+            }
+            & div {
+                margin-top: 5px;
+                padding: 8px 12px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 160px;
+                color: #A958FC;
+                border-radius: 90px;
+                background-color: rgba(238, 222, 254, 1);
+            }
+        }
+    }
+
+
 </style>
