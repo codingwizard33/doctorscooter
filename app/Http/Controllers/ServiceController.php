@@ -37,10 +37,12 @@ class ServiceController extends Controller
         $data = [];
         foreach ($services as $service) {
             $subServices = SubService::where('service_id', $service->id)->get()->toArray();
+            $service->id = 0 . $service->id;
             $service->subService = $subServices;
             array_push($data, $service);
         }
 
+        dd($data);
         return $data;
 
         //return response()->json([

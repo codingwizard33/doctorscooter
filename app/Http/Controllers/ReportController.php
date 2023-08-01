@@ -211,7 +211,7 @@ class ReportController extends BaseController
     public function report_with_echart()
     {
         $dataSales = $this->SalesChart();
-        // $dataEbayWebSite = $this->WebsiteSales();
+        $dataEbayWebSite = $this->WebsiteSales();
         $datapurchases = $this->PurchasesChart();
         $Payment_chart = $this->Payment_chart();
         $TopCustomers = $this->TopCustomers();
@@ -225,9 +225,8 @@ class ReportController extends BaseController
             'customers' => $TopCustomers,
             'product_report' => $Top_Products_Year,
             'report_dashboard' => $report_dashboard,
-            // 'website_sales' => $dataEbayWebSite,
+            'website_sales' => $dataEbayWebSite,
         ]);
-
     }
 
     //----------------- Payment Chart js -----------------------\\
