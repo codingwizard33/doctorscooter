@@ -279,6 +279,13 @@ export default {
       echartPayment: {}
     };
   },
+    watch: {
+        Filter_warehouse: {
+            handler(newVal, oldVal ) {
+                console.log('Call function with ', newVal, 'id')
+            }
+        }
+    },
   computed: {
     ...mapGetters(["currentUserPermissions", "currentUser"]),
     columns_sales() {
@@ -673,14 +680,14 @@ export default {
       return `${value[0]}.${formated}`;
     },
       getWarehouses() {
-          // axios
-          //     .get(`/get-warehouses`)
-          //     .then(response => {
-          //         this.warehouses = response.data.warehouses;
-          //     })
-          //     .catch(error => {
-          //         console.log(error)
-          //     })
+          axios
+              .get(`/get-warehouses`)
+              .then(response => {
+                  this.warehouses = response.data;
+              })
+              .catch(error => {
+                  console.log(error)
+              })
 
       }
   },

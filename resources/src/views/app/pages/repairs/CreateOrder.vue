@@ -110,6 +110,16 @@
                             <h1 class="page_title">Vehicle Details</h1>
                             <!--Model-->
                             <b-col md="12" class="mb-2">
+                                <b-form-group :label="$t('warehouse')+' *'">
+                                    <v-select
+                                        v-model="order.warehouse"
+                                        :reduce="label => label.value"
+                                        :placeholder="$t('Choose_Warehouse')"
+                                        :options="warehouses.map(warehouses => ({label: warehouses.name, value: warehouses.id}))"
+                                    />
+                                </b-form-group>
+                            </b-col>
+                            <b-col md="12" class="mb-2">
                                 <validation-provider
                                     name="Model"
                                     :rules="{required:true , min:3 , max:55}"
@@ -136,6 +146,8 @@
                                     <treeselect
                                         v-model="value"
                                         :multiple="true"
+                                        :join-values="false"
+                                        node-key="id"
                                         :normalizer="normalizer"
                                         :options="services_options"
                                     />
@@ -279,7 +291,7 @@
                                         v-model="order.payment_status"
                                         :options="paymentStatus"
                                         :aria-describedby="ariaDescribedby"
-                                        name="radio-inline"
+                                        name="radio-inline1"
                                     ></b-form-radio-group>
                                 </b-form-group>
                             </b-col>
@@ -362,15 +374,16 @@
                     mobile : "",
                     email: "",
                     model: "",
+                    warehouse: "",
                     information: "",
                     payment_comment: "",
-                    serial_number: "",
-                    payment_status: [],
+                    payment_status: 'paid',
                     services: [],
                     custom_services: [],
-                    selectedPayment: [],
+                    selectedPayment: 'full',
                     selectedWarranty: [],
                 },
+                warehouses: [],
                 new_service: {
                     id: null,
                     name: null,
@@ -387,13 +400,13 @@
                     { text: 'Partial Payment', value: 'partial' },
                     { text: 'Deposit', value: 'deposit' }
                 ],
-                paymentStatus: [
-                    { text: 'Paid', value: 'paid' },
-                    { text: 'Not Paid', value: 'not_paid' },
-                ],
                 warrantyOptions: [
                     { text: 'Warranty', value: 'warranty' },
                     { text: 'Membership (10% Discount)   ', value: 'membership' }
+                ],
+                paymentStatus: [
+                    { text: 'Paid', value: 'paid' },
+                    { text: 'Not Paid', value: 'not_paid' },
                 ],
                 uploadFiles: [],
                 images: []
@@ -404,6 +417,7 @@
         },
         created() {
             this.getAllServices()
+            this.getWarehouses()
             // this.getAllSubServices()
         },
         computed: {
@@ -417,35 +431,35 @@
               return  `${name} - ($${amount})`
             },
             Submit_Order() {
-                console.log('order')
-               axios
-                   .post("/reaper/order/store", {
-                       full_name: this.order.full_name,
-                       phone: this.order.mobile,
-                       email: this.order.email,
-                       model: this.order.model,
-                       price: 40,
-                       serial_number: this.order.serial_number,
-                       information: this.order.information,
-                       payment_comment: this.order.payment_comment,
-                       payment_option: this.order.selectedPayment[0],
-                       payment_status: this.order.payment_status,
-                       payment_warranty: 'waranty',
-                       images: this.images,
-                       services: [
-                           {
-                               id: null,
-                               service_id: 1
-                           }
-                       ],
-                       custom_services: this.order.custom_services
-                   })
-               .then(response => {
-                   console.log(response, 'response')
-               })
-               .catch(error => {
-                   console.log(error)
-               })
+                console.log(this.order,'order')
+               // axios
+               //     .post("/reaper/order/store", {
+               //         full_name: this.order.full_name,
+               //         phone: this.order.mobile,
+               //         email: this.order.email,
+               //         model: this.order.model,
+               //         price: 40,
+               //         serial_number: this.order.serial_number,
+               //         information: this.order.information,
+               //         payment_comment: this.order.payment_comment,
+               //         payment_option: this.order.selectedPayment,
+               //         payment_status: this.order.payment_status,
+               //         payment_warranty: this.order.selectedWarranty,
+               //         images: this.images,
+               //         services: [
+               //             {
+               //                 id: null,
+               //                 service_id: 1
+               //             }
+               //         ],
+               //         custom_services: this.order.custom_services
+               //     })
+               // .then(response => {
+               //     console.log(response, 'response')
+               // })
+               // .catch(error => {
+               //     console.log(error)
+               // })
 
            },
             serviceModal() {
@@ -511,6 +525,17 @@
                     label: node.name,
                     children: node.subService,
                 }
+            },
+            getWarehouses() {
+                axios
+                    .get(`/get-warehouses`)
+                    .then(response => {
+                        this.warehouses = response.data;
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+
             },
             // getAllSubServices() {
             //     axios
@@ -900,4 +925,33 @@ input::-webkit-inner-spin-button {
     }
 
 }
+::v-deep .vue-treeselect__multi-value-item-container .vue-treeselect__multi-value-item {
+    color: #ffffff !important;
+    background: #FF9900 !important;
+    & .vue-treeselect__value-remove {
+       color: #ffffff;
+    }
+}
+::v-deep .vue-treeselect__label-container:hover .vue-treeselect__checkbox--unchecked {
+    border-color: #FF9900;
+    background: #fff;
+}
+    ::v-deep .vue-treeselect__checkbox-container {
+        & .vue-treeselect__checkbox--checked {
+            border-color: #FF9900;
+            background: #FF9900;
+        }
+    }
+    ::v-deep .v-select {
+        & .vs__dropdown-option--highlight {
+            background: #FF9900;
+            color: #ffffff;
+        }
+        &.vs--single {
+            & .vs__selected  {
+                background-color: #FF9900;
+                color: #ffffff;
+            }
+        }
+    }
 </style>
