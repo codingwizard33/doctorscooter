@@ -144,24 +144,15 @@
                                 <div class="multiselect_content">
                                     <label>Services</label>
                                     <treeselect
-                                        v-model="value"
+                                        v-model="order.services"
                                         :multiple="true"
                                         :join-values="false"
                                         node-key="id"
                                         :normalizer="normalizer"
+                                        valueFormat="object"
+                                        @input="checkService"
                                         :options="services_options"
                                     />
-<!--                                    <multiselect-->
-<!--                                        v-model="order.services"-->
-<!--                                        :tag-placeholder="$t('Add_Tag')"-->
-<!--                                        :placeholder="$t('Search_Service')"-->
-<!--                                        label="name"-->
-<!--                                        track-by="id"-->
-<!--                                        :options="services_options"-->
-<!--                                        :multiple="true"-->
-<!--                                        :taggable="true"-->
-<!--                                        @tag="addTag">-->
-<!--                                    </multiselect>-->
                                 </div>
                             </b-col>
                             <b-col md="12" class="md-12">
@@ -173,6 +164,7 @@
                                         :placeholder="$t('Search_Custom_Service')"
                                         :custom-label="serviceType"
                                         label="name"
+                                        @input="customServicesChange"
                                         track-by="code"
                                         :options="custom_services_options"
                                         :multiple="true"
@@ -256,7 +248,7 @@
                             <b-col md="12">
                                 <div class="payment_total">
                                     <div class="payment_total-text">Total amount:</div>
-                                    <div class="payment_total-value">$40.00</div>
+                                    <div class="payment_total-value">${{total_amount}}</div>
                                 </div>
                             </b-col>
                             <hr>
@@ -299,7 +291,7 @@
                             <b-col md="12">
                                 <div class="payment_total due_amount">
                                     <div class="payment_total-text">Due amount:</div>
-                                    <div class="payment_total-value">$90.00</div>
+                                    <div class="payment_total-value">${{due_amount}}</div>
                                 </div>
                             </b-col>
                             <b-col>
@@ -369,6 +361,8 @@
         data() {
             return {
                 value: null,
+                total_amount: 0,
+                due_amount: 0,
                 order: {
                     full_name: "",
                     mobile : "",
@@ -380,7 +374,7 @@
                     payment_status: 'paid',
                     services: [],
                     custom_services: [],
-                    selectedPayment: 'full',
+                    selectedPayment: 'full_payment',
                     selectedWarranty: [],
                 },
                 warehouses: [],
@@ -389,15 +383,11 @@
                     name: null,
                     amount: null
                 },
-                services_options: [
-                    // { name: 'Oil/Filter changed', code: 'of' },
-                    // { name: 'Break Work', code: 'bw' },
-                    // { name: 'Suspension', code: 'su' }
-                ],
+                services_options: [],
                 custom_services_options: [],
                 paymentOptions: [
-                    { text: 'Full Payment', value: 'full' },
-                    { text: 'Partial Payment', value: 'partial' },
+                    { text: 'Full Payment', value: 'full_payment' },
+                    { text: 'Partial Payment', value: 'partial_payment' },
                     { text: 'Deposit', value: 'deposit' }
                 ],
                 warrantyOptions: [
@@ -426,40 +416,37 @@
                 return date.toLocaleString("en-US", {day: "numeric", month: "long", year: "numeric",})
             }
         },
+        mounted() {
+
+        },
         methods: {
             serviceType({name, amount}) {
               return  `${name} - ($${amount})`
             },
             Submit_Order() {
-                console.log(this.order,'order')
-               // axios
-               //     .post("/reaper/order/store", {
-               //         full_name: this.order.full_name,
-               //         phone: this.order.mobile,
-               //         email: this.order.email,
-               //         model: this.order.model,
-               //         price: 40,
-               //         serial_number: this.order.serial_number,
-               //         information: this.order.information,
-               //         payment_comment: this.order.payment_comment,
-               //         payment_option: this.order.selectedPayment,
-               //         payment_status: this.order.payment_status,
-               //         payment_warranty: this.order.selectedWarranty,
-               //         images: this.images,
-               //         services: [
-               //             {
-               //                 id: null,
-               //                 service_id: 1
-               //             }
-               //         ],
-               //         custom_services: this.order.custom_services
-               //     })
-               // .then(response => {
-               //     console.log(response, 'response')
-               // })
-               // .catch(error => {
-               //     console.log(error)
-               // })
+               axios
+                   .post("/reaper/order/store", {
+                       full_name: this.order.full_name,
+                       phone: this.order.mobile,
+                       email: this.order.email,
+                       model: this.order.model,
+                       price: this.total_amount,
+                       serial_number: this.order.serial_number,
+                       information: this.order.information,
+                       payment_comment: this.order.payment_comment,
+                       payment_option: this.order.selectedPayment,
+                       payment_status: this.order.payment_status,
+                       payment_warranty: this.order.selectedWarranty,
+                       images: this.images,
+                       services: this.order.services,
+                       custom_services: this.order.custom_services
+                   })
+               .then(response => {
+                   console.log(response, 'response')
+               })
+               .catch(error => {
+                   console.log(error)
+               })
 
            },
             serviceModal() {
@@ -481,12 +468,6 @@
             //------ Validation State
             getValidationState({dirty, validated, valid = null}) {
                 return dirty || validated ? valid : null;
-            },
-            addTag (newTag) {
-                const tag = {
-                    name: newTag,
-                    code: newTag.substring(0, 2) + Math.floor((Math.random() * 10000000))
-                }
             },
             uploadImg() {
                 this.$refs.upload_image.click()
@@ -514,15 +495,41 @@
                     .get("/service")
                     .then(response => {
                         this.services_options = response.data
+                        this.services_options.map((item) => {
+                            item.id = '0'+item.id
+                        })
                     })
                     .catch(error => {
                         console.log(error)
                     })
             },
+            checkService() {
+                this.total_amount = 0
+                let ev = this.order.services
+                ev.map((item) => {
+                    if(item.service_id) {
+                        this.total_amount += parseInt(item.price)
+                    } else {
+                        item.subService.map((sub) => {
+                            this.total_amount += parseInt(sub.price)
+                        })
+                    }
+                })
+                this.due_amount = this.total_amount
+            },
+            customServicesChange() {
+                let amount = 0
+                let ev = this.order.custom_services
+                ev.map((item) => {
+                    amount += parseInt(item.amount)
+                })
+                this.total_amount += amount
+                this.due_amount = this.total_amount
+            },
             normalizer(node) {
                 return {
                     id: node.id,
-                    label: node.name,
+                    label: node.price ? node.name + ' _ ' + '$'+node.price : node.name,
                     children: node.subService,
                 }
             },
