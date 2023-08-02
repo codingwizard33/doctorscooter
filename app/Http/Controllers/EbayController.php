@@ -10,7 +10,7 @@ class EbayController extends Controller
     public function handle(Request $request)
     {
         $payload = json_decode($request->getContent(), true);
-        dd($payload);
+//        dd($payload);
 
         // Do something with the webhook payload, such as store it in a database
         // or trigger an email notification.
