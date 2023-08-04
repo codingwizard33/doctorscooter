@@ -45,22 +45,23 @@ class ReportController extends BaseController
 
     //----------------- Sales Chart js -----------------------\\
 
-    public function SalesChart()
+    public function SalesChart($day, $warehose_id)
     {
         $role = Auth::user()->roles()->first();
         $view_records = Role::findOrFail($role->id)->inRole('record_view');
 
         // Build an array of the dates we want to show, oldest first
         $dates = collect();
-        foreach (range(-6, 0) as $i) {
+        foreach (range(-$day, 0) as $i) {
             $date = Carbon::now()->addDays($i)->format('Y-m-d');
             $dates->put($date, 0);
         }
 
-        $date_range = \Carbon\Carbon::today()->subDays(6);
+        $date_range = \Carbon\Carbon::today()->subDays($day);
         // Get the sales counts
         $sales = Sale::where('date', '>=', $date_range)
             ->where('deleted_at', '=', null)
+            ->where('warehouse_id', '=', $warehose_id)
             ->where(function ($query) use ($view_records) {
                 if (!$view_records) {
                     return $query->where('user_id', '=', Auth::user()->id);
@@ -208,9 +209,15 @@ class ReportController extends BaseController
 
     //----------------- report dashboard with_echart -----------------------\\
 
+    public function sales_report (Request $request) {
+        $dataSales = $this->SalesChart($request->days, $request->warehouse_id);
+
+        return response()->json([ 'sales' => $dataSales ]);
+    }
+
     public function report_with_echart()
     {
-        $dataSales = $this->SalesChart();
+        $dataSales = $this->SalesChart(7, null);
         $dataEbayWebSite = $this->WebsiteSales();
         $datapurchases = $this->PurchasesChart();
         $Payment_chart = $this->Payment_chart();
