@@ -33,6 +33,7 @@
           <button class="btn btn-danger" @click="delete_by_selected()">{{$t('Del')}}</button>
         </div>
         <div slot="table-actions" class="mt-2 mb-3">
+            <span>Products {{totalRows}}</span>
           <b-button variant="outline-info m-1" size="sm" v-b-toggle.sidebar-right>
             <i class="i-Filter-2"></i>
             {{ $t("Filter") }}
@@ -136,6 +137,18 @@
                 ></b-form-input>
               </b-form-group>
             </b-col>
+
+              <!-- Warehouse  -->
+              <b-col md="12">
+                  <b-form-group :label="$t('warehouse')">
+                      <v-select
+                          :reduce="label => label.value"
+                          :placeholder="$t('Choose_Warehouse')"
+                          v-model="Filter_warehouse"
+                          :options="warehouses.map(warehouse => ({label: warehouse.name, value: warehouse.id}))"
+                      />
+                  </b-form-group>
+              </b-col>
 
             <!-- Category  -->
             <b-col md="12">
@@ -332,6 +345,7 @@ export default {
       Filter_code: "",
       Filter_name: "",
       Filter_category: "",
+      Filter_warehouse: "",
       categories: [],
       brands: [],
       products: {},
@@ -392,7 +406,7 @@ export default {
         {
           label: this.$t("Quantity"),
           field: "quantity",
-          type: "decimal",
+          // type: "decimal",
           tdClass: "text-left",
           thClass: "text-left"
         },
