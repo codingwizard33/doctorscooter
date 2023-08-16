@@ -14,6 +14,7 @@ class RepairOrderService extends Model
     protected $fillable = [
         'order_id',
         'service_id',
+        'subservice_id',
         'status',
     ];
 

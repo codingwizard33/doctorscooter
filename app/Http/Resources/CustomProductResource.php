@@ -47,7 +47,8 @@ class CustomProductResource extends JsonResource
             'payment_status' => $this->payment_status,
             'status' => $this->status,
             'images' => $path,
-            'service' => GetServiceNameInRepairOrder::collection($this->service), // sub_service
+//            'service' => GetServiceNameInRepairOrder::collection($this->service), // sub_service
+            'service' => $this->service, // sub_service
             'custom_service' => $this->customService,
             'details' => [
                 'text' => $detail->text ?? '',

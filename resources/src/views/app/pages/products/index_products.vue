@@ -1,3 +1,4 @@
+
 <template>
   <div class="main-content">
     <breadcumb :page="$t('productsList')" :folder="$t('Products')"/>
