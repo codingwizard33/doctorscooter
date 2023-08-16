@@ -15,8 +15,8 @@
           <img class="logo" :src="'/images/'+currentUser.logo" alt width="60" height="60">
           <div>
             <div>
-              <p class="m-0">&copy; {{ new Date().getFullYear() }} {{$t('developed_by')}} {{currentUser.developed_by}}</p>
-              <p class="m-0">All rights reserved - v4.0.4</p>
+<!--              <p class="m-0">&copy; {{ new Date().getFullYear() }} {{$t('developed_by')}} {{currentUser.developed_by}}</p>-->
+              <p class="m-0">&nbsp; All rights reserved - v4.0.4</p>
             </div>
           </div>
           <span class="flex-grow-1"></span>
