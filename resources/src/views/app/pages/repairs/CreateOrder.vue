@@ -146,7 +146,7 @@
                                     <treeselect
                                         v-model="order.services"
                                         :multiple="true"
-                                        :join-values="false"
+                                        :join-values="true"
                                         node-key="id"
                                         :normalizer="normalizer"
                                         valueFormat="object"
@@ -424,6 +424,21 @@
               return  `${name} - ($${amount})`
             },
             Submit_Order() {
+                let services = []
+                let ev = this.order.services
+                ev.map((item) => {
+                    if(item.service_id) {
+                        let service  = services.find(s => s.uid === item.service_id)
+                        if(!service ) {
+                            service = Object.assign({}, this.services_options.find(s => s.uid === item.service_id));
+                            service.subService = [];
+                            services.push(service)
+                        }
+                        service.subService.push(item);
+                    } else {
+                        services.push(item)
+                    }
+                })
                axios
                    .post("/reaper/order/store", {
                        full_name: this.order.full_name,
@@ -438,7 +453,7 @@
                        payment_status: this.order.payment_status,
                        payment_warranty: this.order.selectedWarranty,
                        images: this.images,
-                       services: this.order.services,
+                       services: services,
                        custom_services: this.order.custom_services
                    })
                .then(response => {
@@ -496,6 +511,7 @@
                     .then(response => {
                         this.services_options = response.data
                         this.services_options.map((item) => {
+                            item.uid = item.id
                             item.id = '0'+item.id
                         })
                     })

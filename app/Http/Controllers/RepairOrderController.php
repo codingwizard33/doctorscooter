@@ -14,6 +14,8 @@ use App\Models\RepairOrder;
 use App\Models\RepairOrderCustomService;
 use App\Models\RepairOrderDetails;
 use App\Models\RepairOrderService;
+use App\Models\Service;
+use App\Models\SubService;
 use App\Services\CustomProductService;
 use App\Services\RepairOrderDetailsService;
 use Illuminate\Http\Request;
@@ -41,10 +43,13 @@ class RepairOrderController extends Controller
     public function index()
     {
         $products = RepairOrder::query()
-            ->with('images', 'customService', 'service', 'user')
-            ->orderBy('created_at', 'asc')
+            ->with('images', 'customService', 'user', 'service')
+            ->orderBy('created_at', 'desc')
             ->paginate(10);
 
+        foreach ($products[0]['service'] as $s) {
+             $s['subService'] = SubService::query()->whereIn('id', explode(',', $s['subservice_id']))->get();
+        }
         return response()->json(
             [
                 'items' => CustomProductResource::collection($products->items()),
@@ -61,7 +66,6 @@ class RepairOrderController extends Controller
     public function store(Request $request)
     {
         $product = $this->customProductService->storeOrUpdateCustomProduct($request->all());
-        // dd($product);
         if ($product['code'] == 200){
             // Hellper::sendSMS($product['phone'], $this->MessageForMail('repair_order_create'));
             // Mail::to($product['product']->email)->send(new RepairOrderMail($this->MessageForMail('repair_order_create')));
