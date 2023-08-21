@@ -46,7 +46,6 @@ class RepairOrderController extends Controller
             ->with('images', 'customService', 'user', 'service')
             ->orderBy('created_at', 'desc')
             ->paginate(10);
-
         foreach ($products[0]['service'] as $s) {
              $s['subService'] = SubService::query()->whereIn('id', explode(',', $s['subservice_id']))->get();
         }
@@ -100,6 +99,9 @@ class RepairOrderController extends Controller
     public function show($id)
     {
         $order = RepairOrder::query()->findOrFail($id)->load('images', 'customService', 'service', 'details');
+        foreach ($order['service'] as $s) {
+            $s['subService'] = SubService::query()->whereIn('id', explode(',', $s['subservice_id']))->get();
+        }
         return response()->json([
             'product' => new CustomProductResource($order),
         ], 200);

@@ -2,6 +2,7 @@
 /public/hot
 /storage
 /public/images/vendor
+/public/images/QR
 /node_modules
 /public/js
 public/mix-manifest.json

@@ -61,7 +61,14 @@ class CustomProductService
                     'status' => RepairOrder::status()[0],
                 ]
             );
-
+            $qrName = $product->full_name . "_" . time() . '.png';
+            $qrUrl = env("APP_URL") . "images/QR/$qrName";
+            \QrCode::size(50)
+                ->format('png')
+                ->generate(env("APP_URL") . "app/repairs/order_details/$product->id?id=$product->id", public_path("images/QR/$qrName"));
+            RepairOrder::query()
+                ->where('id', $product->id)
+                ->update(['qr_url' => $qrUrl]);
             if (!empty($data['images'])) {
                 foreach ($data['images'] as $image) {
 //                        $filePath =  UploadFile::upload($image, '/repair/order/');
@@ -87,7 +94,7 @@ class CustomProductService
                 foreach ($data['services'] as $service) {
                     $subserviseIds = [];
                     foreach ($service['subService'] as $subService) {
-                        array_push($subserviseIds,  $subService['id']);
+                        array_push($subserviseIds, $subService['id']);
                     }
                     RepairOrderService::query()->updateOrCreate(
                         ['id' => (int)$service['id']],
