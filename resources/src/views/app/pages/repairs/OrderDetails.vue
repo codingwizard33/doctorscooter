@@ -141,12 +141,15 @@
                 <b-col md="3" class="detail_tab mb-2">
                     <div class="detail_tab-title mb-2">Order Status</div>
                     <span>Services</span>
-                    <div class="detail_tab-status" v-for="service of order_details.service">
-                        <div class="detail_tab-status_name">{{service.name}}</div>
-                        <b-form-select v-model="service.status" :class="{'done': service.status == 'done', 'pending': service.status == 'pending'}">
-                            <b-form-select-option value="done">Done</b-form-select-option>
-                            <b-form-select-option value="pending">Pending</b-form-select-option>
-                        </b-form-select>
+                    <div class="detail_tab-status service" v-for="service of order_details.service">
+                        <div class="detail_tab-service" v-for="item of service.subService">
+                            <div class="detail_tab-status_name">{{item.name}}</div>
+                            <b-form-select v-model="item.status" :class="{'done': item.status == 'done', 'pending': item.status == 'pending'}">
+                                <b-form-select-option value="done">Done</b-form-select-option>
+                                <b-form-select-option value="pending">Pending</b-form-select-option>
+                            </b-form-select>
+                        </div>
+
                     </div>
                     <hr>
                     <span>Custom Services</span>
@@ -570,10 +573,15 @@
                 line-height: 36px;
             }
             &-status {
+                padding: 8px 0;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                padding: 14px 0;
+                &.service {
+                    flex-direction: column;
+
+                }
+
                 & select {
                     padding: 4px 16px;
                     font-size: 11px;
@@ -608,6 +616,7 @@
                         position: relative;
                     }
                 }
+
                 &_name {
                     color: #0F0F0F;
                     font-size: 18px;
@@ -615,6 +624,48 @@
                     font-weight: 500;
                     line-height: 29.5px;
                 }
+            }
+            &-service {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 8px 0;
+                width: 100%;
+                & select {
+                    padding: 4px 16px;
+                    font-size: 11px;
+                    font-family: "Nunito", sans-serif;
+                    font-weight: 700;
+                    border-radius: 40px;
+                    border: none;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    &:focus {
+                        box-shadow: none;
+                    }
+                    &.done {
+                        width: 80px;
+                        color: #309600;
+                        background: url("/images/green_arrow_down.svg");
+                        background-repeat: no-repeat;
+                        background-position: right;
+                        background-position-x: 82%;
+                        background-color: #D6EACC;
+                        position: relative;
+                    }
+                    &.pending {
+                        width: 95px;
+                        color: #FF9900;
+                        background: url("/images/orange_arrow_down.svg");
+                        background-repeat: no-repeat;
+                        background-position: right;
+                        background-position-x: 82%;
+                        background-color: rgba(255, 153, 0, 0.20);
+                        position: relative;
+                    }
+                }
+
             }
         }
     }
