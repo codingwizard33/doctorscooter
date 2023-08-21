@@ -11,6 +11,10 @@ use App\Models\RepairOrderCustomService;
 use App\Models\RepairOrderService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use BaconQrCode\Renderer\ImageRenderer;
+use BaconQrCode\Renderer\Image\ImagickImageBackEnd;
+use BaconQrCode\Renderer\RendererStyle\RendererStyle;
+use BaconQrCode\Writer;
 
 // use Picqer\Barcode\BarcodeGeneratorSVG;
 
@@ -63,12 +67,22 @@ class CustomProductService
             );
             $qrName = $product->full_name . "_" . time() . '.png';
             $qrUrl = env("APP_URL") . "images/QR/$qrName";
-            \QrCode::size(50)
-                ->format('png')
-                ->generate(env("APP_URL") . "app/repairs/order_details/$product->id?id=$product->id", public_path("images/QR/$qrName"));
+
+            $renderer = new ImageRenderer(
+                new RendererStyle(50),
+                new ImagickImageBackEnd()
+            );
+            $writer = new Writer($renderer);
+            $writer->writeFile(env("APP_URL") . "app/repairs/order_details/$product->id?id=$product->id", public_path("images/QR/$qrName"));
+
+//            \QrCode::size(50)
+//                ->format('png')
+//                ->generate(env("APP_URL") . "app/repairs/order_details/$product->id?id=$product->id", public_path("images/QR/$qrName"));
+
             RepairOrder::query()
                 ->where('id', $product->id)
                 ->update(['qr_url' => $qrUrl]);
+
             if (!empty($data['images'])) {
                 foreach ($data['images'] as $image) {
 //                        $filePath =  UploadFile::upload($image, '/repair/order/');
