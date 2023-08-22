@@ -193,7 +193,6 @@ return [
         Nwidart\Modules\LaravelModulesServiceProvider::class,
         Macellan\Zip\ZipServiceProvider::class,
         Nexmo\Laravel\NexmoServiceProvider::class,
-        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class
     ],
 
     /*
@@ -251,7 +250,6 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'Module' => Nwidart\Modules\Facades\Module::class,
         'Nexmo' => Nexmo\Laravel\Facade\Nexmo::class,
-        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class
     ],
 
 ];
