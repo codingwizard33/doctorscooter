@@ -39,6 +39,7 @@ class CustomProductResource extends JsonResource
             'model' => $this->model,
             'price' => $this->price,
             'bar_code' => $matches[0] . "<p style='letter-spacing: 12px;'>$this->bar_code</p>",
+            'qr_url' => $this->qr_url,
             'serial_number' => $this->serial_number,
             'information' => $this->information,
             'payment_comment' => $this->payment_comment,
