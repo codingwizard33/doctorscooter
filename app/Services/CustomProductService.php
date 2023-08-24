@@ -65,11 +65,11 @@ class CustomProductService
                     'status' => RepairOrder::status()[0],
                 ]
             );
-            $qrName = $product->full_name . "_" . time() . '.png';
+            $qrName = str_replace(' ', '_', $product->full_name) . "_" . time() . '.png';
             $qrUrl = env("APP_URL") . "images/QR/$qrName";
 
             $renderer = new ImageRenderer(
-                new RendererStyle(50),
+                new RendererStyle(80),
                 new ImagickImageBackEnd()
             );
             $writer = new Writer($renderer);
