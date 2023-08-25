@@ -31,9 +31,13 @@
                     </b-button>
                 </div>
                 <template slot="table-row" slot-scope="props">
-                    <span v-if="props.column.field == 'bar_code'">
-                        <div v-html="props.formattedRow[props.column.field]"></div>
+                    <span v-if="props.column.field == 'qr_url'">
+                        <img :src="props.formattedRow[props.column.field]" alt="QR img" style="width: 85px; height: 70px">
+<!--                        <div v-html="props.formattedRow[props.column.field]"></div>-->
                     </span>
+<!--                    <span v-else-if="props.column.field == 'bar_code'">-->
+<!--                        <div v-html="props.formattedRow[props.column.field]"></div>-->
+<!--                    </span>-->
                     <span v-else>
                       {{ props.formattedRow[props.column.field] }}
                     </span>
@@ -45,6 +49,10 @@
                     </div>
                     <b-button v-if="props.column.field == 'action'" class="open_order-btn" @click="orderDetails(props)">
                         Open Order <span class="ml-2 d-flex"><i class="i-Arrow-Right"></i></span>
+                    </b-button>
+                    <b-button v-if="props.column.field == 'print'" class="print_btn" @click="printQr(props)">
+<!--                        <div class="btn_img"></div>-->
+                        <div class="btn_img"></div>
                     </b-button>
                 </template>
 
@@ -161,7 +169,7 @@
                 return [
                     {
                         label: this.$t("Reference"),
-                        field: "bar_code",
+                        field: "qr_url",
                         tdClass: "text-left",
                         thClass: "text-left"
                     },
@@ -199,6 +207,12 @@
                     {
                         label: '',
                         field: "action",
+                        tdClass: "text-left",
+                        thClass: "text-left"
+                    },
+                    {
+                        label: '',
+                        field: "print",
                         tdClass: "text-left",
                         thClass: "text-left"
                     },
@@ -256,7 +270,13 @@
             },
             upper(item) {
                 return item.charAt(0).toUpperCase() + item.replaceAll('_', ' ').slice(1);
-            }
+            },
+            printQr(props) {
+                const printableContent =  `<img src="${props.row.qr_url}">`
+                const printWindow = window.open('', '', 'height=900,width=900')
+                printWindow.document.write(printableContent)
+                printWindow.print()
+            },
 
         }, //end Methods
 
@@ -308,6 +328,27 @@
     line-height: 20px;
     display: flex;
     align-items: center
+}
+::v-deep .print_btn {
+    width: 64px !important;
+    height: 40px !important;
+    border-radius: 6px;
+    background: #F90 !important;
+    border: none;
+    box-shadow: 0 4px 5px 0px rgba(0, 0, 0, 0.20);
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+    cursor: pointer;
+
+    & .btn_img {
+        width: 24px;
+        height: 24px;
+        background: url("/images/printer.svg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
 }
     ::v-deep .bar_img {
         width: 100%;
