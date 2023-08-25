@@ -457,7 +457,10 @@
                        custom_services: this.order.custom_services
                    })
                .then(response => {
-                   console.log(response, 'response')
+                   if(response.status == 200) {
+                       this.$router.push({path: `/app/repairs/repair_orders`})
+                   }
+                   // console.log(response, 'response')
                })
                .catch(error => {
                    console.log(error)
