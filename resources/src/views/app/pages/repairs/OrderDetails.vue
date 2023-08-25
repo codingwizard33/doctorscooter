@@ -26,7 +26,7 @@
         <div v-else>
             <b-row>
                 <b-col md="8" class="mb-2 mr-5">
-                    <b-card>
+                    <b-card class="p-8">
                         <b-row>
                             <b-col md="5" class="detail_item">
                                 <div class="detail_item-card">
@@ -46,11 +46,11 @@
                                     </div>
                                 </div>
                             </b-col>
-                            <b-col md="1" class="detail_item print">
-                                <div class="print_btn" @click="printDetails()">
-                                    <i class="btn_img"></i>
-                                </div>
-                            </b-col>
+<!--                            <b-col md="1" class="detail_item print">-->
+<!--                                <div class="print_btn" @click="printDetails()">-->
+<!--                                    <i class="btn_img"></i>-->
+<!--                                </div>-->
+<!--                            </b-col>-->
                         </b-row>
                         <hr>
                         <b-row>
@@ -212,9 +212,6 @@
         methods: {
             goBack() {
                 this.$router.go(-1)
-            },
-            printDetails() {
-                console.log('print details')
             },
             getDetails(id) {
                 NProgress.start();
@@ -418,34 +415,6 @@
     }
     ::v-deep .detail {
         &_item {
-            &.print {
-                position: relative;
-
-                & .print_btn {
-                    position: absolute;
-                    top: 4px;
-                    right: 20px;
-                    width: 41px;
-                    height: 41px;
-                    border-radius: 6px;
-                    background: #F90;
-                    box-shadow: 0 4px 5px 0px rgba(0, 0, 0, 0.20);
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    cursor: pointer;
-
-                    & .btn_img {
-                        width: 24px;
-                        height: 24px;
-                        background: url("/images/printer.svg");
-                        background-position: center;
-                        background-repeat: no-repeat;
-                        background-size: contain;
-                    }
-                }
-            }
-
             &-btn {
                 height: 35px;
                 padding: 6px 18px;
@@ -641,6 +610,13 @@
                     display: flex;
                     justify-content: center;
                     align-items: center;
+                    width: 80px;
+                    background: url("/images/orange_arrow_down.svg");
+                    background-color: rgba(252, 205, 136, 0.99);
+                    background-repeat: no-repeat;
+                    background-position: right;
+                    background-position-x: 82%;
+                    position: relative;
                     &:focus {
                         box-shadow: none;
                     }
