@@ -274,8 +274,11 @@
             printQr(props) {
                 const printableContent =  `<img src="${props.row.qr_url}">`
                 const printWindow = window.open('', '', 'height=900,width=900')
-                printWindow.document.write(printableContent)
-                printWindow.print()
+                setTimeout(() => {
+                    printWindow.document.write(printableContent)
+                    printWindow.print()
+                }, 300)
+
             },
 
         }, //end Methods
