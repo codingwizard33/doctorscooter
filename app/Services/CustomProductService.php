@@ -66,14 +66,14 @@ class CustomProductService
                 ]
             );
             $qrName = str_replace(' ', '_', $product->full_name) . "_" . time() . '.png';
-            $qrUrl = env("APP_URL_FOR_QR") . "images/QR/$qrName";
+            $qrUrl = env("APP_URL") . "/images/QR/$qrName";
 
             $renderer = new ImageRenderer(
                 new RendererStyle(80),
                 new ImagickImageBackEnd()
             );
             $writer = new Writer($renderer);
-            $writer->writeFile(env("APP_URL_FOR_QR") . "app/repairs/order_details/$product->id?id=$product->id", public_path("images/QR/$qrName"));
+            $writer->writeFile(env("APP_URL") . "/app/repairs/order_details/$product->id?id=$product->id", public_path("images/QR/$qrName"));
 
 //            \QrCode::size(50)
 //                ->format('png')
