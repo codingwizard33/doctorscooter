@@ -588,10 +588,10 @@
 
                 &_name {
                     color: #0F0F0F;
-                    font-size: 18px;
+                    font-size: 16px;
                     font-family: "Nunito", sans-serif;
-                    font-weight: 500;
-                    line-height: 29.5px;
+                    font-weight: 600;
+                    line-height: 22px;
                 }
             }
             &-service {
