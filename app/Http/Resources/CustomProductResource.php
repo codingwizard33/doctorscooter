@@ -27,7 +27,7 @@ class CustomProductResource extends JsonResource
         }
 
         $detail = $this->details->first();
-        preg_match('/<svg.*<\/svg>/s', $this->barCode($this->bar_code), $matches);
+//        preg_match('/<svg.*<\/svg>/s', $this->barCode($this->bar_code), $matches);
 
         return [
             'id' => $this->id,
@@ -38,7 +38,7 @@ class CustomProductResource extends JsonResource
             'email' => $this->email,
             'model' => $this->model,
             'price' => $this->price,
-            'bar_code' => $matches[0] . "<p style='letter-spacing: 12px;'>$this->bar_code</p>",
+//            'bar_code' => $matches[0] . "<p style='letter-spacing: 12px;'>$this->bar_code</p>",
             'qr_url' => $this->qr_url,
             'serial_number' => $this->serial_number,
             'information' => $this->information,
