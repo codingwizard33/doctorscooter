@@ -308,7 +308,7 @@
         </b-form>
     </validation-observer>
 
-    <!--change password modal-->
+    <!--Add Service modal-->
     <b-modal ref="add_service-modal" centered size="md" hide-header hide-footer>
         <div class="modal_content">
             <div class="modal_title">
@@ -343,7 +343,7 @@
             </form>
         </div>
     </b-modal>
-    <!--change password modal-->
+    <!--Add Service modal-->
 
 </div>
 </template>
@@ -444,6 +444,7 @@
                        full_name: this.order.full_name,
                        phone: this.order.mobile,
                        email: this.order.email,
+                       warehouse: this.order.warehouse,
                        model: this.order.model,
                        price: this.total_amount,
                        serial_number: this.order.serial_number,
