@@ -32,6 +32,7 @@ class CustomProductResource extends JsonResource
         return [
             'id' => $this->id,
             'uuid' => $this->uuid,
+            'warehouse' => $this->warehouse,
             'sales_man' => new GetUserResource($this->user),
             'full_name' => $this->full_name,
             'phone' => $this->phone,
