@@ -1,5 +1,28 @@
 <template>
     <div>
+        <b-row class="align-items-center mb-2">
+            <b-col class="align-items-center">
+                <button  class="btn btn-outline-primary mr-5" @click="daySalesReport(0)">
+                    Today
+                </button>
+                <button  class="btn btn-outline-primary mr-5" @click="daySalesReport(7)">
+                    7 days
+                </button>
+                <button  class="btn btn-outline-primary mr-5" @click="daySalesReport(30)">
+                    30 days
+                </button>
+            </b-col>
+            <b-col>
+                <b-form-group :label="$t('warehouse')">
+                    <v-select
+                        v-model="Filter_warehouse"
+                        :reduce="label => label.value"
+                        :placeholder="$t('Choose_Warehouse')"
+                        :options="warehouses.map(warehouses => ({label: warehouses.name, value: warehouses.id}))"
+                    />
+                </b-form-group>
+            </b-col>
+        </b-row>
         <div class="page_container">
             <div class="page_boxes">
                 <div class="box_item completed">
@@ -130,14 +153,41 @@
                         waiting_count: 11,
                         collection_count: 13
                     }
-                ]
+                ],
+                Filter_warehouse: '',
+                warehouses: [],
             }
         },
         created() {
 
         },
+        mounted() {
+            this.getWarehouses()
+        },
         methods: {
+            getWarehouses() {
+                axios
+                    .get(`/get-warehouses`)
+                    .then(response => {
+                        this.warehouses = response.data;
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
 
+            },
+            daySalesReport(day) {
+                axios
+                    .post(`sales-report`, {
+                        days: day,
+                    }).then(function (response) {
+                    console.log(response, 'ressss')
+                })["catch"](function (error) {
+                    console.log(error, 'error')
+                    // _this4.SubmitProcessing = false;
+                    // _this4.makeToast("danger", _this4.$t("InvalidData"), _this4.$t("Failed"));
+                });
+            },
 
         }
 
