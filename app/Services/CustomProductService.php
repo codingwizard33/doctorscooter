@@ -76,17 +76,13 @@ class CustomProductService
             $writer = new Writer($renderer);
             $writer->writeFile(env("APP_URL") . "/app/repairs/order_details/$product->id?id=$product->id", public_path("images/QR/$qrName"));
 
-//            \QrCode::size(50)
-//                ->format('png')
-//                ->generate(env("APP_URL") . "app/repairs/order_details/$product->id?id=$product->id", public_path("images/QR/$qrName"));
-
             RepairOrder::query()
                 ->where('id', $product->id)
                 ->update(['qr_url' => $qrUrl]);
 
             if (!empty($data['images'])) {
                 foreach ($data['images'] as $image) {
-//                        $filePath =  UploadFile::upload($image, '/repair/order/');
+//                    $filePath =  UploadFile::upload($image, '/repair/order/');
                     $filePath = UploadFile::base64($image, 'image');
                     $product->images()->create(
                         [
