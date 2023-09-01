@@ -46,15 +46,19 @@ class RepairOrderController extends Controller
             ->with('images', 'customService', 'user', 'service')
             ->orderBy('created_at', 'desc')
             ->paginate(10);
-        foreach ($products[0]['service'] as $s) {
-             $s['subService'] = SubService::query()->whereIn('id', explode(',', $s['subservice_id']))->get();
+        if (count($products) > 0) {
+            foreach ($products[0]['service'] as $s) {
+                $s['subService'] = SubService::query()->whereIn('id', explode(',', $s['subservice_id']))->get();
+            }
+            return response()->json(
+                [
+                    'items' => CustomProductResource::collection($products->items()),
+                    'pagination' => $this->pagination($products),
+                ]
+            );
+        } else {
+            return [];
         }
-        return response()->json(
-            [
-                'items' => CustomProductResource::collection($products->items()),
-                'pagination' => $this->pagination($products),
-            ]
-        );
     }
 
 
@@ -65,7 +69,7 @@ class RepairOrderController extends Controller
     public function store(Request $request)
     {
         $product = $this->customProductService->storeOrUpdateCustomProduct($request->all());
-        if ($product['code'] == 200){
+        if ($product['code'] == 200) {
             // Hellper::sendSMS($product['phone'], $this->MessageForMail('repair_order_create'));
             // Mail::to($product['product']->email)->send(new RepairOrderMail($this->MessageForMail('repair_order_create')));
         }
@@ -118,21 +122,21 @@ class RepairOrderController extends Controller
         $product = RepairOrder::query()->findOrFail($id);
 
         // Repair order status
-        if (isset($request->status)){
+        if (isset($request->status)) {
             $product->update([
                 'status' => $request->status
             ]);
         }
 
         // pay status
-        if (isset($request->payment_status)){
+        if (isset($request->payment_status)) {
             $product->update([
                 'payment_status' => $request->payment_status
             ]);
         }
 
         // pay service status
-        if (isset($request['service']['id'])){
+        if (isset($request['service']['id'])) {
             $service = RepairOrderService::query()->findOrFail($request['service']['id']);
             $service->update([
                 'status' => $request['service']['status']
@@ -140,7 +144,7 @@ class RepairOrderController extends Controller
         }
 
         // pay custom service status
-        if (isset($request['custom_service']['id'])){
+        if (isset($request['custom_service']['id'])) {
             $customService = RepairOrderCustomService::query()->findOrFail($request['custom_service']['id']);
             $customService->update([
                 'status' => $request['custom_service']['status']
@@ -161,7 +165,7 @@ class RepairOrderController extends Controller
      */
     public function barCode(Request $request, $id)
     {
-        $filePath =  UploadFile::upload($request->bar_code, '/repair/order/barcode/');
+        $filePath = UploadFile::upload($request->bar_code, '/repair/order/barcode/');
         $product = RepairOrder::query()->findOrFail($id);
         $product->update([
             'bar_code' => $filePath
@@ -170,7 +174,7 @@ class RepairOrderController extends Controller
         return response()->json([
             'message' => __('Updated bar code successfully'),
             'product' => new CustomProductResource($product),
-        ],200);
+        ], 200);
     }
 
     /**
@@ -197,7 +201,7 @@ class RepairOrderController extends Controller
         // create and update in one function
         $details = $this->repairOrderDetailsService->repairOrderDetails($request->all());
 
-        if ($details['code'] == 200){
+        if ($details['code'] == 200) {
             Hellper::sendSMS($details['details']->repairOrder->phone, $this->MessageForMail('repair_order_finish'));
             Mail::to($details['details']->repairOrder->email)->send(new RepairOrderMail($this->MessageForMail('repair_order_finish')));
         }
@@ -215,19 +219,18 @@ class RepairOrderController extends Controller
     public function repairOrderDetailsDelete($id)
     {
         DB::beginTransaction();
-            $detail = RepairOrderDetails::query()->findOrFail($id)->load('images');
-            foreach ($detail->images as $image){
-                $PathForDelete = str_replace('/storage', '', $image->path);
-                Storage::delete('/public' . $PathForDelete);
-            }
-            $detail->images()->delete();
-            $detail->delete();
+        $detail = RepairOrderDetails::query()->findOrFail($id)->load('images');
+        foreach ($detail->images as $image) {
+            $PathForDelete = str_replace('/storage', '', $image->path);
+            Storage::delete('/public' . $PathForDelete);
+        }
+        $detail->images()->delete();
+        $detail->delete();
         DB::commit();
         return response()->json([
             'message' => $this->MessageDelete(),
         ], 200);
     }
-
 
 
     /**
