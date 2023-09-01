@@ -101,8 +101,8 @@
                                     </div>
                                     <div class="detail_item-text">
                                         <div class="detail_item-name">Pictures of the Issues: &nbsp;</div>
-                                        <div class="img_container" v-for="item of 6">
-                                            <img :src="image" alt="">
+                                        <div class="img_container" v-for="item of order_details.images">
+                                            <img :src="item.path" alt="">
                                         </div>
                                     </div>
                                 </div>
@@ -140,8 +140,11 @@
                 </b-col>
                 <b-col md="3" class="detail_tab mb-2">
                     <div class="detail_tab-title mb-2">Order Status</div>
-                    <span>Services</span>
-                    <div class="detail_tab-status service" v-for="service of order_details.service">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span>Services</span>
+                        <span class="all_done-btn">All Done</span>
+                    </div>
+                    <div v-if="service.subService.length" class="detail_tab-status service" v-for="service of order_details.service">
                         <div class="detail_tab-service" v-for="item of service.subService">
                             <div class="detail_tab-status_name">{{item.name}}</div>
                             <b-form-select v-model="item.status" :class="{'done': item.status == 'done', 'pending': item.status == 'pending'}">
@@ -149,10 +152,21 @@
                                 <b-form-select-option value="pending">Pending</b-form-select-option>
                             </b-form-select>
                         </div>
-
+                    </div>
+                    <div v-else class="detail_tab-status service" v-for="service of order_details.service">
+                        <div class="detail_tab-service">
+                            <div class="detail_tab-status_name">{{service.service_name}}</div>
+                            <b-form-select v-model="service.status" :class="{'done': service.status == 'done', 'pending': service.status == 'pending'}">
+                                <b-form-select-option value="done">Done</b-form-select-option>
+                                <b-form-select-option value="pending">Pending</b-form-select-option>
+                            </b-form-select>
+                        </div>
                     </div>
                     <hr>
-                    <span>Custom Services</span>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span>Custom Services</span>
+                        <span class="all_done-btn">All Done</span>
+                    </div>
                     <div class="detail_tab-status" v-for="service of order_details.custom_service">
                         <div class="detail_tab-status_name">{{service.name}}</div>
                         <b-form-select v-model="service.status" :class="{'done': service.status == 'done', 'pending': service.status == 'pending'}">
@@ -455,9 +469,13 @@
                 }
                 & .img_container {
                     width: 55px;
-                    height: 34px;
+                    height: 45px;
                     border-radius: 4px;
                     margin: 0 3px;
+                    img {
+                        width: 55px;
+                        height: 45px;
+                    }
 
                 }
                 & .input_container {
@@ -530,6 +548,13 @@
             border-radius: 8px;
             background: #F6F6F6;
             padding: 22px;
+            & .all_done-btn {
+                text-decoration: underline;
+                color: #309600;
+                font-size: 15px;
+                font-weight: 500;
+                cursor: pointer;
+            }
             & hr {
                 margin-top: 15px;
                 margin-bottom: 15px;

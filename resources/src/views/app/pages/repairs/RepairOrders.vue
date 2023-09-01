@@ -226,10 +226,17 @@
                 NProgress.set(0.1);
                 axios.get('/reaper/order')
                     .then(response => {
-                        this.orders = response.data.items
-                        this.totalRows = response.data.pagination.total;
-                        NProgress.done();
-                        this.isLoading = false;
+                        if(response.data && response.data.items) {
+                            this.orders = response.data.items
+                            this.totalRows = response.data.pagination.total;
+                            NProgress.done();
+                            this.isLoading = false;
+                        } else {
+                            this.orders = []
+                            this.totalRows = ''
+                            NProgress.done();
+                            this.isLoading = false;
+                        }
                     })
                     .catch(error => {
                         console.log(error)

@@ -663,6 +663,7 @@
                  height: 40px;
              }
              & label {
+                 font-size: 16px;
 
              }
          }
