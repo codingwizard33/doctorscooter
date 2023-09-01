@@ -13,6 +13,7 @@ class RepairOrder extends Model
 
     protected $fillable = [
         'uuid',
+        'warehouse',
         'key',
         'user_id',
         'full_name',
