@@ -101,7 +101,6 @@ class CustomProductService
                 }
                 // ------ update or create ------ \\
                 // ------ if !isset id -> create, if isset id -> update ------ \\
-
                 foreach ($data['services'] as $service) {
                     $subserviseIds = [];
                     foreach ($service['subService'] as $subService) {
@@ -113,6 +112,7 @@ class CustomProductService
                             'order_id' => $product->id,
                             'service_id' => $service['id'],
                             'subservice_id' => implode(', ', $subserviseIds),
+                            'service_name' => $service['name'],
                             'status' => isset($id)
                                 ? $ServiceDB->where('id', (int)$service['id'])->first()->status
                                 : RepairOrderService::status()[0],
