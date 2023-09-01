@@ -15,6 +15,7 @@ class RepairOrderService extends Model
         'order_id',
         'service_id',
         'subservice_id',
+        'service_name',
         'status',
     ];
 
