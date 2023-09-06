@@ -50,10 +50,10 @@
                     <b-button v-if="props.column.field == 'action'" class="open_order-btn" @click="orderDetails(props)">
                         Open Order <span class="ml-2 d-flex"><i class="i-Arrow-Right"></i></span>
                     </b-button>
-                    <b-button v-if="props.column.field == 'print'" class="print_btn" @click="printQr(props)">
+<!--                    <b-button v-if="props.column.field == 'print'" class="print_btn" @click="printQr(props)">-->
+<!--&lt;!&ndash;                        <div class="btn_img"></div>&ndash;&gt;-->
 <!--                        <div class="btn_img"></div>-->
-                        <div class="btn_img"></div>
-                    </b-button>
+<!--                    </b-button>-->
                 </template>
 
             </vue-good-table>
@@ -210,12 +210,12 @@
                         tdClass: "text-left",
                         thClass: "text-left"
                     },
-                    {
-                        label: '',
-                        field: "print",
-                        tdClass: "text-left",
-                        thClass: "text-left"
-                    },
+                    // {
+                    //     label: '',
+                    //     field: "print",
+                    //     tdClass: "text-left",
+                    //     thClass: "text-left"
+                    // },
 
                 ];
             }
@@ -278,15 +278,15 @@
             upper(item) {
                 return item.charAt(0).toUpperCase() + item.replaceAll('_', ' ').slice(1);
             },
-            printQr(props) {
-                const printableContent =  `<img src="${props.row.qr_url}">`
-                const printWindow = window.open('', '', 'height=900,width=900')
-                setTimeout(() => {
-                    printWindow.document.write(printableContent)
-                    printWindow.print()
-                }, 300)
-
-            },
+            // printQr(props) {
+            //     const printableContent =  `<img src="${props.row.qr_url}">`
+            //     const printWindow = window.open('', '', 'height=900,width=900')
+            //     setTimeout(() => {
+            //         printWindow.document.write(printableContent)
+            //         printWindow.print()
+            //     }, 300)
+            //
+            // },
 
         }, //end Methods
 
