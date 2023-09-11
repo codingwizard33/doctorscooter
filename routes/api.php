@@ -16,15 +16,11 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-
-
-
-
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('get-order', "WordpressController@handle");
+Route::get('get-order', "WordpressController@handle");
 Route::post('epos_addproduct', "EposController@create");
 Route::post('epos_sellproduct', "EposController@sell");
 
@@ -460,10 +456,9 @@ Route::middleware(['auth:api', 'Is_Active'])->group(function () {
             Route::get('/show/{id}', 'SubServiceController@show');
             Route::post('/store', 'SubServiceController@store');
             Route::post('/update/{id}', 'SubServiceController@update');
+            Route::post('/change-status', 'SubServiceController@manageStatus');
             Route::get('/delete/{id}', 'SubServiceController@destroy');
         });
-
-
 });
 
 

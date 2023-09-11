@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helper\MessageHellper;
 use App\Http\Requests\SubService\CreateUpdateRequest;
 use App\Http\Resources\SubService\GetSubServiceResource;
+use App\Models\RepairOrderSubservice;
 use App\Models\Service;
 use App\Models\SubService;
 use App\Services\SubServiceService;
@@ -90,5 +91,12 @@ class SubServiceController extends Controller
         return response()->json([
             'message' => $this->MessageDelete(),
         ], 200);
+    }
+
+    public function manageStatus(Request $request)
+    {
+        RepairOrderSubservice::query()
+            ->where('id', $request->subservice_id)
+            ->update(['status' => $request->status]);
     }
 }
