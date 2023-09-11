@@ -215,10 +215,6 @@
             </section>
         </vue-html2pdf>
 
-
-
-
-
         <div class="head_btn-container">
             <b-form-select
                 v-model="order_details.status"
@@ -358,12 +354,12 @@
                     <div class="detail_tab-title mb-2">Order Status</div>
                     <div class="d-flex justify-content-between align-items-center">
                         <span>Services</span>
-                        <span class="all_done-btn">All Done</span>
+                        <span class="all_done-btn" @click="allServiceDone(order_details.service)">All Done</span>
                     </div>
-                    <div v-if="service.subService.length" class="detail_tab-status service" v-for="service of order_details.service">
-                        <div class="detail_tab-service" v-for="item of service.subService">
-                            <div class="detail_tab-status_name">{{item.name}}</div>
-                            <b-form-select v-model="item.status" :class="{'done': item.status == 'done', 'pending': item.status == 'pending'}">
+                    <div v-if="service.sub_service.length" class="detail_tab-status service" v-for="service of order_details.service">
+                        <div class="detail_tab-service" v-for="item of service.sub_service">
+                            <div class="detail_tab-status_name">{{item.subservice_name}}</div>
+                            <b-form-select v-model="item.status" @change="onChangeService($event, item)" :class="{'done': item.status == 'done', 'pending': item.status == 'pending'}">
                                 <b-form-select-option value="done">Done</b-form-select-option>
                                 <b-form-select-option value="pending">Pending</b-form-select-option>
                             </b-form-select>
@@ -476,6 +472,62 @@
                     this.uploadFiles.push(event.target.files[i])
                     this.createImage(event.target.files[i])
                 }
+
+            },
+            onChangeService(ev, item) {
+                console.log(item.id, 'subservice_id')
+                console.log(item.service_id, 'service_id')
+                console.log(ev, 'status')
+                console.log(this.getId, 'order_id')
+                NProgress.start();
+                NProgress.set(0.1);
+                axios
+                    .post(
+                        `sub/service/change-status`, {
+                            subservice_id: item.id,
+                            service_id: item.service_id,
+                            order_id: this.getId,
+                            status: ev,
+                        }
+                    )
+                    .then(response => {
+                        this.isLoading = false;
+                        NProgress.done();
+                        this.getDetails(this.getId)
+                    })
+                    .catch(error => {
+                        NProgress.done();
+                        setTimeout(() => {
+                            this.isLoading = false;
+                        }, 500);
+                    })
+
+            },
+            allServiceDone(services) {
+                let arr = []
+                services.map(item => {
+                    arr.push(item.id)
+                })
+                NProgress.start();
+                NProgress.set(0.1);
+                axios
+                    .post(
+                        `sub/service/all-done`, {
+                            order_id: this.getId,
+                            service_id: arr,
+                        }
+                    )
+                    .then(response => {
+                        this.isLoading = false;
+                        NProgress.done();
+                        this.getDetails(this.getId)
+                    })
+                    .catch(error => {
+                        NProgress.done();
+                        setTimeout(() => {
+                            this.isLoading = false;
+                        }, 500);
+                    })
 
             },
             onChangePaymentStatus(ev) {
