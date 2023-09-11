@@ -456,11 +456,13 @@ Route::middleware(['auth:api', 'Is_Active'])->group(function () {
             Route::get('/show/{id}', 'SubServiceController@show');
             Route::post('/store', 'SubServiceController@store');
             Route::post('/update/{id}', 'SubServiceController@update');
-            Route::post('/change-status', 'SubServiceController@manageStatus');
             Route::get('/delete/{id}', 'SubServiceController@destroy');
+
+            //statuses
+            Route::post('/change-status', 'SubServiceController@manageStatus');
+            Route::post('/all-done', 'SubServiceController@allDone');
         });
 });
-
 
 
 
