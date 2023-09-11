@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use App\Helper\MessageHellper;
 use App\Http\Requests\SubService\CreateUpdateRequest;
 use App\Http\Resources\SubService\GetSubServiceResource;
+use App\Mail\RepairOrderMail;
+use App\Models\RepairOrder;
 use App\Models\RepairOrderSubservice;
 use App\Models\Service;
 use App\Models\SubService;
 use App\Services\SubServiceService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class SubServiceController extends Controller
 {
@@ -93,10 +96,22 @@ class SubServiceController extends Controller
         ], 200);
     }
 
+    /**
+     * @param Request $request
+     */
     public function manageStatus(Request $request)
     {
         RepairOrderSubservice::query()
             ->where('id', $request->subservice_id)
             ->update(['status' => $request->status]);
+    }
+
+    public function allDone(Request $request)
+    {
+        $email = RepairOrder::query()->where('id', $request->order_id)->pluck('email');
+        RepairOrderSubservice::query()
+            ->where('id', explode(',', $request->subservice_id))
+            ->update(['status' => $request->status]);
+        Mail::to($email)->send(new RepairOrderMail('Your order has been successfully finished'));
     }
 }
