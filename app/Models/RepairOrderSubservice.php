@@ -5,17 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class RepairOrderService extends Model
+class RepairOrderSubservice extends Model
 {
     use HasFactory;
 
-    protected $table = 'repair_order_services';
+    protected $table = 'repair_order_subservices';
 
     protected $fillable = [
-        'order_id',
+        'service_table_id',
         'service_id',
         'subservice_id',
-        'service_name',
+        'subservice_name',
         'status',
     ];
 
@@ -28,14 +28,8 @@ class RepairOrderService extends Model
         ];
     }
 
-
     public function order()
     {
-        return $this->belongsTo(RepairOrder::class);
-    }
-
-    public function subService()
-    {
-        return $this->hasMany(RepairOrderSubservice::class, 'service_table_id', 'id');
+        return $this->belongsTo(RepairOrderService::class);
     }
 }

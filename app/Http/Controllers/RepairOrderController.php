@@ -43,7 +43,7 @@ class RepairOrderController extends Controller
     public function index()
     {
         $products = RepairOrder::query()
-            ->with('images', 'customService', 'user', 'service')
+            ->with('images', 'customService', 'user', 'service.subService')
             ->orderBy('created_at', 'desc')
             ->paginate(10);
         if (count($products) > 0) {
@@ -102,7 +102,7 @@ class RepairOrderController extends Controller
      */
     public function show($id)
     {
-        $order = RepairOrder::query()->findOrFail($id)->load('images', 'customService', 'service', 'details');
+        $order = RepairOrder::query()->findOrFail($id)->load('images', 'customService', 'service.subService', 'details');
         foreach ($order['service'] as $s) {
             $s['subService'] = SubService::query()->whereIn('id', explode(',', $s['subservice_id']))->get();
         }

@@ -9,6 +9,7 @@ use App\Helper\UploadFile;
 use App\Models\RepairOrder;
 use App\Models\RepairOrderCustomService;
 use App\Models\RepairOrderService;
+use App\Models\RepairOrderSubservice;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use BaconQrCode\Renderer\ImageRenderer;
@@ -102,25 +103,31 @@ class CustomProductService
                 // ------ update or create ------ \\
                 // ------ if !isset id -> create, if isset id -> update ------ \\
                 foreach ($data['services'] as $service) {
-                    $subserviseIds = [];
-                    foreach ($service['subService'] as $subService) {
-                        array_push($subserviseIds, $subService['id']);
-                    }
-                    RepairOrderService::query()->updateOrCreate(
+                    $service_id = RepairOrderService::query()->updateOrCreate(
                         ['id' => (int)$service['id']],
                         [
                             'order_id' => $product->id,
                             'service_id' => $service['id'],
-                            'subservice_id' => implode(', ', $subserviseIds),
                             'service_name' => $service['name'],
                             'status' => isset($id)
                                 ? $ServiceDB->where('id', (int)$service['id'])->first()->status
                                 : RepairOrderService::status()[0],
                         ]
                     );
+                    foreach ($service['subService'] as $subService) {
+                        RepairOrderSubservice::query()->updateOrCreate(
+                            ['id' => $subService['id']],
+                            [
+                                'service_table_id' => $service_id['id'],
+                                'service_id' => $subService['service_id'],
+                                'subservice_id' => $subService['id'],
+                                'subservice_name' => $subService['name'],
+                                'status' => RepairOrderSubservice::status()[0],
+                            ]
+                        );
+                    }
                 }
             }
-
 
             if (!empty($data['custom_services'])) {
                 // ------ update ------ \\
