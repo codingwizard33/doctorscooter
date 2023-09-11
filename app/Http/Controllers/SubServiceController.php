@@ -108,10 +108,12 @@ class SubServiceController extends Controller
 
     public function allDone(Request $request)
     {
-        $email = RepairOrder::query()->where('id', $request->order_id)->pluck('email');
-        RepairOrderSubservice::query()
-            ->where('id', explode(',', $request->subservice_id))
-            ->update(['status' => $request->status]);
-        Mail::to($email)->send(new RepairOrderMail('Your order has been successfully finished'));
+//        $email = RepairOrder::query()->where('id', $request->order_id)->pluck('email');
+        foreach ($request->service_id as $id) {
+            RepairOrderSubservice::query()
+                ->where('service_table_id', $id)
+                ->update(['status' => 'done']);
+        }
+//        Mail::to($email)->send(new RepairOrderMail('Your order has been successfully finished'));
     }
 }
