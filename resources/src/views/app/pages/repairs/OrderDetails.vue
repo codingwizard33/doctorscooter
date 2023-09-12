@@ -1,216 +1,150 @@
 <template>
     <div class="main-content">
+<!--        print content-->
         <vue-html2pdf
             :show-layout="false"
             :float-layout="true"
             :enable-download="false"
             :preview-modal="true"
-            :paginate-elements-by-height="1500"
+            :paginate-elements-by-height="200"
             filename="Order Details"
-            :pdf-quality="3"
+            :pdf-quality="10"
             :manual-pagination="true"
-            pdf-format="a4"
+            pdf-format="a7"
             pdf-orientation="landscape"
-            pdf-content-width="1120px"
+            pdf-content-width="380px"
             ref="html2Pdf"
         >
             <section slot="pdf-content">
                 <!-- PDF Content Here -->
-                <div class="main-content printing_content">
-<!--                    <div class="head_btn-container">-->
-<!--                        <b-form-select-->
-<!--                            v-model="order_details.status"-->
-<!--                            @change="onChangeStatus"-->
-<!--                            :class="[{'done': order_details.status == 'done'},-->
-<!--                 {'progress': order_details.status == 'pending'},-->
-<!--                 {'cancelled': order_details.status == 'cancelled'},-->
-<!--                 {'collection': order_details.status == 'waiting_for_collection'},-->
-<!--                 {'parts': order_details.status == 'waiting_for_parts'}-->
-<!--                 ]">-->
-<!--                            <b-form-select-option value="done">Done</b-form-select-option>-->
-<!--                            <b-form-select-option value="pending">In Progress</b-form-select-option>-->
-<!--                            <b-form-select-option value="cancelled">Cancelled</b-form-select-option>-->
-<!--                            <b-form-select-option value="waiting_for_parts">Waiting for Parts</b-form-select-option>-->
-<!--                            <b-form-select-option value="waiting_for_collection">Waiting for Collection</b-form-select-option>-->
-<!--                        </b-form-select>-->
-<!--                        <div class="back_btn" @click="goBack()"><i class="nav-icon i-Left"></i>&nbsp; Back</div>-->
-<!--                    </div>-->
-                    <breadcumb :page="$t('Order_Detail')" :folder="$t('Order_Detail')"/>
-                    <div v-if="isLoading" class="loading_page spinner spinner-primary mr-3"></div>
-                    <div v-else>
-                        <b-row>
-                            <b-col md="9" class="mb-2 mr-4">
-                                <b-card class="p-8">
-                                    <b-row>
-                                        <b-col md="5" class="detail_item">
-                                            <div class="detail_item-card">
-                                                <div class="detail_item-btn">Salesman</div>
-                                                <div class="detail_item-text">
-                                                    <div class="detail_item-name">Name: &nbsp;</div>
-                                                    <div class="detail_item-value">{{order_details.sales_man.firstname}} {{order_details.sales_man.lastname}}</div>
-                                                </div>
-                                            </div>
-                                        </b-col>
-                                        <b-col md="6" class="detail_item">
-                                            <div class="detail_item-card">
-                                                <div class="detail_item-btn">Technician</div>
-                                                <div class="detail_item-text">
-                                                    <div class="detail_item-name">Name: &nbsp;</div>
-                                                    <div class="detail_item-value">{{order_details.full_name}}</div>
-                                                </div>
-                                            </div>
-                                        </b-col>
-                                    </b-row>
-                                    <hr>
-                                    <b-row>
-                                        <b-col md="5" class="detail_item">
-                                            <div class="detail_item-card">
-                                                <div class="detail_item-btn">Customer Details</div>
-                                                <div class="detail_item-text">
-                                                    <div class="detail_item-name">Full Name: &nbsp;</div>
-                                                    <div class="detail_item-value">{{order_details.full_name}}</div>
-                                                </div>
-                                                <div class="detail_item-text">
-                                                    <div class="detail_item-name">Mobile: &nbsp;</div>
-                                                    <div class="detail_item-value">{{order_details.phone}}</div>
-                                                </div>
-                                                <div class="detail_item-text">
-                                                    <div class="detail_item-name">Email: &nbsp;</div>
-                                                    <div class="detail_item-value">{{order_details.email}}</div>
-                                                </div>
-                                            </div>
-                                        </b-col>
-                                        <b-col md="6" class="detail_item">
-                                            <div class="detail_item-card">
-                                                <div class="detail_item-btn">Vehicle Details</div>
-                                                <div class="detail_item-text">
-                                                    <div class="detail_item-name">Model: &nbsp;</div>
-                                                    <div class="detail_item-value">{{order_details.model}}</div>
-                                                </div>
-                                                <div class="detail_item-text">
-                                                    <div class="detail_item-name">Service: &nbsp;</div>
-                                                    <div class="detail_item-value">Oil/Filter changed, Brake Work</div>
-                                                </div>
-                                            </div>
-                                        </b-col>
-                                        <b-col md="1"></b-col>
-                                    </b-row>
-                                    <hr>
-                                    <b-row>
-                                        <b-col md="5" class="detail_item">
-                                            <div class="detail_item-card">
-                                                <div class="detail_item-btn">Issue Information</div>
-                                                <div class="detail_item-text">
-                                        <textarea
-                                            rows="5"
-                                            disabled
-                                            :placeholder="$t('Afewwords')"
-                                            v-model="order_details.information"
-                                        ></textarea>
-                                                </div>
-                                                <div class="detail_item-text">
-                                                    <div class="detail_item-name">Pictures of the Issues: &nbsp;</div>
-                                                    <div class="img_container" v-for="item of order_details.images">
-                                                        <img :src="item.path" alt="">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </b-col>
-                                        <b-col md="6" class="detail_item">
-                                            <div class="detail_item-card">
-                                                <div class="detail_item-btn">Comments & Images By Technician</div>
-                                                <div class="detail_item-text">
-                                        <textarea
-                                            rows="5"
-                                            :placeholder="$t('Afewwords')"
-                                            v-model="order_details.text"
-                                        ></textarea>
-                                                </div>
-                                                <div class="detail_item-text">
-<!--                                                    <div class="input_container" @click="addImg()">-->
-<!--                                                        <input type="file" multiple ref="photo_upload" @change="onFileChange">-->
-<!--                                                        <div class="up_img"></div>-->
-<!--                                                        <div class="up_text">Upload from Photos</div>-->
-<!--                                                    </div>-->
-                                                    <div v-for="item of images" class="upload_img">
-                                                        <img :src="item" alt="">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </b-col>
-                                        <b-col md="1"></b-col>
-                                    </b-row>
-                                    <b-row>
-<!--                                        <b-col md="12" class="save_btn-container">-->
-<!--                                            <b-button class="save_btn" @click="saveOrderDetails()">Save</b-button>-->
-<!--                                        </b-col>-->
-                                    </b-row>
-                                </b-card>
-                            </b-col>
-                            <b-col md="2" class="detail_item print">
+                <div class="main-content printing">
+                        <div class="title">Order Detail</div>
+                        <div class="content_data">
+                            <div class="content_text">
+                                <div class="text_item">Client Name: &nbsp;<span class="text_value">{{order_details.full_name}}</span></div>
+                                <div class="text_item">Telephone: &nbsp;<span class="text_value">{{order_details.phone}}</span></div>
+                                <div class="text_item">Model: &nbsp;<span class="text_value">{{order_details.model}}</span></div>
+                            </div>
+                            <div class="content_text code">
+                                <div class="text_item">QR code:</div>
                                 <div class="qr_url-container">
                                     <img :src="order_details.qr_url" alt="">
                                 </div>
-                                <!--                                            <div class="print_btn" @click="printDetails()">-->
-                                <!--                                                <i class="btn_img"></i>-->
-                                <!--                                            </div>-->
-                            </b-col>
-<!--                            <b-col md="3" class="detail_tab mb-2">-->
-<!--                                <div class="detail_tab-title mb-2">Order Status</div>-->
-<!--                                <div class="d-flex justify-content-between align-items-center">-->
-<!--                                    <span>Services</span>-->
-<!--                                    <span class="all_done-btn">All Done</span>-->
-<!--                                </div>-->
-<!--                                <div v-if="service.subService.length" class="detail_tab-status service" v-for="service of order_details.service">-->
-<!--                                    <div class="detail_tab-service" v-for="item of service.subService">-->
-<!--                                        <div class="detail_tab-status_name">{{item.name}}</div>-->
-<!--                                        <b-form-select v-model="item.status" :class="{'done': item.status == 'done', 'pending': item.status == 'pending'}">-->
-<!--                                            <b-form-select-option value="done">Done</b-form-select-option>-->
-<!--                                            <b-form-select-option value="pending">Pending</b-form-select-option>-->
-<!--                                        </b-form-select>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                <div v-else class="detail_tab-status service" v-for="service of order_details.service">-->
-<!--                                    <div class="detail_tab-service">-->
-<!--                                        <div class="detail_tab-status_name">{{service.service_name}}</div>-->
-<!--                                        <b-form-select v-model="service.status" :class="{'done': service.status == 'done', 'pending': service.status == 'pending'}">-->
-<!--                                            <b-form-select-option value="done">Done</b-form-select-option>-->
-<!--                                            <b-form-select-option value="pending">Pending</b-form-select-option>-->
-<!--                                        </b-form-select>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                <hr>-->
-<!--                                <div class="d-flex justify-content-between align-items-center">-->
-<!--                                    <span>Custom Services</span>-->
-<!--                                    <span class="all_done-btn">All Done</span>-->
-<!--                                </div>-->
-<!--                                <div class="detail_tab-status" v-for="service of order_details.custom_service">-->
-<!--                                    <div class="detail_tab-status_name">{{service.name}}</div>-->
-<!--                                    <b-form-select v-model="service.status" :class="{'done': service.status == 'done', 'pending': service.status == 'pending'}">-->
-<!--                                        <b-form-select-option value="done">Done</b-form-select-option>-->
-<!--                                        <b-form-select-option value="pending">Pending</b-form-select-option>-->
-<!--                                    </b-form-select>-->
-<!--                                </div>-->
-<!--                                <hr>-->
-<!--                                <div class="detail_tab-status">-->
-<!--                                    <div class="detail_tab-status_name">Payment Status</div>-->
-<!--                                    <b-form-select v-model="order_details.payment_status" @change="onChangePaymentStatus" :class="[-->
-<!--                            {'done': order_details.payment_status == 'paid'},-->
-<!--                            {'pending': order_details.payment_status == 'not_paid'},-->
-<!--                            {'pending': order_details.payment_status == 'pending'},-->
-<!--                            {'pending': order_details.payment_status == 'cancelled'}-->
-<!--                            ]">-->
-<!--                                        <b-form-select-option value="paid">Paid</b-form-select-option>-->
-<!--                                        <b-form-select-option value="not_paid">Not Paid</b-form-select-option>-->
-<!--                                        <b-form-select-option value="pending">Pending</b-form-select-option>-->
-<!--                                        <b-form-select-option value="cancelled">Cancelled </b-form-select-option>-->
-<!--                                    </b-form-select>-->
-<!--                                </div>-->
+                            </div>
+                        </div>
 
+<!--                        <b-row>-->
+<!--                            <b-col md="9" class="mb-2 mr-4">-->
+<!--                                <b-card class="p-8">-->
+<!--                                    <b-row>-->
+<!--                                        <b-col md="5" class="detail_item">-->
+<!--                                            <div class="detail_item-card">-->
+<!--                                                <div class="detail_item-btn">Salesman</div>-->
+<!--                                                <div class="detail_item-text">-->
+<!--                                                    <div class="detail_item-name">Name: &nbsp;</div>-->
+<!--                                                    <div class="detail_item-value">{{order_details.sales_man.firstname}} {{order_details.sales_man.lastname}}</div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </b-col>-->
+<!--                                        <b-col md="6" class="detail_item">-->
+<!--                                            <div class="detail_item-card">-->
+<!--                                                <div class="detail_item-btn">Technician</div>-->
+<!--                                                <div class="detail_item-text">-->
+<!--                                                    <div class="detail_item-name">Name: &nbsp;</div>-->
+<!--                                                    <div class="detail_item-value">{{order_details.full_name}}</div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </b-col>-->
+<!--                                    </b-row>-->
+<!--                                    <hr>-->
+<!--                                    <b-row>-->
+<!--                                        <b-col md="5" class="detail_item">-->
+<!--                                            <div class="detail_item-card">-->
+<!--                                                <div class="detail_item-btn">Customer Details</div>-->
+<!--                                                <div class="detail_item-text">-->
+<!--                                                    <div class="detail_item-name">Full Name: &nbsp;</div>-->
+<!--                                                    <div class="detail_item-value">{{order_details.full_name}}</div>-->
+<!--                                                </div>-->
+<!--                                                <div class="detail_item-text">-->
+<!--                                                    <div class="detail_item-name">Mobile: &nbsp;</div>-->
+<!--                                                    <div class="detail_item-value">{{order_details.phone}}</div>-->
+<!--                                                </div>-->
+<!--                                                <div class="detail_item-text">-->
+<!--                                                    <div class="detail_item-name">Email: &nbsp;</div>-->
+<!--                                                    <div class="detail_item-value">{{order_details.email}}</div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </b-col>-->
+<!--                                        <b-col md="6" class="detail_item">-->
+<!--                                            <div class="detail_item-card">-->
+<!--                                                <div class="detail_item-btn">Vehicle Details</div>-->
+<!--                                                <div class="detail_item-text">-->
+<!--                                                    <div class="detail_item-name">Model: &nbsp;</div>-->
+<!--                                                    <div class="detail_item-value">{{order_details.model}}</div>-->
+<!--                                                </div>-->
+<!--                                                <div class="detail_item-text">-->
+<!--                                                    <div class="detail_item-name">Service: &nbsp;</div>-->
+<!--                                                    <div class="detail_item-value">Oil/Filter changed, Brake Work</div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </b-col>-->
+<!--                                        <b-col md="1"></b-col>-->
+<!--                                    </b-row>-->
+<!--                                    <hr>-->
+<!--                                    <b-row>-->
+<!--                                        <b-col md="5" class="detail_item">-->
+<!--                                            <div class="detail_item-card">-->
+<!--                                                <div class="detail_item-btn">Issue Information</div>-->
+<!--                                                <div class="detail_item-text">-->
+<!--                                        <textarea-->
+<!--                                            rows="5"-->
+<!--                                            disabled-->
+<!--                                            :placeholder="$t('Afewwords')"-->
+<!--                                            v-model="order_details.information"-->
+<!--                                        ></textarea>-->
+<!--                                                </div>-->
+<!--                                                <div class="detail_item-text">-->
+<!--                                                    <div class="detail_item-name">Pictures of the Issues: &nbsp;</div>-->
+<!--                                                    <div class="img_container" v-for="item of order_details.images">-->
+<!--                                                        <img :src="item.path" alt="">-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </b-col>-->
+<!--                                        <b-col md="6" class="detail_item">-->
+<!--                                            <div class="detail_item-card">-->
+<!--                                                <div class="detail_item-btn">Comments & Images By Technician</div>-->
+<!--                                                <div class="detail_item-text">-->
+<!--                                        <textarea-->
+<!--                                            rows="5"-->
+<!--                                            :placeholder="$t('Afewwords')"-->
+<!--                                            v-model="order_details.text"-->
+<!--                                        ></textarea>-->
+<!--                                                </div>-->
+<!--                                                <div class="detail_item-text">-->
+
+<!--                                                    <div v-for="item of images" class="upload_img">-->
+<!--                                                        <img :src="item" alt="">-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </b-col>-->
+<!--                                        <b-col md="1"></b-col>-->
+<!--                                    </b-row>-->
+<!--                                    <b-row>-->
+
+<!--                                    </b-row>-->
+<!--                                </b-card>-->
 <!--                            </b-col>-->
-                        </b-row>
+<!--                            <b-col md="2" class="detail_item print">-->
+<!--                                <div class="qr_url-container">-->
+<!--                                    <img :src="order_details.qr_url" alt="">-->
+<!--                                </div>-->
+<!--                            </b-col>-->
 
-                    </div>
+<!--                        </b-row>-->
+
+
                 </div>
             </section>
         </vue-html2pdf>
@@ -767,15 +701,59 @@
                 font-weight: 600;
             }
         }
-        &.printing_content {
-            margin-top: 10px;
-            padding: 0 10px;
-            & .qr_url-container {
-                width: 100px;
-                height: 100px;
-                & img {
-                    width: 100px;
-                    height: 100px;
+        &.printing {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            & .title {
+                color: #000;
+                font-family: "Nunito", sans-serif;
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: 18px;
+                padding-bottom: 8px;
+            }
+            & .content {
+                &_data {
+                    display: flex;
+                    justify-content: space-between;
+                }
+                &_text {
+                    display: flex;
+                    flex-direction: column;
+                    &.code {
+                        width: 150px;
+                        & .text_item {
+                            padding: 0 10px;
+                        }
+                    }
+                    & .text_item {
+                        padding: 8px 0;
+                        color: #949494;
+                        font-family: "Nunito", sans-serif;
+                        font-size: 10px;
+                        font-style: normal;
+                        font-weight: 500;
+                        line-height: 15px;
+                        & .text_value {
+                            color:  #000000;
+                            font-family: "Nunito", sans-serif;
+                            font-size: 10px;
+                            font-style: normal;
+                            font-weight: 600;
+                            line-height: 15px;
+                        }
+                    }
+                    & .qr_url-container {
+                        width: 122px;
+                        height: 122px;
+                        & img {
+                            width: 122px;
+                            height: 122px;
+                        }
+                    }
                 }
             }
         }
