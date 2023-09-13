@@ -22,7 +22,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('get-order', "WordpressController@handle");
 Route::post('epos_addproduct', "EposController@create");
-Route::post('epos_sellproduct', "EposController@sell");
+Route::post('/epos_sellproduct', [\App\Http\Controllers\EposController::class, 'sell']);
 
 //--------------------------- Reset Password  ---------------------------
 

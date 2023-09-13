@@ -7,12 +7,10 @@ use App\Models\Test;
 
 class EposController extends Controller
 {
-    public function create(Request $request)
+    public function sell(Request $request)//Test
     {
-        Test::create([
-            'test' => $request
-        ]);
-
-        return 1;
+        $fo = fopen('badrjan.txt', 'w');
+        fwrite($fo, 'Test file!!');
+        fclose($fo);
     }
 }
