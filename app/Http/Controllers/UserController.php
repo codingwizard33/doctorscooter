@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\ImageManagerStatic as Image;
 use \Nwidart\Modules\Facades\Module;
+use function PHPUnit\Framework\isEmpty;
 
 class UserController extends BaseController
 {
@@ -89,9 +90,12 @@ class UserController extends BaseController
         $helpers = new helpers();
         $User = User::find(Auth::id());
         $UserData = $User->assignedWarehouses;
-        $UserData[0]['pivot']['name'] = Warehouse::query()
-            ->where('id', $UserData[0]['pivot']['warehouse_id'])
-            ->pluck('name')[0];
+        if (count($UserData) > 0) {
+            $UserData[0]['pivot']['name'] = Warehouse::query()
+                ->where('id', $UserData[0]['pivot']['warehouse_id'])
+                ->pluck('name')[0];
+            $user['warehouse'] = $UserData[0]['pivot'];
+        }
         $user['avatar'] = Auth::user()->avatar;
         $user['username'] = Auth::user()->username;
         $user['currency'] = $helpers->Get_Currency();
@@ -99,7 +103,6 @@ class UserController extends BaseController
         $user['default_language'] = Setting::first()->default_language;
         $user['footer'] = Setting::first()->footer;
         $user['developed_by'] = Setting::first()->developed_by;
-        $user['warehouse'] = $UserData[0]['pivot'];
         $permissions = Auth::user()->roles()->first()->permissions->pluck('name');
         $products_alerts = product_warehouse::join('products', 'product_warehouse.product_id', '=', 'products.id')
             ->whereRaw('qte <= stock_alert')
