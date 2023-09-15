@@ -16,9 +16,12 @@ use App\Models\RepairOrderDetails;
 use App\Models\RepairOrderService;
 use App\Models\Service;
 use App\Models\SubService;
+use App\Models\User;
+use App\Models\Warehouse;
 use App\Services\CustomProductService;
 use App\Services\RepairOrderDetailsService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -42,8 +45,10 @@ class RepairOrderController extends Controller
      */
     public function index()
     {
+        $user = User::find(Auth::id())->assignedWarehouses;
         $products = RepairOrder::query()
             ->with('images', 'customService', 'user', 'service.subService')
+            ->where('warehouse', $user[0]['pivot']['warehouse_id'])
             ->orderBy('created_at', 'desc')
             ->paginate(10);
         if (count($products) > 0) {
