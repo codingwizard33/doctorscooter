@@ -357,6 +357,7 @@
     import Treeselect from '@riophae/vue-treeselect'
     // import the styles
     import '@riophae/vue-treeselect/dist/vue-treeselect.css'
+    import {mapGetters} from "vuex";
     export default {
         name: "CreateOrder",
         data() {
@@ -408,10 +409,19 @@
         },
         created() {
             this.getAllServices()
-            this.getWarehouses()
-            // this.getAllSubServices()
+            if(this.currentUser.warehouse) {
+                let warehouse = {
+                    name: this.currentUser.warehouse.name,
+                    id: this.currentUser.warehouse.warehouse_id
+                }
+                this.warehouses = [warehouse]
+                this.order.warehouse = this.currentUser.warehouse.warehouse_id
+            } else {
+                this.getWarehouses()
+            }
         },
         computed: {
+            ...mapGetters(["currentUser"]),
             getDate() {
                 let date = new Date()
                 return date.toLocaleString("en-US", {day: "numeric", month: "long", year: "numeric",})

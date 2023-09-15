@@ -179,14 +179,14 @@
                                   {label: 'Korean', value: 'kr'},
                                   {label: 'Bangla', value: 'ba'},
                                   {label: 'Portuguese', value: 'br'},
-                              ]"                     
+                              ]"
                       ></v-select>
                         <b-form-invalid-feedback>{{ errors[0] }}</b-form-invalid-feedback>
                          </b-form-group>
                     </validation-provider>
                   </b-col>
 
-                  
+
                   <!-- Default Customer -->
                   <b-col lg="4" md="4" sm="12">
                     <b-form-group :label="$t('DefaultCustomer')">
@@ -327,7 +327,7 @@ export default {
   },
   data() {
     return {
-      
+
       isLoading: true,
       data: new FormData(),
       settings: [],
@@ -412,7 +412,7 @@ export default {
       },
 
 
-  
+
     //---------------------------------- Update Settings ----------------\\
     Update_Settings() {
       NProgress.start();
@@ -452,7 +452,7 @@ export default {
           this.makeToast("danger", this.$t("InvalidData"), this.$t("Failed"));
           NProgress.done();
         });
-    }, 
+    },
 
     //---------------------------------- Clear_Cache ----------------\\
     Clear_Cache() {
@@ -472,7 +472,7 @@ export default {
           NProgress.done();
           this.makeToast("danger", this.$t("Failed_to_clear_cache"), this.$t("Failed"));
         });
-    },   
+    },
 
     //---------------------------------- Get SETTINGS ----------------\\
     Get_Settings() {
