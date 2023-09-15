@@ -248,7 +248,7 @@
                             <b-col md="12">
                                 <div class="payment_total">
                                     <div class="payment_total-text">Total amount:</div>
-                                    <div class="payment_total-value">${{total_amount}}</div>
+                                    <div class="payment_total-value">£{{total_amount}}</div>
                                 </div>
                             </b-col>
                             <hr>
@@ -272,6 +272,7 @@
                                         :options="warrantyOptions"
                                         :aria-describedby="ariaDescribedby"
                                         name="flavour-1"
+                                        @change="onChangeWarranty"
                                     ></b-form-checkbox-group>
                                 </b-form-group>
                             </b-col>
@@ -291,7 +292,7 @@
                             <b-col md="12">
                                 <div class="payment_total due_amount">
                                     <div class="payment_total-text">Due amount:</div>
-                                    <div class="payment_total-value">${{due_amount}}</div>
+                                    <div class="payment_total-value">£{{due_amount}}</div>
                                 </div>
                             </b-col>
                             <b-col>
@@ -421,7 +422,7 @@
         },
         methods: {
             serviceType({name, amount}) {
-              return  `${name} - ($${amount})`
+              return  `${name} - (£${amount})`
             },
             Submit_Order() {
                 let services = []
@@ -546,10 +547,18 @@
                 this.total_amount += amount
                 this.due_amount = this.total_amount
             },
+            onChangeWarranty(ev) {
+                if(ev.indexOf("membership")!== -1 && ev.indexOf("warranty") !== -1 && this.due_amount != 0) {
+                    this.due_amount -= this.due_amount * 10 / 100
+                } else  {
+                    this.checkService()
+                    this.customServicesChange()
+                }
+            },
             normalizer(node) {
                 return {
                     id: node.id,
-                    label: node.price ? node.name + ' _ ' + '$'+node.price : node.name,
+                    label: node.price ? node.name + ' _ ' + '£'+node.price : node.name,
                     children: node.subService,
                 }
             },
