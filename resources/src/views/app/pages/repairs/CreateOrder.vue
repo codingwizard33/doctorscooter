@@ -431,8 +431,8 @@
 
         },
         methods: {
-            serviceType({name, amount}) {
-              return  `${name} - (£${amount})`
+            serviceType({name, price}) {
+              return  `${name} - (£${price})`
             },
             Submit_Order() {
                 let services = []
@@ -487,9 +487,10 @@
             addNewService() {
                 if(this.new_service.name !== null && this.new_service.amount !== null ) {
                     this.custom_services_options.push({
+                        id: null,
                         c_id: this.custom_services_options.length + 1,
                         name: this.new_service.name,
-                        amount: this.new_service.amount,
+                        price: this.new_service.amount,
                     })
                     this.serviceModal()
                 }
@@ -552,7 +553,7 @@
                 let amount = 0
                 let ev = this.order.custom_services
                 ev.map((item) => {
-                    amount += parseInt(item.amount)
+                    amount += parseInt(item.price)
                 })
                 this.total_amount += amount
                 this.due_amount = this.total_amount
