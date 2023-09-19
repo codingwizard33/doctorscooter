@@ -315,7 +315,7 @@
                     </div>
                     <div class="detail_tab-status" v-for="service of order_details.custom_service">
                         <div class="detail_tab-status_name">{{service.name}}</div>
-                        <b-form-select v-model="service.status" :class="{'done': service.status == 'done', 'pending': service.status == 'pending'}">
+                        <b-form-select v-model="service.status" @change="onCustomServiceChange($event, service)" :class="{'done': service.status == 'done', 'pending': service.status == 'pending'}">
                             <b-form-select-option value="done">Done</b-form-select-option>
                             <b-form-select-option value="pending">Pending</b-form-select-option>
                         </b-form-select>
@@ -436,6 +436,9 @@
                         }, 500);
                     })
 
+            },
+            onCustomServiceChange(ev, item) {
+                
             },
             allServiceDone(services) {
                 let arr = []
