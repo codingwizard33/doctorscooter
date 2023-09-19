@@ -311,7 +311,7 @@
                     <hr>
                     <div class="d-flex justify-content-between align-items-center">
                         <span>Custom Services</span>
-                        <span class="all_done-btn">All Done</span>
+                        <span class="all_done-btn" @click="allCustomServiceDone()">All Done</span>
                     </div>
                     <div class="detail_tab-status" v-for="service of order_details.custom_service">
                         <div class="detail_tab-status_name">{{service.name}}</div>
@@ -409,10 +409,6 @@
 
             },
             onChangeService(ev, item) {
-                console.log(item.id, 'subservice_id')
-                console.log(item.service_id, 'service_id')
-                console.log(ev, 'status')
-                console.log(this.getId, 'order_id')
                 NProgress.start();
                 NProgress.set(0.1);
                 axios
@@ -438,7 +434,27 @@
 
             },
             onCustomServiceChange(ev, item) {
-                
+                console.log(ev, item, 'ggggggggg')
+                NProgress.start();
+                NProgress.set(0.1);
+                axios
+                    .post(
+                        `custom/service/change-status-custom`, {
+                            custom_service_id: item.id,
+                            status: ev,
+                        }
+                    )
+                    .then(response => {
+                        this.isLoading = false;
+                        NProgress.done();
+                        this.getDetails(this.getId)
+                    })
+                    .catch(error => {
+                        NProgress.done();
+                        setTimeout(() => {
+                            this.isLoading = false;
+                        }, 500);
+                    })
             },
             allServiceDone(services) {
                 let arr = []
@@ -466,6 +482,27 @@
                         }, 500);
                     })
 
+            },
+            allCustomServiceDone() {
+                NProgress.start();
+                NProgress.set(0.1);
+                axios
+                    .post(
+                        `custom/service/all-done-custom`, {
+                            order_id: this.getId,
+                        }
+                    )
+                    .then(response => {
+                        this.isLoading = false;
+                        NProgress.done();
+                        this.getDetails(this.getId)
+                    })
+                    .catch(error => {
+                        NProgress.done();
+                        setTimeout(() => {
+                            this.isLoading = false;
+                        }, 500);
+                    })
             },
             onChangePaymentStatus(ev) {
                 NProgress.start();
