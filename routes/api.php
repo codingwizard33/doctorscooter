@@ -451,7 +451,7 @@ Route::middleware(['auth:api', 'Is_Active'])->group(function () {
 
     //---------------------------- Sub Service -----------------------------\\
     //-------------------------------------------------------------------------\\
-        Route::group([ 'prefix' => '/sub/service'], function () { //   /api/service
+        Route::group([ 'prefix' => '/sub/service'], function () { //   /api/sub/service
             Route::get('/', 'SubServiceController@index');
             Route::get('/show/{id}', 'SubServiceController@show');
             Route::post('/store', 'SubServiceController@store');
@@ -461,6 +461,14 @@ Route::middleware(['auth:api', 'Is_Active'])->group(function () {
             //statuses
             Route::post('/change-status', 'SubServiceController@manageStatus');
             Route::post('/all-done', 'SubServiceController@allDone');
+        });
+
+    //---------------------------- Custom Service -----------------------------\\
+    //-------------------------------------------------------------------------\\
+        Route::group([ 'prefix' => '/custom/service'], function () { //   /api/custom/service
+            //statuses
+            Route::post('/change-status-custom', 'SubServiceController@manageStatusCustom');
+            Route::post('/all-done-custom', 'SubServiceController@allDoneCustom');
         });
 });
 
