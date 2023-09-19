@@ -165,7 +165,7 @@
                                         :custom-label="serviceType"
                                         label="name"
                                         @input="customServicesChange"
-                                        track-by="code"
+                                        track-by="c_id"
                                         :options="custom_services_options"
                                         :multiple="true"
                                         :taggable="true"
@@ -487,7 +487,7 @@
             addNewService() {
                 if(this.new_service.name !== null && this.new_service.amount !== null ) {
                     this.custom_services_options.push({
-                        id: null,
+                        c_id: this.custom_services_options.length + 1,
                         name: this.new_service.name,
                         amount: this.new_service.amount,
                     })
