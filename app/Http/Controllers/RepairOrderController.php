@@ -46,9 +46,10 @@ class RepairOrderController extends Controller
     public function index()
     {
         $user = User::find(Auth::id())->assignedWarehouses;
+//        dd($user);
         $products = RepairOrder::query()
             ->with('images', 'customService', 'user', 'service.subService')
-            ->where('warehouse', $user[0]['pivot']['warehouse_id'])
+            ->where('warehouse', (count($user)) > 0 ? $user[0]['pivot']['warehouse_id'] : '!=', null)
             ->orderBy('created_at', 'desc')
             ->paginate(10);
         if (count($products) > 0) {
