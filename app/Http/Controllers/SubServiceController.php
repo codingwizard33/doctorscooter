@@ -7,6 +7,7 @@ use App\Http\Requests\SubService\CreateUpdateRequest;
 use App\Http\Resources\SubService\GetSubServiceResource;
 use App\Mail\RepairOrderMail;
 use App\Models\RepairOrder;
+use App\Models\RepairOrderCustomService;
 use App\Models\RepairOrderSubservice;
 use App\Models\Service;
 use App\Models\SubService;
@@ -106,14 +107,37 @@ class SubServiceController extends Controller
             ->update(['status' => $request->status]);
     }
 
+    /**
+     * @param Request $request
+     */
     public function allDone(Request $request)
     {
-//        $email = RepairOrder::query()->where('id', $request->order_id)->pluck('email');
+        /*$email = RepairOrder::query()->where('id', $request->order_id)->pluck('email');
+        Mail::to($email)->send(new RepairOrderMail('Your order has been successfully finished')); todo */
         foreach ($request->service_id as $id) {
             RepairOrderSubservice::query()
                 ->where('service_table_id', $id)
                 ->update(['status' => 'done']);
         }
-//        Mail::to($email)->send(new RepairOrderMail('Your order has been successfully finished'));
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function manageStatusCustom(Request $request)
+    {
+        RepairOrderCustomService::query()
+            ->where('id', $request->custom_service_id)
+            ->update(['status' => $request->status]);
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function allDoneCustom(Request $request)
+    {
+        RepairOrderCustomService::query()
+            ->where('order_id', $request->order_id)
+            ->update(['status' => 'done']);
     }
 }
