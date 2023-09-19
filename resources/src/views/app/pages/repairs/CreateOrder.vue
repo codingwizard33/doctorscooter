@@ -165,7 +165,7 @@
                                         :custom-label="serviceType"
                                         label="name"
                                         @input="customServicesChange"
-                                        track-by="code"
+                                        track-by="c_id"
                                         :options="custom_services_options"
                                         :multiple="true"
                                         :taggable="true"
@@ -357,6 +357,7 @@
     import Treeselect from '@riophae/vue-treeselect'
     // import the styles
     import '@riophae/vue-treeselect/dist/vue-treeselect.css'
+    import {mapGetters} from "vuex";
     export default {
         name: "CreateOrder",
         data() {
@@ -408,10 +409,19 @@
         },
         created() {
             this.getAllServices()
-            this.getWarehouses()
-            // this.getAllSubServices()
+            if(this.currentUser.warehouse) {
+                let warehouse = {
+                    name: this.currentUser.warehouse.name,
+                    id: this.currentUser.warehouse.warehouse_id
+                }
+                this.warehouses = [warehouse]
+                this.order.warehouse = this.currentUser.warehouse.warehouse_id
+            } else {
+                this.getWarehouses()
+            }
         },
         computed: {
+            ...mapGetters(["currentUser"]),
             getDate() {
                 let date = new Date()
                 return date.toLocaleString("en-US", {day: "numeric", month: "long", year: "numeric",})
@@ -477,7 +487,7 @@
             addNewService() {
                 if(this.new_service.name !== null && this.new_service.amount !== null ) {
                     this.custom_services_options.push({
-                        id: null,
+                        c_id: this.custom_services_options.length + 1,
                         name: this.new_service.name,
                         amount: this.new_service.amount,
                     })
