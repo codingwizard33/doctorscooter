@@ -23,6 +23,16 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('get-order', "WordpressController@handle");
 Route::post('epos_addproduct', "EposController@create");
 Route::post('/epos_sellproduct', [\App\Http\Controllers\EposController::class, 'sell']);
+//
+Route::post('/epos_update_product', [\App\Http\Controllers\EposController::class, 'epos_update_product']);
+Route::post('/epos_update_product_stock', [\App\Http\Controllers\EposController::class, 'epos_update_product_stock']);
+Route::post('/epos_create_product_stock_event', [\App\Http\Controllers\EposController::class, 'epos_create_product_stock_event']);
+Route::post('/epos_create_purchase_order', [\App\Http\Controllers\EposController::class, 'epos_create_purchase_order']);
+Route::post('/epos_update_purchase_order', [\App\Http\Controllers\EposController::class, 'epos_update_purchase_order']);
+Route::post('/epos_update_product_in_stock', [\App\Http\Controllers\EposController::class, 'epos_update_product_in_stock']);
+Route::post('/epos_create_ordered_transaction', [\App\Http\Controllers\EposController::class, 'epos_create_ordered_transaction']);
+
+
 
 //--------------------------- Reset Password  ---------------------------
 
@@ -436,8 +446,8 @@ Route::middleware(['auth:api', 'Is_Active'])->group(function () {
 
         Route::get('/show/{id}', 'RepairOrderController@show');
         Route::post('/change/status/{id}', 'RepairOrderController@changeStatus');
-
         Route::post('/bar/code/{id}', 'RepairOrderController@barCode');
+
     });
 
     //------------------------------- Service --------------------------------\\
@@ -472,7 +482,7 @@ Route::middleware(['auth:api', 'Is_Active'])->group(function () {
         });
 });
 
-
+Route::get('/technicians', 'RepairOrderController@getTechnicians');
 
 
     //-------------------------------  Print & PDF ------------------------\\

@@ -251,4 +251,16 @@ class RepairOrderController extends Controller
             'totalPages' => $items->lastPage(),
         ];
     }
+
+    public function getTechnicians()
+    {
+        $user = User::find(Auth::id())->assignedWarehouses;
+        return User::whereHas(
+            'roles', function ($q) {
+            $q->where('role_id', 4);
+        }
+        )->with(['assignedWarehouses' => function ($query) use ($user){
+            $query->where($user[0]['pivot']['warehouse_id']);
+        }])->get();
+    }
 }
