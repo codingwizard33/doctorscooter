@@ -419,6 +419,7 @@
             } else {
                 this.getWarehouses()
             }
+            this.getTechnicians()
         },
         computed: {
             ...mapGetters(["currentUser"]),
@@ -584,6 +585,16 @@
                     })
 
             },
+            getTechnicians() {
+                axios
+                    .get(`/reaper/order/technicians`)
+                        .then(response => {
+                            console.log(response.data, 'getTechnicians')
+                        })
+                        .catch(error => {
+                            console.log(error)
+                        })
+            }
             // getAllSubServices() {
             //     axios
             //         .get("/sub/service")
