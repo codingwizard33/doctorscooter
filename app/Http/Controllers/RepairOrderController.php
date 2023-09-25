@@ -14,6 +14,7 @@ use App\Models\RepairOrder;
 use App\Models\RepairOrderCustomService;
 use App\Models\RepairOrderDetails;
 use App\Models\RepairOrderService;
+use App\Models\Role;
 use App\Models\Service;
 use App\Models\SubService;
 use App\Models\User;
@@ -254,13 +255,29 @@ class RepairOrderController extends Controller
 
     public function getTechnicians()
     {
-        $user = User::find(Auth::id())->assignedWarehouses;
-        return User::whereHas(
-            'roles', function ($q) {
-            $q->where('role_id', 4);
+        $tech = [];
+        $user = User::find(Auth::id());
+        $role = $user->roles[0]['id'];
+        if ($role == 1) {
+            $data = User::with('roles')->get();
+            foreach ($data as $d) {
+                $d = json_decode($d, true);
+                if ($d['roles'][0]['id'] == 4) {
+                    $tech[] = $d;
+                }
+            }
+            return $tech;
         }
-        )->with(['assignedWarehouses' => function ($query) use ($user){
-            $query->where($user[0]['pivot']['warehouse_id']);
-        }])->get();
+        $warehouse = $user->assignedWarehouses[0]['id'];
+        $data = User::with('assignedWarehouses', 'roles')->get();
+        foreach ($data as $d) {
+            if ($d['roles'][0]['id'] == 4) {
+                $d = json_decode($d, true);
+                if ($d['assigned_warehouses'][0]['id'] == $warehouse) {
+                    $tech[] = $d;
+                }
+            }
+        }
+        return $tech;
     }
 }
