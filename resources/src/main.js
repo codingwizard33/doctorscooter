@@ -40,6 +40,9 @@ Vue.use(VueCookie);
 import VueExcelXlsx from "vue-excel-xlsx";
 Vue.use(VueExcelXlsx);
 
+import VueHtml2pdf from 'vue-html2pdf'
+Vue.use(VueHtml2pdf)
+
 window.axios = require('axios');
 window.axios.defaults.baseURL = '/api/';
 
