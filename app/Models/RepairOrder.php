@@ -15,6 +15,7 @@ class RepairOrder extends Model
         'uuid',
         'warehouse',
         'key',
+        'tech_id',
         'user_id',
         'full_name',
         'phone',
@@ -77,5 +78,10 @@ class RepairOrder extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function technician()
+    {
+        return $this->hasOne(User::class, 'tech_id', 'id');
     }
 }

@@ -51,6 +51,7 @@ class CustomProductService
                     'key' => $data['key'],
                     'uuid' => $data['uuid']->toString(),
                     'warehouse' => $data['warehouse'],
+                    'tech_id' => $data['tech_id'],
                     'user_id' => Auth::id(),
                     'full_name' => $data['full_name'],
                     'phone' => $data['phone'],
