@@ -188,6 +188,17 @@
                                     </svg>&nbsp;
                                     Add New Service</b-button>
                             </b-col>
+                            <b-col md="12" class="md-12">
+                                <div class="multiselect_content">
+                                    <b-form-group :label="$t('Technicians')">
+                                        <v-select
+                                            :placeholder="$t('Choose_Technician')"
+                                            v-model="order.technician"
+                                            :options="allTechnicians.map(technician => ({label: technician.firstname+ ' '+technician.lastname, value: technician.id}))"
+                                        />
+                                    </b-form-group>
+                                </div>
+                            </b-col>
                             <hr>
                             <h1 class="page_title">Issue information</h1>
                             <!--Issue-->
@@ -378,6 +389,7 @@
                     custom_services: [],
                     selectedPayment: 'full_payment',
                     selectedWarranty: [],
+                    technician: ''
                 },
                 warehouses: [],
                 new_service: {
@@ -401,7 +413,8 @@
                     { text: 'Not Paid', value: 'not_paid' },
                 ],
                 uploadFiles: [],
-                images: []
+                images: [],
+                allTechnicians: []
             }
         },
         components: {
@@ -438,6 +451,7 @@
             Submit_Order() {
                 let services = []
                 let ev = this.order.services
+                console.log(this.order, 'aaaaaaaaaaaaaaaaaa')
                 ev.map((item) => {
                     if(item.service_id) {
                         let service  = services.find(s => s.uid === item.service_id)
@@ -467,7 +481,8 @@
                        payment_warranty: this.order.selectedWarranty,
                        images: this.images,
                        services: services,
-                       custom_services: this.order.custom_services
+                       custom_services: this.order.custom_services,
+                       tech_id: this.order.technician.value
                    })
                .then(response => {
                    if(response.status == 200) {
@@ -589,6 +604,7 @@
                 axios
                     .get(`/reaper/order/technicians`)
                         .then(response => {
+                            this.allTechnicians = response.data
                             console.log(response.data, 'getTechnicians')
                         })
                         .catch(error => {
@@ -848,6 +864,7 @@
              display: flex;
              align-items: center;
              justify-content: center;
+             margin-bottom: 10px;
              &:focus {
                  box-shadow: none;
                  outline: none;
