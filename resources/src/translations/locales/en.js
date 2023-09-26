@@ -495,6 +495,8 @@ export default {
     ListSales: 'All Sales',
     ListReturns: 'All Returns',
     PeopleManager: 'People Management',
+    Technicians: 'Technicians',
+    Choose_Technician: 'Choose Technician',
 
     //sweet Alert
     Delete: {
