@@ -188,7 +188,7 @@
                                     <div class="detail_item-btn">Technician</div>
                                     <div class="detail_item-text">
                                         <div class="detail_item-name">Name: &nbsp;</div>
-                                        <div class="detail_item-value">{{order_details.full_name}}</div>
+                                        <div class="detail_item-value">{{order_details.technician.firstname}} {{order_details.technician.lastname}}</div>
                                     </div>
                                 </div>
                             </b-col>
@@ -226,7 +226,7 @@
                                     </div>
                                     <div class="detail_item-text">
                                         <div class="detail_item-name">Service: &nbsp;</div>
-                                        <div class="detail_item-value">Oil/Filter changed, Brake Work</div>
+                                        <div class="detail_item-value">{{getServiceName(order_details.service)}}</div>
                                     </div>
                                 </div>
                             </b-col>
@@ -397,6 +397,13 @@
                         this.isLoading = false;
                     }, 500);
                 })
+            },
+            getServiceName(services) {
+                let serviceNames = []
+                services.map((service) => {
+                    serviceNames.push(service.service_name)
+                })
+                return serviceNames.join(', ')
             },
             addImg() {
                 this.$refs.photo_upload.click()
