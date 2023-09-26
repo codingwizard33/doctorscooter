@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use App\Http\Resources\RepairOrder\GetServiceNameInRepairOrder;
 use App\Http\Resources\User\GetUserResource;
+use http\Client\Curl\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Picqer\Barcode\BarcodeGeneratorSVG;
 
@@ -52,6 +53,7 @@ class CustomProductResource extends JsonResource
 //            'service' => GetServiceNameInRepairOrder::collection($this->service), // sub_service
             'service' => $this->service, // sub_service
             'custom_service' => $this->customService,
+            'technician' => \App\Models\User::find($this->tech_id),
             'details' => [
                 'text' => $detail->text ?? '',
                 'images' => $detail->images ?? []
