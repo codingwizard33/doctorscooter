@@ -10,6 +10,8 @@ use App\Http\Requests\RepairOrderDetail\CreateUpdateDetailRequest;
 use App\Http\Resources\CustomProductResource;
 use App\Mail\RepairOrderMail;
 use App\Models\Image;
+use App\Models\Lesson;
+use App\Models\Repair;
 use App\Models\RepairOrder;
 use App\Models\RepairOrderCustomService;
 use App\Models\RepairOrderDetails;
@@ -26,6 +28,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use function PHPUnit\Framework\isEmpty;
 
 class RepairOrderController extends Controller
 {
@@ -279,5 +282,47 @@ class RepairOrderController extends Controller
             }
         }
         return $tech;
+    }
+
+    public function repairSystem()
+    {
+        $statuses = ['done', 'pending', 'cancelled', 'waiting_for_parts', 'waiting_for_collection'];
+        $user = Auth::user();
+        $role = $user->roles[0]->name;
+        if ($role != 'Super admin') {
+            $warehouse = $user->assignedWarehouses[0]->id;
+        }
+        foreach ($statuses as $status) {
+            $ro = RepairOrder::query();
+            $ro->where('status', $status);
+            if ($role != 'Super admin') {
+                $ro->where('warehouse', $warehouse);
+            }
+            $repairOrder[$status] = $ro->count();
+        }
+        $tech = User::query();
+        if ($role != 'Super admin') {
+            $tech->wherehas('assignedWarehouses', function ($q) use ($warehouse) {
+                $q->where('id', $warehouse);
+            });
+        }
+        $tech->where('role_id', '4');
+        $technicians = $tech->get();
+
+        foreach ($technicians as $technician) {
+            foreach ($statuses as $status) {
+                $data['name'] = $technician['firstname'] . ' ' . $technician['lastname'];
+                $data['avatar'] = $technician['avatar'];
+                $d = RepairOrder::query();
+                if ($role != 'Super admin') {
+                    $d->where('warehouse', $warehouse);
+                }
+                $d->where('tech_id', $technician['id']);
+                $d->where('status', $status);
+                $data[$status] = $d->count();
+            }
+            $latestData[] = $data;
+        }
+        return ['allData' => $repairOrder, 'techniciansData' => $latestData];
     }
 }
