@@ -82,6 +82,6 @@ class RepairOrder extends Model
 
     public function technician()
     {
-        return $this->hasOne(User::class, 'tech_id', 'id');
+        return $this->hasOne(User::class, 'id', 'tech_id');
     }
 }

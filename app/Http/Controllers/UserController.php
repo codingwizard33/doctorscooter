@@ -166,7 +166,7 @@ class UserController extends BaseController
             $User->email     = $request['email'];
             $User->phone     = $request['phone'];
             $User->password  = Hash::make($request['password']);
-            $User->avatar    = $filename;
+            $User->avatar    = getenv('APP_URL').'/images/avatar/' . $filename;
             $User->role_id   = $request['role'];
             $User->is_all_warehouses   = $request['is_all_warehouses'];
             $User->save();
