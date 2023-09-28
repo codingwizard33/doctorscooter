@@ -29,28 +29,28 @@
                     <div class="box_item-icon">
                         <div class="icon"></div>
                     </div>
-                    <div class="point">80</div>
+                    <div class="point">{{allData.done}}</div>
                     <div class="box_item-title">Complete Repairs</div>
                 </div>
                 <div class="box_item pending">
                     <div class="box_item-icon">
                         <div class="icon"></div>
                     </div>
-                    <div class="point">25</div>
+                    <div class="point">{{allData.pending}}</div>
                     <div class="box_item-title">Pending Repairs</div>
                 </div>
                 <div class="box_item waiting">
                     <div class="box_item-icon">
                         <div class="icon"></div>
                     </div>
-                    <div class="point">10</div>
+                    <div class="point">{{allData.waiting_for_parts}}</div>
                     <div class="box_item-title">Waiting For Parts</div>
                 </div>
                 <div class="box_item collection">
                     <div class="box_item-icon">
                         <div class="icon"></div>
                     </div>
-                    <div class="point">2</div>
+                    <div class="point">{{allData.waiting_for_collection}}</div>
                     <div class="box_item-title">Waiting For Collection</div>
                 </div>
             </div>
@@ -60,10 +60,12 @@
                 <div class="working_on-content">
                     <div v-for="item of workings" class="working_on-item">
                         <div class="user_data">
-                            <div class="user_data-avatar"></div>
+                            <div class="user_data-avatar">
+                                <img :src="item.avatar == 'no_avatar.png' ? NoAvatar: item.avatar" alt="">
+                            </div>
                             <div class="user_data-name">
                                 <div class="name">{{item.name}}</div>
-                                <div class="spec">{{item.spec}}</div>
+                                <div class="spec">Technical</div>
                             </div>
                         </div>
 
@@ -73,7 +75,7 @@
                             </div>
                             <div class="user_data-item_name">
                                 <div class="item_name">Complete Repairs</div>
-                                <div class="item_point">{{item.complete_count}}</div>
+                                <div class="item_point">{{item.done}}</div>
                             </div>
                         </div>
                         <div class="user_data-item pending">
@@ -82,7 +84,7 @@
                             </div>
                             <div class="user_data-item_name">
                                 <div class="item_name">Pending Repairs</div>
-                                <div class="item_point">{{item.pending_count}}</div>
+                                <div class="item_point">{{item.pending}}</div>
                             </div>
                         </div>
                         <div class="user_data-item waiting">
@@ -91,7 +93,7 @@
                             </div>
                             <div class="user_data-item_name">
                                 <div class="item_name">Waiting for Parts</div>
-                                <div class="item_point">{{item.waiting_count}}</div>
+                                <div class="item_point">{{item.waiting_for_parts}}</div>
                             </div>
                         </div>
                         <div class="user_data-item collection">
@@ -100,7 +102,7 @@
                             </div>
                             <div class="user_data-item_name">
                                 <div class="item_name">Waiting for Colloection</div>
-                                <div class="item_point">{{item.collection_count}}</div>
+                                <div class="item_point">{{item.waiting_for_collection}}</div>
                             </div>
                         </div>
 
@@ -112,47 +114,50 @@
 </template>
 
 <script>
+    import NoAvatar from '/images/avatar.png'
     export default {
         name: "RepairSystem",
         data() {
             return {
+                allData: null,
+                NoAvatar,
                 workings: [
-                    {
-                        name: 'Nilver Michael',
-                        spec: 'Technical',
-                        avatar: '',
-                        complete_count: 12,
-                        pending_count: 13,
-                        waiting_count: 14,
-                        collection_count: 13
-                    },
-                    {
-                        name: 'Nilver Michael',
-                        spec: 'Technical',
-                        avatar: '',
-                        complete_count: 12,
-                        pending_count: 5,
-                        waiting_count: 16,
-                        collection_count: 18
-                    },
-                    {
-                        name: 'Nilver Michael',
-                        spec: 'Technical',
-                        avatar: '',
-                        complete_count: 12,
-                        pending_count: 14,
-                        waiting_count: 20,
-                        collection_count: 10
-                    },
-                    {
-                        name: 'Nilver Michael',
-                        spec: 'Technical',
-                        avatar: '',
-                        complete_count: 20,
-                        pending_count: 12,
-                        waiting_count: 11,
-                        collection_count: 13
-                    }
+                    // {
+                    //     name: 'Nilver Michael',
+                    //     spec: 'Technical',
+                    //     avatar: '',
+                    //     complete_count: 12,
+                    //     pending_count: 13,
+                    //     waiting_count: 14,
+                    //     collection_count: 13
+                    // },
+                    // {
+                    //     name: 'Nilver Michael',
+                    //     spec: 'Technical',
+                    //     avatar: '',
+                    //     complete_count: 12,
+                    //     pending_count: 5,
+                    //     waiting_count: 16,
+                    //     collection_count: 18
+                    // },
+                    // {
+                    //     name: 'Nilver Michael',
+                    //     spec: 'Technical',
+                    //     avatar: '',
+                    //     complete_count: 12,
+                    //     pending_count: 14,
+                    //     waiting_count: 20,
+                    //     collection_count: 10
+                    // },
+                    // {
+                    //     name: 'Nilver Michael',
+                    //     spec: 'Technical',
+                    //     avatar: '',
+                    //     complete_count: 20,
+                    //     pending_count: 12,
+                    //     waiting_count: 11,
+                    //     collection_count: 13
+                    // }
                 ],
                 Filter_warehouse: '',
                 warehouses: [],
@@ -181,6 +186,8 @@
                 axios
                     .get(`/reaper/order/repair-system`)
                     .then(response => {
+                        this.workings = response.data.techniciansData
+                        this.allData = response.data.allData
                         console.log('repair-system', response.data)
                     })
                     .catch(error => {
@@ -242,11 +249,15 @@
 
                     & .user_data {
                         display: flex;
+                        width: 18%;
 
                         &-avatar {
                             width: 71px;
                             height: 76px;
-                            background: url("/images/avatar.png");
+                            & img {
+                                border-radius: 12px;
+                            }
+                            /*background: url("/images/avatar.png");*/
                         }
 
                         &-name {
@@ -254,6 +265,8 @@
                             display: flex;
                             flex-direction: column;
                             justify-content: space-between;
+                            max-width: 215px;
+                            width: 100%;
 
                             & .name {
                                 font-weight: 500;
