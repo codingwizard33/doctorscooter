@@ -2,7 +2,7 @@
     <div>
         <b-row class="align-items-center mb-2">
             <b-col class="align-items-center">
-                <button class="btn btn-outline-primary mr-5" @click="daySalesReport(0)">
+                <button class="btn btn-outline-primary mr-5" @click="daySalesReport(1)">
                     Today
                 </button>
                 <button class="btn btn-outline-primary mr-5" @click="daySalesReport(7)">
@@ -181,7 +181,7 @@
                 axios
                     .get(`/reaper/order/repair-system`)
                     .then(response => {
-                        console.log('repair-system', response.data )
+                        console.log('repair-system', response.data)
                     })
                     .catch(error => {
                         console.log(error)
@@ -189,15 +189,13 @@
             },
             daySalesReport(day) {
                 axios
-                    .post(`sales-report`, {
-                        days: day,
-                    }).then(function (response) {
-                    console.log(response, 'ressss')
-                })["catch"](function (error) {
-                    console.log(error, 'error')
-                    // _this4.SubmitProcessing = false;
-                    // _this4.makeToast("danger", _this4.$t("InvalidData"), _this4.$t("Failed"));
-                });
+                    .get(`repair-system-filter/${day}`)
+                    .then(response => {
+                        console.log('repair-system-filter ', response.data)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
             },
 
         }
