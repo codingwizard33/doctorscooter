@@ -448,6 +448,8 @@ Route::middleware(['auth:api', 'Is_Active'])->group(function () {
         Route::post('/change/status/{id}', 'RepairOrderController@changeStatus');
         Route::post('/bar/code/{id}', 'RepairOrderController@barCode');
         Route::get('/technicians', 'RepairOrderController@getTechnicians');
+        Route::get('/repair-system', 'RepairOrderController@repairSystem');
+        Route::get('/repair-system-filter/{day}', 'RepairOrderController@repairSystemFilter');
     });
 
     //------------------------------- Service --------------------------------\\
