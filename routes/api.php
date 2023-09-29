@@ -449,7 +449,8 @@ Route::middleware(['auth:api', 'Is_Active'])->group(function () {
         Route::post('/bar/code/{id}', 'RepairOrderController@barCode');
         Route::get('/technicians', 'RepairOrderController@getTechnicians');
         Route::get('/repair-system', 'RepairOrderController@repairSystem');
-        Route::get('/repair-system-filter/{day}', 'RepairOrderController@repairSystemFilter');
+        Route::get('/repair-system-filter/{days}/{warehouse}', 'RepairOrderController@repairSystemFilter');
+        Route::get('/repair-system-filter-warehouse/{warehouse}', 'RepairOrderController@repairSystemFilterWarehouse');
     });
 
     //------------------------------- Service --------------------------------\\
