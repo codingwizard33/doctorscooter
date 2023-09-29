@@ -30,6 +30,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use function PHPUnit\Framework\isEmpty;
+use function PHPUnit\Framework\isNull;
 
 class RepairOrderController extends Controller
 {
@@ -285,7 +286,7 @@ class RepairOrderController extends Controller
         return $tech;
     }
 
-    public function repairSystem($filter=false, $date=null, $days=null)
+    public function repairSystem($filter = false, $date = null, $days = null, $warehouseId = 'null')
     {
         $statuses = ['done', 'pending', 'cancelled', 'waiting_for_parts', 'waiting_for_collection'];
         $user = Auth::user();
@@ -299,6 +300,8 @@ class RepairOrderController extends Controller
             $ro->where('status', $status);
             if ($role != 'Super admin') {
                 $ro->where('warehouse', $warehouse);
+            } else if ($warehouseId != 'null') {
+                $ro->where('warehouse', $warehouseId);
             }
             $filter ? ($days == 1) ? $ro->where('created_at', Carbon::today()) : $ro->where('created_at', '>=', $date) : '';
             $repairOrder[$status] = $ro->count();
@@ -307,6 +310,10 @@ class RepairOrderController extends Controller
         if ($role != 'Super admin') {
             $tech->wherehas('assignedWarehouses', function ($q) use ($warehouse) {
                 $q->where('id', $warehouse);
+            });
+        } else if ($warehouseId != 'null') {
+            $tech->wherehas('assignedWarehouses', function ($q) use ($warehouseId) {
+                $q->where('id', $warehouseId);
             });
         }
         $tech->where('role_id', '4');
@@ -319,6 +326,8 @@ class RepairOrderController extends Controller
                 $d = RepairOrder::query();
                 if ($role != 'Super admin') {
                     $d->where('warehouse', $warehouse);
+                } else if ($warehouseId != 'null') {
+                    $d->where('warehouse', $warehouseId);
                 }
                 $filter ? ($days == 1) ? $d->where('created_at', Carbon::today()) : $d->where('created_at', '>=', $date) : '';
                 $d->where('tech_id', $technician['id']);
@@ -330,9 +339,9 @@ class RepairOrderController extends Controller
         return ['allData' => $repairOrder, 'techniciansData' => $latestData];
     }
 
-    public function repairSystemFilter($days)
+    public function repairSystemFilter($days, $warehouse)
     {
         $action = ($days == 1) ? Carbon::today() : Carbon::now()->subDays($days);
-        return $this->repairSystem(true, $action, $days);
+        return $this->repairSystem(true, $action, $days, $warehouse);
     }
 }
