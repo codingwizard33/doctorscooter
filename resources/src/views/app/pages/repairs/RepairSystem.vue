@@ -16,12 +16,14 @@
                 <b-form-group :label="$t('warehouse')">
                     <v-select
                         v-model="Filter_warehouse"
+                        @input="onWarehouseChange"
                         :reduce="label => label.value"
                         :placeholder="$t('Choose_Warehouse')"
-                        :options="warehouses.map(warehouses => ({label: warehouses.name, value: warehouses.id}))"
+                        :options="warehouses.map(warehouse => ({label: warehouse.name, value: warehouse.id}))"
                     />
                 </b-form-group>
             </b-col>
+            mmmmm {{Filter_warehouse}}
         </b-row>
         <div class="page_container">
             <div class="page_boxes">
@@ -29,28 +31,28 @@
                     <div class="box_item-icon">
                         <div class="icon"></div>
                     </div>
-                    <div class="point">{{allData.done}}</div>
+                    <div v-if="allData" class="point">{{allData.done || 0}}</div>
                     <div class="box_item-title">Complete Repairs</div>
                 </div>
                 <div class="box_item pending">
                     <div class="box_item-icon">
                         <div class="icon"></div>
                     </div>
-                    <div class="point">{{allData.pending}}</div>
+                    <div v-if="allData" class="point">{{allData.pending || 0}}</div>
                     <div class="box_item-title">Pending Repairs</div>
                 </div>
                 <div class="box_item waiting">
                     <div class="box_item-icon">
                         <div class="icon"></div>
                     </div>
-                    <div class="point">{{allData.waiting_for_parts}}</div>
+                    <div v-if="allData" class="point">{{allData.waiting_for_parts || 0}}</div>
                     <div class="box_item-title">Waiting For Parts</div>
                 </div>
                 <div class="box_item collection">
                     <div class="box_item-icon">
                         <div class="icon"></div>
                     </div>
-                    <div class="point">{{allData.waiting_for_collection}}</div>
+                    <div v-if="allData" class="point">{{allData.waiting_for_collection || 0}}</div>
                     <div class="box_item-title">Waiting For Collection</div>
                 </div>
             </div>
@@ -159,7 +161,7 @@
                     //     collection_count: 13
                     // }
                 ],
-                Filter_warehouse: '',
+                Filter_warehouse: null,
                 warehouses: [],
             }
         },
@@ -188,15 +190,15 @@
                     .then(response => {
                         this.workings = response.data.techniciansData
                         this.allData = response.data.allData
-                        console.log('repair-system', response.data)
                     })
                     .catch(error => {
                         console.log(error)
                     })
             },
             daySalesReport(day) {
+                let warehouse_id = this.Filter_warehouse
                 axios
-                    .get(`/reaper/order/repair-system-filter/${day}`)
+                    .get(`/reaper/order/repair-system-filter/${day}/${warehouse_id}`)
                     .then(response => {
                         console.log('repair-system-filter ', response.data)
                     })
@@ -204,6 +206,16 @@
                         console.log(error)
                     })
             },
+            onWarehouseChange(ev) {
+                axios
+                    .get(`/reaper/order/repair-system-filter-warehouse/${ev}`)
+                    .then(response => {
+                        console.log(response.data, 'repair-system-filter-warehouse')
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+            }
 
         }
 
