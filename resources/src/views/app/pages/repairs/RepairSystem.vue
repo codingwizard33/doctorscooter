@@ -196,7 +196,7 @@
             },
             daySalesReport(day) {
                 axios
-                    .get(`repair-system-filter/${day}`)
+                    .get(`/reaper/order/repair-system-filter/${day}`)
                     .then(response => {
                         console.log('repair-system-filter ', response.data)
                     })
