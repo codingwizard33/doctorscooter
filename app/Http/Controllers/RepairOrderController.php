@@ -303,7 +303,7 @@ class RepairOrderController extends Controller
             } else if ($warehouseId != 'null') {
                 $ro->where('warehouse', $warehouseId);
             }
-            $filter ? ($days == 1) ? $ro->where('created_at', Carbon::today()) : $ro->where('created_at', '>=', $date) : '';
+            $filter ? ($days == 1) ? $ro->whereDate('created_at', Carbon::today()) : $ro->where('created_at', '>=', $date) : '';
             $repairOrder[$status] = $ro->count();
         }
         $tech = User::query();
@@ -329,7 +329,7 @@ class RepairOrderController extends Controller
                 } else if ($warehouseId != 'null') {
                     $d->where('warehouse', $warehouseId);
                 }
-                $filter ? ($days == 1) ? $d->where('created_at', Carbon::today()) : $d->where('created_at', '>=', $date) : '';
+                $filter ? ($days == 1) ? $d->whereDate('created_at', Carbon::today()) : $d->where('created_at', '>=', $date) : '';
                 $d->where('tech_id', $technician['id']);
                 $d->where('status', $status);
                 $data[$status] = $d->count();
@@ -343,5 +343,10 @@ class RepairOrderController extends Controller
     {
         $action = ($days == 1) ? Carbon::today() : Carbon::now()->subDays($days);
         return $this->repairSystem(true, $action, $days, $warehouse);
+    }
+
+    public function repairSystemFilterWarehouse($warehouse)
+    {
+        //todo
     }
 }
