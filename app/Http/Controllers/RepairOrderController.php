@@ -290,6 +290,7 @@ class RepairOrderController extends Controller
         $statuses = ['done', 'pending', 'cancelled', 'waiting_for_parts', 'waiting_for_collection'];
         $user = Auth::user();
         $role = $user->roles[0]->name;
+        $latestData = [];
         if ($role != 'Super admin') {
             $warehouse = $user->assignedWarehouses[0]->id;
         }
