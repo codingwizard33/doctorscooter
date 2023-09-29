@@ -3,6 +3,7 @@
 /storage
 /public/images/vendor
 /public/images/QR
+/public/images/avatar
 /node_modules
 /public/js
 public/mix-manifest.json
