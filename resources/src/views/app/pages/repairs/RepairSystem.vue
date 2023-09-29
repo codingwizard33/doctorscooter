@@ -1,7 +1,7 @@
 <template>
     <div>
         <b-row class="align-items-center mb-2">
-            <b-col class="align-items-center">
+            <b-col class="align-items-center head_buttons">
                 <button class="btn btn-outline-primary mr-5" @click="daySalesReport(1)">
                     Today
                 </button>
@@ -23,7 +23,6 @@
                     />
                 </b-form-group>
             </b-col>
-            mmmmm {{Filter_warehouse}}
         </b-row>
         <div class="page_container">
             <div class="page_boxes">
@@ -117,50 +116,14 @@
 
 <script>
     import NoAvatar from '/images/avatar.png'
+    import {mapGetters} from "vuex";
     export default {
         name: "RepairSystem",
         data() {
             return {
                 allData: null,
                 NoAvatar,
-                workings: [
-                    // {
-                    //     name: 'Nilver Michael',
-                    //     spec: 'Technical',
-                    //     avatar: '',
-                    //     complete_count: 12,
-                    //     pending_count: 13,
-                    //     waiting_count: 14,
-                    //     collection_count: 13
-                    // },
-                    // {
-                    //     name: 'Nilver Michael',
-                    //     spec: 'Technical',
-                    //     avatar: '',
-                    //     complete_count: 12,
-                    //     pending_count: 5,
-                    //     waiting_count: 16,
-                    //     collection_count: 18
-                    // },
-                    // {
-                    //     name: 'Nilver Michael',
-                    //     spec: 'Technical',
-                    //     avatar: '',
-                    //     complete_count: 12,
-                    //     pending_count: 14,
-                    //     waiting_count: 20,
-                    //     collection_count: 10
-                    // },
-                    // {
-                    //     name: 'Nilver Michael',
-                    //     spec: 'Technical',
-                    //     avatar: '',
-                    //     complete_count: 20,
-                    //     pending_count: 12,
-                    //     waiting_count: 11,
-                    //     collection_count: 13
-                    // }
-                ],
+                workings: [],
                 Filter_warehouse: null,
                 warehouses: [],
             }
@@ -168,8 +131,15 @@
         created() {
 
         },
+        computed: {
+            ...mapGetters(["currentUser"]),
+        },
         mounted() {
-            this.getWarehouses()
+            if(this.currentUser.warehouse) {
+                this.warehouses.push(this.currentUser.warehouse)
+            } else {
+                this.getWarehouses()
+            }
             this.getSystemData()
         },
         methods: {
@@ -200,6 +170,8 @@
                 axios
                     .get(`/reaper/order/repair-system-filter/${day}/${warehouse_id}`)
                     .then(response => {
+                        this.workings = response.data.techniciansData
+                        this.allData = response.data.allData
                         console.log('repair-system-filter ', response.data)
                     })
                     .catch(error => {
@@ -210,6 +182,8 @@
                 axios
                     .get(`/reaper/order/repair-system-filter-warehouse/${ev}`)
                     .then(response => {
+                        this.workings = response.data.techniciansData
+                        this.allData = response.data.allData
                         console.log(response.data, 'repair-system-filter-warehouse')
                     })
                     .catch(error => {
@@ -223,6 +197,16 @@
 </script>
 
 <style scoped lang="scss">
+    ::v-deep .head_buttons {
+        & .btn {
+            &:focus {
+                background: #FF9800;
+                box-shadow: 0 8px 25px -8px #FF9800;
+                border-color: #FF9800;
+                color: #111827;
+            }
+        }
+    }
     .page {
         &_container {
             display: flex;
