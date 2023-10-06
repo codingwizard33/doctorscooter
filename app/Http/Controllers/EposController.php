@@ -10,6 +10,14 @@ class EposController extends Controller
 
     public function sell(Request $request)//Test
     {
+        try {
+            $test = Test::query()->create($request->all());
+            $fo = fopen('testStockDB.txt', 'w');
+            fwrite($fo,  $test .  "\n");
+            fclose($fo);
+        } catch(\Exception $e)  {
+
+        }
         $fo = fopen('testStock.txt', 'w');
         foreach ($request->all() as $key => $value) {
             fwrite($fo, $key . ': ' . $value . "\n");
