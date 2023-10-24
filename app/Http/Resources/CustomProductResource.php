@@ -19,7 +19,6 @@ class CustomProductResource extends JsonResource
     public function toArray($request)
     {
         $path = [];
-        // dd($this->images());
         if (!empty($this->images()->pluck('path'))){
             foreach ($this->images()->get() as $key => $image){
                 $path[$key]['id'] = $image->id;
@@ -59,8 +58,10 @@ class CustomProductResource extends JsonResource
                 'images' => $detail->images ?? []
             ],
 
-            'created_at' => $this->created_at->format(config('app.app_date_format')),
-            'updated_at' => $this->updated_at->format(config('app.app_date_format')),
+//            'created_at' => $this->created_at->format(config('app.app_date_format')),
+//            'updated_at' => $this->updated_at->format(config('app.app_date_format')),
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 
