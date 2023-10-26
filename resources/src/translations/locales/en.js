@@ -244,6 +244,7 @@ export default {
     Customer: 'Customer',
     CustomerCode: 'Customer Code',
     Status: 'Status',
+    CreatedAt: 'Created at',
     UpdatedAt: 'Updated at',
     SupplierCode: 'Supplier Code',
     Categorie: 'Category',

@@ -174,6 +174,14 @@
                 <b-col md="8" class="mb-2 mr-4">
                     <b-card class="p-8">
                         <b-row>
+                            <b-col md="12" class="mb-3">
+                                <div class="order_details-date">
+                                    <b>Date: {{getDate(order_details.created_at)}}</b>
+
+                                </div>
+                            </b-col>
+                        </b-row>
+                        <b-row>
                             <b-col md="5" class="detail_item">
                                 <div class="detail_item-card">
                                     <div class="detail_item-btn">Salesman</div>
@@ -378,6 +386,10 @@
         methods: {
             goBack() {
                 this.$router.go(-1)
+            },
+            getDate(date) {
+                let d = new Date(date).toLocaleString()
+                return d
             },
             getDetails(id) {
                 NProgress.start();
