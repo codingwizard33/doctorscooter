@@ -268,7 +268,7 @@
                                         <textarea
                                             rows="5"
                                             :placeholder="$t('Afewwords')"
-                                            v-model="order_details.text"
+                                            v-model="order_details.details.text"
                                         ></textarea>
                                     </div>
                                     <div class="detail_item-text">
@@ -276,6 +276,9 @@
                                             <input type="file" multiple ref="photo_upload" @change="onFileChange">
                                             <div class="up_img"></div>
                                             <div class="up_text">Upload from Photos</div>
+                                        </div>
+                                        <div v-for="item of order_details.details.images" class="upload_img">
+                                            <img :src="'http://scooter.ec/'+item.path" alt="">
                                         </div>
                                         <div v-for="item of images" class="upload_img">
                                             <img :src="item" alt="">
@@ -571,15 +574,15 @@
                 reader.readAsDataURL(file)
             },
             saveOrderDetails() {
-                if(this.order_details.text && this.images.length) {
+                if(this.order_details.details.text && this.images.length) {
                     NProgress.start();
                         NProgress.set(0.1);
                         axios
                             .post(
-                                `reaper/order/details/update/${this.getId}`, {
+                                `reaper/order/details/store/${this.getId}`, {
                                     order_id: this.getId,
-                                    text: this.order_details.text,
-                                    image: this.images
+                                    text: this.order_details.details.text,
+                                    images: this.images
                                 }
                             )
                             .then(response => {
