@@ -22,12 +22,12 @@ class RepairOrderDetailsService
      * @param null $id
      * @return array
      */
-    public function repairOrderDetails($data)
+    public function repairOrderDetails($data, $id)
     {
         try {
             DB::beginTransaction();
                 $details = RepairOrderDetails::query()->updateOrCreate(
-                    ['order_id' => $data['order_id']], //, 'user_id' => Auth::user()->id
+                    ['order_id' => $id], //, 'user_id' => Auth::user()->id
                     [
                         'user_id' => Auth::user()->id, //Auth::user()->id
                         'order_id' => $data['order_id'],
