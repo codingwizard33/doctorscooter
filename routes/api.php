@@ -440,7 +440,7 @@ Route::middleware(['auth:api', 'Is_Active'])->group(function () {
         Route::get('/delete/one/image/{id}', 'RepairOrderController@deleteOneImage');
 
         Route::group([ 'prefix' => '/details'], function () {//   /api/reaper/order/details
-            Route::post('/store', 'RepairOrderController@repairOrderDetailsCreate');
+            Route::post('/store/{id}', 'RepairOrderController@repairOrderDetailsCreate');
             Route::get('/delete/{id}', 'RepairOrderController@repairOrderDetailsDelete');
         });
 

@@ -98,6 +98,8 @@ class RepairOrderController extends Controller
      */
     public function update(CreateUpdateRequest $request, $id)
     {
+        //CreateUpdateRequest
+//        dd($request->all());
         $product = $this->customProductService->storeOrUpdateCustomProduct($request->all(), $id);
         return response()->json([
             'message' => $product['message'],
@@ -207,14 +209,14 @@ class RepairOrderController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function repairOrderDetailsCreate(CreateUpdateDetailRequest $request)
+    public function repairOrderDetailsCreate(CreateUpdateDetailRequest $request, $id)
     {
         // create and update in one function
-        $details = $this->repairOrderDetailsService->repairOrderDetails($request->all());
+        $details = $this->repairOrderDetailsService->repairOrderDetails($request->all(), $id);
 
         if ($details['code'] == 200) {
-            Hellper::sendSMS($details['details']->repairOrder->phone, $this->MessageForMail('repair_order_finish'));
-            Mail::to($details['details']->repairOrder->email)->send(new RepairOrderMail($this->MessageForMail('repair_order_finish')));
+//            Hellper::sendSMS($details['details']->repairOrder->phone, $this->MessageForMail('repair_order_finish'));
+//            Mail::to($details['details']->repairOrder->email)->send(new RepairOrderMail($this->MessageForMail('repair_order_finish')));
         }
         return response()->json([
             'message' => $details['message'],
