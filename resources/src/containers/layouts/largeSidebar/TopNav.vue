@@ -185,7 +185,7 @@
         >
           <template slot="button-content" >
             <img
-              :src="'/images/avatar/'+currentUser.avatar"
+              :src="currentUser.avatar == 'http://scooter.ec//images/avatar/no_avatar.svg' ? currentUser.avatar : '/images/avatar/'+currentUser.avatar"
               id="userDropdown"
               alt
               data-toggle="dropdown"
@@ -282,10 +282,6 @@ export default {
       "logout",
     ]),
 
-    logoutUser() {
-      this.$store.dispatch("logout");
-    },
-
     SetLocal(locale) {
       this.$i18n.locale = locale;
       this.$store.dispatch("language/setLanguage", locale);
@@ -296,7 +292,8 @@ export default {
       Util.toggleFullScreen();
     },
     logoutUser() {
-      this.logout();
+        this.$store.dispatch("logout");
+        this.logout();
     },
 
     closeMegaMenu() {

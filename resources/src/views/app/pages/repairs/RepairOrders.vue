@@ -38,15 +38,24 @@
 <!--                    <span v-else-if="props.column.field == 'bar_code'">-->
 <!--                        <div v-html="props.formattedRow[props.column.field]"></div>-->
 <!--                    </span>-->
+                    <span v-else-if="props.column.field == 'created_at'">
+                        {{getDate(props.formattedRow[props.column.field])}}
+                    </span>
+                    <span v-else-if="props.column.field == 'updated_at'">
+                        {{getDate(props.formattedRow[props.column.field])}}
+                    </span>
                     <span v-else>
                       {{ props.formattedRow[props.column.field] }}
                     </span>
+
                     <div v-if="props.column.field == 'payment_status'">
                         {{ upper(props.formattedRow[props.column.field])}}
                     </div>
                     <div v-if="props.column.field == 'status'">
                         {{ upper(props.formattedRow[props.column.field])}}
                     </div>
+
+
                     <b-button v-if="props.column.field == 'action'" class="open_order-btn" @click="orderDetails(props)">
                         Open Order <span class="ml-2 d-flex"><i class="i-Arrow-Right"></i></span>
                     </b-button>
@@ -199,8 +208,14 @@
                         thClass: "text-left"
                     },
                     {
+                        label: this.$t("CreatedAt"),
+                        field: "created_at",
+                        tdClass: "text-left",
+                        thClass: "text-left"
+                    },
+                    {
                         label: this.$t("UpdatedAt"),
-                        field: "updated_at",
+                        field: 'updated_at',
                         tdClass: "text-left",
                         thClass: "text-left"
                     },
@@ -253,6 +268,11 @@
             },
             orderDetails(props) {
                 this.$router.push({path: `/app/repairs/order_details/${props.row.id}`, query: { id: props.row.id }})
+            },
+            getDate(item) {
+                // let d = new Date(date).toLocaleString("en-US", {timeZoneName: "short"}).split(',')[0]
+                let date = new Date(item).toLocaleString()
+                return date
             },
             tdClassPaymentStatus(row) {
                 if (row.payment_status === 'cancelled') {
