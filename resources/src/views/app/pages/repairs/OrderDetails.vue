@@ -176,7 +176,8 @@
                         <b-row>
                             <b-col md="12" class="mb-3">
                                 <div class="order_details-date">
-                                    <b>Date: {{getDate(order_details.created_at)}}</b>
+                                    <b>Created at: {{getDate(order_details.created_at)}}</b>
+                                    <b>Updated at: {{getDate(order_details.updated_at)}}</b>
 
                                 </div>
                             </b-col>
@@ -278,7 +279,7 @@
                                             <div class="up_text">Upload from Photos</div>
                                         </div>
                                         <div v-for="item of order_details.details.images" class="upload_img">
-                                            <img :src="'http://scooter.ec/'+item.path" alt="">
+                                            <img :src="'https://doctorscootercrm.co.uk/'+item.path" alt="">
                                         </div>
                                         <div v-for="item of images" class="upload_img">
                                             <img :src="item" alt="">
@@ -678,6 +679,10 @@
 <style scoped lang="scss">
     .main-content {
         position: relative;
+        & .order_details-date {
+            display: flex;
+            justify-content: space-between;
+        }
         & .head_btn-container {
             position: absolute;
             top: 0;
