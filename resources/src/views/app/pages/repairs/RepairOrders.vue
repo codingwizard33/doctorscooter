@@ -48,9 +48,9 @@
                       {{ props.formattedRow[props.column.field] }}
                     </span>
 
-                    <div v-if="props.column.field == 'payment_status'">
-                        {{ upper(props.formattedRow[props.column.field])}}
-                    </div>
+<!--                    <div v-if="props.column.field == 'payment_status'">-->
+<!--                        {{ upper(props.formattedRow[props.column.field])}}-->
+<!--                    </div>-->
                     <div v-if="props.column.field == 'status'">
                         {{ upper(props.formattedRow[props.column.field])}}
                     </div>
@@ -94,8 +94,13 @@
 
                         <!-- date  -->
                         <b-col md="12">
-                            <b-form-group :label="$t('date')">
-                                <b-form-input type="date" v-model="Filter_date"></b-form-input>
+                            <b-form-group label="Start Date">
+                                <b-form-input type="date" v-model="start_date"></b-form-input>
+                            </b-form-group>
+                        </b-col>
+                        <b-col md="12">
+                            <b-form-group label="End Date">
+                                <b-form-input type="date" v-model="end_date"></b-form-input>
                             </b-form-group>
                         </b-col>
 
@@ -104,8 +109,19 @@
                             <b-form-group label="Status">
                                 <v-select
                                     placeholder="Choose Status"
-                                    v-model="Filter_category"
-                                    :options="categories.map(category => ({label: category.label, value: category.name}))"
+                                    v-model="status_filter"
+                                    :options="statuses.map(status => ({label: status.label, value: status.name}))"
+                                />
+                            </b-form-group>
+                        </b-col>
+
+                        <!-- Payment Status  -->
+                        <b-col md="12">
+                            <b-form-group label="Payment Status">
+                                <v-select
+                                    placeholder="Choose Payment Status"
+                                    v-model="payment_status_filter"
+                                    :options="payment_statuses.map(status => ({label: status.label, value: status.name}))"
                                 />
                             </b-form-group>
                         </b-col>
@@ -134,12 +150,12 @@
 <!--                            </b-button>-->
 <!--                        </b-col>-->
 
-<!--                        <b-col md="6" sm="12">-->
-<!--                            <b-button @click="Reset_Filter()" variant="danger m-1" size="sm" block>-->
-<!--                                <i class="i-Power-2"></i>-->
-<!--                                {{ $t("Reset") }}-->
-<!--                            </b-button>-->
-<!--                        </b-col>-->
+                        <b-col md="6" sm="12">
+                            <b-button @click="Reset_Filter()" variant="danger m-1" size="sm" block>
+                                <i class="i-Power-2"></i>
+                                {{ $t("Reset") }}
+                            </b-button>
+                        </b-col>
 
                     </b-row>
                 </div>
@@ -159,9 +175,11 @@
                 search: "",
                 isLoading: true,
                 orders: {},
-                Filter_date: '',
-                Filter_category: '',
-                categories: [
+                start_date: '',
+                end_date: '',
+                status_filter: '',
+                payment_status_filter: '',
+                statuses: [
                     {
                         label: 'Done',
                         name: 'done'
@@ -177,6 +195,24 @@
                     {
                         label: 'Waiting for collection',
                         name: 'waiting_for_collection'
+                    },
+                    {
+                        label: 'Cancelled',
+                        name: 'cancelled'
+                    }
+                ],
+                payment_statuses: [
+                    {
+                        label: 'Paid',
+                        name: 'paid'
+                    },
+                    {
+                        label: 'Pending',
+                        name: 'pending'
+                    },
+                    {
+                        label: 'Not Paid',
+                        name: 'not_paid'
                     },
                     {
                         label: 'Cancelled',
@@ -250,22 +286,37 @@
                 let filteredItems = this.orders.filter((item) => {
                     return item.full_name.toLowerCase().includes(this.search.toLowerCase())
                 })
-                let dateFilter = filteredItems.filter((item) => {
-                    if(this.Filter_date !== '') {
-                        let date_set = new Date(this.Filter_date).getTime()
+                let startDate = filteredItems.filter((item) => {
+                    if(this.start_date !== '') {
+                        let date_set = new Date(this.start_date).getTime()
                         return new Date(item.created_at).getTime() >=  date_set
                     } else {
                         return item
                     }
                 })
-                let statusFilter = dateFilter.filter((statusItem) => {
-                    if(this.Filter_category && this.Filter_category.value) {
-                        return statusItem.status == this.Filter_category.value
+                let endDate = startDate.filter((item) => {
+                    if(this.end_date !== '') {
+                        let date_set = new Date(this.end_date).getTime()
+                        return new Date(item.created_at).getTime() <=  date_set
+                    } else {
+                        return item
+                    }
+                })
+                let statusFilter = endDate.filter((statusItem) => {
+                    if(this.status_filter && this.status_filter.value) {
+                        return statusItem.status == this.status_filter.value
                     } else {
                         return statusItem
                     }
                 })
-                return statusFilter
+                let paymentStatusFilter = statusFilter.filter((statusItem) => {
+                    if(this.payment_status_filter && this.payment_status_filter.value) {
+                        return statusItem.payment_status == this.payment_status_filter.value
+                    } else {
+                        return statusItem
+                    }
+                })
+                return paymentStatusFilter
             }
         },
         methods: {
@@ -295,6 +346,15 @@
             onSearch(value) {
                 this.search = value.searchTerm;
                 // this.Get_Products(this.serverParams.page);
+            },
+
+            //------ Reset Filter
+            Reset_Filter() {
+                this.search = "";
+                this.start_date = "";
+                this.end_date = "";
+                this.status_filter = "";
+                this.payment_status_filter = "";
             },
             newOrder() {
                 this.$router.push({path: `/app/repairs/order`})
@@ -329,6 +389,7 @@
                 }
             },
             upper(item) {
+                console.log(item)
                 return item.charAt(0).toUpperCase() + item.replaceAll('_', ' ').slice(1);
             },
             // printQr(props) {
