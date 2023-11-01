@@ -48,9 +48,9 @@
                       {{ props.formattedRow[props.column.field] }}
                     </span>
 
-                    <div v-if="props.column.field == 'payment_status'">
-                        {{ upper(props.formattedRow[props.column.field])}}
-                    </div>
+<!--                    <div v-if="props.column.field == 'payment_status'">-->
+<!--                        {{ upper(props.formattedRow[props.column.field])}}-->
+<!--                    </div>-->
                     <div v-if="props.column.field == 'status'">
                         {{ upper(props.formattedRow[props.column.field])}}
                     </div>
@@ -110,7 +110,18 @@
                                 <v-select
                                     placeholder="Choose Status"
                                     v-model="status_filter"
-                                    :options="categories.map(category => ({label: category.label, value: category.name}))"
+                                    :options="statuses.map(status => ({label: status.label, value: status.name}))"
+                                />
+                            </b-form-group>
+                        </b-col>
+
+                        <!-- Payment Status  -->
+                        <b-col md="12">
+                            <b-form-group label="Payment Status">
+                                <v-select
+                                    placeholder="Choose Payment Status"
+                                    v-model="payment_status_filter"
+                                    :options="payment_statuses.map(status => ({label: status.label, value: status.name}))"
                                 />
                             </b-form-group>
                         </b-col>
@@ -167,7 +178,8 @@
                 start_date: '',
                 end_date: '',
                 status_filter: '',
-                categories: [
+                payment_status_filter: '',
+                statuses: [
                     {
                         label: 'Done',
                         name: 'done'
@@ -183,6 +195,24 @@
                     {
                         label: 'Waiting for collection',
                         name: 'waiting_for_collection'
+                    },
+                    {
+                        label: 'Cancelled',
+                        name: 'cancelled'
+                    }
+                ],
+                payment_statuses: [
+                    {
+                        label: 'Paid',
+                        name: 'paid'
+                    },
+                    {
+                        label: 'Pending',
+                        name: 'pending'
+                    },
+                    {
+                        label: 'Not Paid',
+                        name: 'not_paid'
                     },
                     {
                         label: 'Cancelled',
@@ -279,7 +309,14 @@
                         return statusItem
                     }
                 })
-                return statusFilter
+                let paymentStatusFilter = statusFilter.filter((statusItem) => {
+                    if(this.payment_status_filter && this.payment_status_filter.value) {
+                        return statusItem.payment_status == this.payment_status_filter.value
+                    } else {
+                        return statusItem
+                    }
+                })
+                return paymentStatusFilter
             }
         },
         methods: {
@@ -317,6 +354,7 @@
                 this.start_date = "";
                 this.end_date = "";
                 this.status_filter = "";
+                this.payment_status_filter = "";
             },
             newOrder() {
                 this.$router.push({path: `/app/repairs/order`})
@@ -351,6 +389,7 @@
                 }
             },
             upper(item) {
+                console.log(item)
                 return item.charAt(0).toUpperCase() + item.replaceAll('_', ' ').slice(1);
             },
             // printQr(props) {
