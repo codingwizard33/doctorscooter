@@ -8,7 +8,7 @@
                 mode="remote"
                 :columns="columns"
                 :totalRows="totalRows"
-                :rows="orders"
+                :rows="filteredItems"
                 :sort-options="{
                     enabled: false,
                 }"
@@ -92,13 +92,20 @@
 <!--                            </b-form-group>-->
 <!--                        </b-col>-->
 
-                        <!-- Category  -->
+                        <!-- date  -->
                         <b-col md="12">
-                            <b-form-group :label="$t('Categorie')">
+                            <b-form-group :label="$t('date')">
+                                <b-form-input type="date" v-model="Filter_date"></b-form-input>
+                            </b-form-group>
+                        </b-col>
+
+                        <!-- Status  -->
+                        <b-col md="12">
+                            <b-form-group label="Status">
                                 <v-select
-                                    :placeholder="$t('Choose_Category')"
+                                    placeholder="Choose Status"
                                     v-model="Filter_category"
-                                    :options="categories.map(categories => ({label: categories.lavel, value: categories.name}))"
+                                    :options="categories.map(category => ({label: category.label, value: category.name}))"
                                 />
                             </b-form-group>
                         </b-col>
@@ -152,19 +159,24 @@
                 search: "",
                 isLoading: true,
                 orders: {},
+                Filter_date: '',
                 Filter_category: '',
                 categories: [
                     {
-                        label: 'Paid',
-                        name: 'paid'
-                    },
-                    {
-                        label: 'Not Paid',
-                        name: 'not_paid'
+                        label: 'Done',
+                        name: 'done'
                     },
                     {
                         label: 'Pending',
                         name: 'pending'
+                    },
+                    {
+                        label: 'Waiting for parts',
+                        name: 'waiting_for_parts'
+                    },
+                    {
+                        label: 'Waiting for collection',
+                        name: 'waiting_for_collection'
                     },
                     {
                         label: 'Cancelled',
@@ -233,6 +245,27 @@
                     // },
 
                 ];
+            },
+            filteredItems() {
+                let filteredItems = this.orders.filter((item) => {
+                    return item.full_name.toLowerCase().includes(this.search.toLowerCase())
+                })
+                let dateFilter = filteredItems.filter((item) => {
+                    if(this.Filter_date !== '') {
+                        let date_set = new Date(this.Filter_date).getTime()
+                        return new Date(item.created_at).getTime() >=  date_set
+                    } else {
+                        return item
+                    }
+                })
+                let statusFilter = dateFilter.filter((statusItem) => {
+                    if(this.Filter_category && this.Filter_category.value) {
+                        return statusItem.status == this.Filter_category.value
+                    } else {
+                        return statusItem
+                    }
+                })
+                return statusFilter
             }
         },
         methods: {
