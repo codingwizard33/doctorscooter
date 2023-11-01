@@ -177,6 +177,7 @@
                             <b-col md="12" class="mb-3">
                                 <div class="order_details-date">
                                     <b>Created at: {{getDate(order_details.created_at)}}</b>
+                                    <b>Id: {{order_details.uuid}}</b>
                                     <b>Updated at: {{getDate(order_details.updated_at)}}</b>
 
                                 </div>
