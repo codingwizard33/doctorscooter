@@ -320,11 +320,11 @@ class RepairOrderController extends Controller
         }
         $tech->where('role_id', '4');
         $technicians = $tech->get();
-
         foreach ($technicians as $technician) {
             foreach ($statuses as $status) {
-                $data['name'] = $technician['firstname'] . ' ' . $technician['lastname'];
+                $data['id'] = $technician['id'];
                 $data['avatar'] = $technician['avatar'];
+                $data['name'] = $technician['firstname'] . ' ' . $technician['lastname'];
                 $d = RepairOrder::query();
                 if ($role != 'Super admin') {
                     $d->where('warehouse', $warehouse);
@@ -345,6 +345,11 @@ class RepairOrderController extends Controller
     {
         $action = ($days == 1) ? Carbon::today() : Carbon::now()->subDays($days);
         return $this->repairSystem(true, $action, $days, $warehouse);
+    }
+
+    public function repairOrderFilter($tecId, $status)
+    {
+
     }
 
     public function repairSystemFilterWarehouse($warehouse)
