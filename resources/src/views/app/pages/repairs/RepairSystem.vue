@@ -70,7 +70,7 @@
                             </div>
                         </div>
 
-                        <div class="user_data-item completed">
+                        <div class="user_data-item completed" @click="getTechnicData(item.id, 'done')">
                             <div class="user_data-item_avatar">
                                 <div class="small_avatar"></div>
                             </div>
@@ -79,7 +79,7 @@
                                 <div class="item_point">{{item.done}}</div>
                             </div>
                         </div>
-                        <div class="user_data-item pending">
+                        <div class="user_data-item pending" @click="getTechnicData(item.id, 'pending')">
                             <div class="user_data-item_avatar">
                                 <div class="small_avatar"></div>
                             </div>
@@ -88,7 +88,7 @@
                                 <div class="item_point">{{item.pending}}</div>
                             </div>
                         </div>
-                        <div class="user_data-item waiting">
+                        <div class="user_data-item waiting" @click="getTechnicData(item.id, 'waiting_for_parts')">
                             <div class="user_data-item_avatar">
                                 <div class="small_avatar"></div>
                             </div>
@@ -97,7 +97,7 @@
                                 <div class="item_point">{{item.waiting_for_parts}}</div>
                             </div>
                         </div>
-                        <div class="user_data-item collection">
+                        <div class="user_data-item collection" @click="getTechnicData(item.id, 'waiting_for_collection')">
                             <div class="user_data-item_avatar">
                                 <div class="small_avatar"></div>
                             </div>
@@ -188,6 +188,14 @@
                     })
                     .catch(error => {
                         console.log(error)
+                    })
+            },
+            getTechnicData(id, status) {
+                console.log(id, status, 'id _ status')
+
+                axios.get(`/reaper/order/repair-order-filter/${id}/${status}`)
+                    .then(response => {
+                        console.log(response, 'res')
                     })
             }
 
