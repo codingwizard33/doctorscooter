@@ -48,9 +48,9 @@
                       {{ props.formattedRow[props.column.field] }}
                     </span>
 
-<!--                    <div v-if="props.column.field == 'payment_status'">-->
-<!--                        {{ upper(props.formattedRow[props.column.field])}}-->
-<!--                    </div>-->
+                    <div v-if="props.column.field == 'payment_status'">
+                        {{ upper(props.formattedRow[props.column.field])}}
+                    </div>
                     <div v-if="props.column.field == 'status'">
                         {{ upper(props.formattedRow[props.column.field])}}
                     </div>
@@ -368,14 +368,15 @@
                 return date
             },
             tdClassPaymentStatus(row) {
-                if (row.payment_status === 'cancelled') {
+                if(row.payment_status === 'pending') {
+                    return 'pending';
+                }else if (row.payment_status === 'cancelled') {
                     return 'cancelled';
                 } else if(row.payment_status === 'paid') {
                     return 'paid';
                 } else if(row.payment_status === 'not_paid') {
                     return 'not_paid'
                 }
-                return 'green-class';
             },
             tdClassStatus(row) {
                 if (row.status === 'waiting_for_collection') {
@@ -389,7 +390,6 @@
                 }
             },
             upper(item) {
-                console.log(item)
                 return item.charAt(0).toUpperCase() + item.replaceAll('_', ' ').slice(1);
             },
             // printQr(props) {
