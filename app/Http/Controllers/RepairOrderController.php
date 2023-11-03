@@ -29,6 +29,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use mysql_xdevapi\Collection;
 use function PHPUnit\Framework\isEmpty;
 use function PHPUnit\Framework\isNull;
 
@@ -349,7 +350,25 @@ class RepairOrderController extends Controller
 
     public function repairOrderFilter($tecId, $status)
     {
-
+        $products = RepairOrder::query()
+            ->with('images', 'customService', 'user', 'service.subService')
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+        foreach ($products[0]['service'] as $s) {
+            $s['subService'] = SubService::query()->whereIn('id', explode(',', $s['subservice_id']))->get();
+        }
+        $data = CustomProductResource::collection($products->items())->toArray('collection');
+        foreach ($data as $d) {
+            if ($d['technician']['id'] == $tecId && $d['status'] == $status) {
+                $latestData[] = $d;
+            }
+        }
+        return response()->json(
+            [
+                'items' => $latestData,
+                'pagination' => $this->pagination($products),
+            ]
+        );
     }
 
     public function repairSystemFilterWarehouse($warehouse)
