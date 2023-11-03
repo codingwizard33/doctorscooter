@@ -450,7 +450,7 @@ Route::middleware(['auth:api', 'Is_Active'])->group(function () {
         Route::get('/technicians', 'RepairOrderController@getTechnicians');
         Route::get('/repair-system', 'RepairOrderController@repairSystem');
         Route::get('/repair-system-filter/{days}/{warehouse}', 'RepairOrderController@repairSystemFilter');
-        Route::get('/repair-order-filter/{tecId}/{warehouse}', 'RepairOrderController@repairOrderFilter');
+        Route::get('/repair-order-filter/{tecId}/{status}', 'RepairOrderController@repairOrderFilter');
         Route::get('/repair-system-filter-warehouse/{warehouse}', 'RepairOrderController@repairSystemFilterWarehouse');
     });
 
