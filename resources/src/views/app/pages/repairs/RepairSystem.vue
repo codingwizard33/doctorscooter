@@ -70,7 +70,7 @@
                             </div>
                         </div>
 
-                        <div class="user_data-item completed" @click="getTechnicData(item.id, 'done')">
+                        <div class="user_data-item completed" :class="{'pointer':item.done != 0 }" @click="getTechnicData(item, 'done')">
                             <div class="user_data-item_avatar">
                                 <div class="small_avatar"></div>
                             </div>
@@ -79,7 +79,7 @@
                                 <div class="item_point">{{item.done}}</div>
                             </div>
                         </div>
-                        <div class="user_data-item pending" @click="getTechnicData(item.id, 'pending')">
+                        <div class="user_data-item pending" :class="{'pointer':item.pending != 0 }" @click="getTechnicData(item, 'pending')">
                             <div class="user_data-item_avatar">
                                 <div class="small_avatar"></div>
                             </div>
@@ -88,7 +88,7 @@
                                 <div class="item_point">{{item.pending}}</div>
                             </div>
                         </div>
-                        <div class="user_data-item waiting" @click="getTechnicData(item.id, 'waiting_for_parts')">
+                        <div class="user_data-item waiting" :class="{'pointer':item.waiting_for_parts != 0 }" @click="getTechnicData(item, 'waiting_for_parts')">
                             <div class="user_data-item_avatar">
                                 <div class="small_avatar"></div>
                             </div>
@@ -97,7 +97,7 @@
                                 <div class="item_point">{{item.waiting_for_parts}}</div>
                             </div>
                         </div>
-                        <div class="user_data-item collection" @click="getTechnicData(item.id, 'waiting_for_collection')">
+                        <div class="user_data-item collection" :class="{'pointer':item.waiting_for_collection != 0 }" @click="getTechnicData(item, 'waiting_for_collection')">
                             <div class="user_data-item_avatar">
                                 <div class="small_avatar"></div>
                             </div>
@@ -115,449 +115,463 @@
 </template>
 
 <script>
-    import NoAvatar from '/images/avatar.png'
-    import {mapGetters} from "vuex";
-    export default {
-        name: "RepairSystem",
-        data() {
-            return {
-                allData: null,
-                NoAvatar,
-                workings: [],
-                Filter_warehouse: null,
-                warehouses: [],
-            }
-        },
-        created() {
+import NoAvatar from '/images/avatar.png'
+import {mapGetters} from "vuex";
+
+export default {
+    name: "RepairSystem",
+    data() {
+        return {
+            allData: null,
+            NoAvatar,
+            workings: [],
+            Filter_warehouse: null,
+            warehouses: [],
+        }
+    },
+    created() {
+
+    },
+    computed: {
+        ...mapGetters(["currentUser"]),
+    },
+    mounted() {
+        if (this.currentUser.warehouse) {
+            this.warehouses.push(this.currentUser.warehouse)
+        } else {
+            this.getWarehouses()
+        }
+        this.getSystemData()
+    },
+    methods: {
+        getWarehouses() {
+            axios
+                .get(`/get-warehouses`)
+                .then(response => {
+                    this.warehouses = response.data;
+                })
+                .catch(error => {
+                    console.log(error)
+                })
 
         },
-        computed: {
-            ...mapGetters(["currentUser"]),
+        getSystemData() {
+            axios
+                .get(`/reaper/order/repair-system`)
+                .then(response => {
+                    this.workings = response.data.techniciansData
+                    this.allData = response.data.allData
+                })
+                .catch(error => {
+                    console.log(error)
+                })
         },
-        mounted() {
-            if(this.currentUser.warehouse) {
-                this.warehouses.push(this.currentUser.warehouse)
+        daySalesReport(day) {
+            let warehouse_id = this.Filter_warehouse
+            axios
+                .get(`/reaper/order/repair-system-filter/${day}/${warehouse_id}`)
+                .then(response => {
+                    this.workings = response.data.techniciansData
+                    this.allData = response.data.allData
+                    console.log('repair-system-filter ', response.data)
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        },
+        onWarehouseChange(ev) {
+            axios
+                .get(`/reaper/order/repair-system-filter-warehouse/${ev}`)
+                .then(response => {
+                    this.workings = response.data.techniciansData
+                    this.allData = response.data.allData
+                    console.log(response.data, 'repair-system-filter-warehouse')
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        },
+        getTechnicData(item, status) {
+            if (item[status] != 0) {
+                console.log(item)
+                console.log(status)
+                this.$router.push({path: `/app/repairs/repair_orders`, query: { id: item.id, status: status }})
+
             } else {
-                this.getWarehouses()
-            }
-            this.getSystemData()
-        },
-        methods: {
-            getWarehouses() {
-                axios
-                    .get(`/get-warehouses`)
-                    .then(response => {
-                        this.warehouses = response.data;
-                    })
-                    .catch(error => {
-                        console.log(error)
-                    })
 
-            },
-            getSystemData() {
-                axios
-                    .get(`/reaper/order/repair-system`)
-                    .then(response => {
-                        this.workings = response.data.techniciansData
-                        this.allData = response.data.allData
-                    })
-                    .catch(error => {
-                        console.log(error)
-                    })
-            },
-            daySalesReport(day) {
-                let warehouse_id = this.Filter_warehouse
-                axios
-                    .get(`/reaper/order/repair-system-filter/${day}/${warehouse_id}`)
-                    .then(response => {
-                        this.workings = response.data.techniciansData
-                        this.allData = response.data.allData
-                        console.log('repair-system-filter ', response.data)
-                    })
-                    .catch(error => {
-                        console.log(error)
-                    })
-            },
-            onWarehouseChange(ev) {
-                axios
-                    .get(`/reaper/order/repair-system-filter-warehouse/${ev}`)
-                    .then(response => {
-                        this.workings = response.data.techniciansData
-                        this.allData = response.data.allData
-                        console.log(response.data, 'repair-system-filter-warehouse')
-                    })
-                    .catch(error => {
-                        console.log(error)
-                    })
-            },
-            getTechnicData(id, status) {
-                console.log(id, status, 'id _ status')
-
-                axios.get(`/reaper/order/repair-order-filter/${id}/${status}`)
-                    .then(response => {
-                        console.log(response, 'res')
-                    })
             }
+
 
         }
 
     }
+
+}
 </script>
 
 <style scoped lang="scss">
-    ::v-deep .head_buttons {
-        & .btn {
-            &:focus {
-                background: #FF9800;
-                box-shadow: 0 8px 25px -8px #FF9800;
-                border-color: #FF9800;
-                color: #111827;
-            }
+::v-deep .head_buttons {
+    & .btn {
+        &:focus {
+            background: #FF9800;
+            box-shadow: 0 8px 25px -8px #FF9800;
+            border-color: #FF9800;
+            color: #111827;
         }
     }
-    .page {
-        &_container {
-            display: flex;
-            width: 100%;
-            flex-direction: column;
+}
 
-            & .working_on {
-                &-container {
+.page {
+    &_container {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+
+        & .working_on {
+            &-container {
+                display: flex;
+                flex-direction: column;
+                background: #FFFFFF;
+                border: 1.55215px solid #EAEAEA;
+                box-shadow: 0 6.2086px 15.5215px rgba(0, 0, 0, 0.04);
+                border-radius: 23.2823px;
+                padding: 12px 40px;
+            }
+
+            &-title {
+                font-weight: 500;
+                font-size: 32px;
+                line-height: 44px;
+                color: #263238;
+                margin-bottom: 17px;
+            }
+
+            &-item {
+                background: #FFFFFF;
+                border: 0.886944px solid #EAEAEA;
+                box-shadow: 0 7.09555px 17.7389px rgba(0, 0, 0, 0.04);
+                border-radius: 8.86944px;
+                padding: 17px 18px;
+                margin: 10px 0;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                & .user_data {
                     display: flex;
-                    flex-direction: column;
-                    background: #FFFFFF;
-                    border: 1.55215px solid #EAEAEA;
-                    box-shadow: 0 6.2086px 15.5215px rgba(0, 0, 0, 0.04);
-                    border-radius: 23.2823px;
-                    padding: 12px 40px;
-                }
+                    width: 18%;
 
-                &-title {
-                    font-weight: 500;
-                    font-size: 32px;
-                    line-height: 44px;
-                    color: #263238;
-                    margin-bottom: 17px;
-                }
+                    &-avatar {
+                        width: 71px;
+                        height: 76px;
 
-                &-item {
-                    background: #FFFFFF;
-                    border: 0.886944px solid #EAEAEA;
-                    box-shadow: 0 7.09555px 17.7389px rgba(0, 0, 0, 0.04);
-                    border-radius: 8.86944px;
-                    padding: 17px 18px;
-                    margin: 10px 0;
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-
-                    & .user_data {
-                        display: flex;
-                        width: 18%;
-
-                        &-avatar {
-                            width: 71px;
-                            height: 76px;
-                            & img {
-                                border-radius: 12px;
-                            }
-                            /*background: url("/images/avatar.png");*/
+                        & img {
+                            border-radius: 12px;
                         }
 
-                        &-name {
-                            padding: 1px 14px;
+                        /*background: url("/images/avatar.png");*/
+                    }
+
+                    &-name {
+                        padding: 1px 14px;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-between;
+                        max-width: 215px;
+                        width: 100%;
+
+                        & .name {
+                            font-weight: 500;
+                            font-size: 23.0605px;
+                            line-height: 35px;
+                            color: #263238;
+                        }
+
+                        & .spec {
+                            font-weight: 400;
+                            font-size: 20px;
+                            line-height: 30px;
+                            color: #C0C0C0;
+                        }
+                    }
+
+                    &-item {
+                        border-left: 2px solid #E8E8E8;
+                        display: flex;
+                        align-items: center;
+                        padding-left: 32px;
+                        &.pointer {
+                        cursor: pointer;
+                            &:hover {
+                                border-left: 2px solid #808080;
+                            }
+                    }
+
+                        &_name {
                             display: flex;
                             flex-direction: column;
                             justify-content: space-between;
-                            max-width: 215px;
-                            width: 100%;
+                            padding-left: 14px;
 
-                            & .name {
-                                font-weight: 500;
-                                font-size: 23.0605px;
-                                line-height: 35px;
-                                color: #263238;
-                            }
-
-                            & .spec {
-                                font-weight: 400;
-                                font-size: 20px;
-                                line-height: 30px;
-                                color: #C0C0C0;
+                            & .item_name {
+                                font-weight: 600;
+                                font-size: 17px;
+                                line-height: 20px;
+                                color: #717171;
+                                margin-bottom: 10px;
                             }
                         }
 
-                        &-item {
-                            border-left: 2px solid #E8E8E8;
-                            display: flex;
-                            align-items: center;
-                            padding-left: 32px;
-
-                            &_name {
+                        &.completed {
+                            & .user_data-item_avatar {
+                                width: 63px;
+                                height: 66px;
+                                border-radius: 16px;
+                                background: #DAF7EB;
                                 display: flex;
-                                flex-direction: column;
-                                justify-content: space-between;
-                                padding-left: 14px;
+                                align-items: center;
+                                justify-content: center;
 
-                                & .item_name {
-                                    font-weight: 600;
-                                    font-size: 17px;
-                                    line-height: 20px;
-                                    color: #717171;
-                                    margin-bottom: 10px;
-                                }
-                            }
-
-                            &.completed {
-                                & .user_data-item_avatar {
-                                    width: 63px;
-                                    height: 66px;
-                                    border-radius: 16px;
-                                    background: #DAF7EB;
-                                    display: flex;
-                                    align-items: center;
-                                    justify-content: center;
-
-                                    & .small_avatar {
-                                        width: 30px;
-                                        height: 30px;
-                                        background: url("/images/completed_small.svg");
-                                        background-position: center;
-                                        background-repeat: no-repeat;
-                                        background-size: contain;
-                                    }
-
-                                }
-
-                                & .item_point {
-                                    font-weight: 700;
-                                    font-size: 28px;
-                                    line-height: 32px;
-                                    color: #42B844;
+                                & .small_avatar {
+                                    width: 30px;
+                                    height: 30px;
+                                    background: url("/images/completed_small.svg");
+                                    background-position: center;
+                                    background-repeat: no-repeat;
+                                    background-size: contain;
                                 }
 
                             }
 
-                            &.pending {
-                                & .user_data-item_avatar {
-                                    width: 63px;
-                                    height: 66px;
-                                    border-radius: 16px;
-                                    background: #FFE5BF;
-                                    display: flex;
-                                    align-items: center;
-                                    justify-content: center;
-
-                                    & .small_avatar {
-                                        width: 30px;
-                                        height: 30px;
-                                        background: url("/images/pending_small.svg");
-                                        background-position: center;
-                                        background-repeat: no-repeat;
-                                        background-size: contain;
-                                    }
-                                }
-
-                                & .item_point {
-                                    font-weight: 700;
-                                    font-size: 28px;
-                                    line-height: 32px;
-                                    color: #FF9900;
-                                }
-                            }
-
-                            &.waiting {
-                                & .user_data-item_avatar {
-                                    width: 63px;
-                                    height: 66px;
-                                    border-radius: 16px;
-                                    background: #EEDEFE;
-                                    display: flex;
-                                    align-items: center;
-                                    justify-content: center;
-
-                                    & .small_avatar {
-                                        width: 30px;
-                                        height: 30px;
-                                        background: url("/images/waiting_small.svg");
-                                        background-position: center;
-                                        background-repeat: no-repeat;
-                                        background-size: contain;
-                                    }
-                                }
-
-                                & .item_point {
-                                    font-weight: 700;
-                                    font-size: 28px;
-                                    line-height: 32px;
-                                    color: #A958FC;
-                                }
-                            }
-
-                            &.collection {
-                                & .user_data-item_avatar {
-                                    width: 63px;
-                                    height: 66px;
-                                    border-radius: 16px;
-                                    background: #CFF3FF;
-                                    display: flex;
-                                    align-items: center;
-                                    justify-content: center;
-
-                                    & .small_avatar {
-                                        width: 30px;
-                                        height: 30px;
-                                        background: url("/images/collection_small.svg");
-                                        background-position: center;
-                                        background-repeat: no-repeat;
-                                        background-size: contain;
-                                    }
-                                }
-
-                                & .item_point {
-                                    font-weight: 700;
-                                    font-size: 28px;
-                                    line-height: 32px;
-                                    color: #40D1FD;
-                                }
-
+                            & .item_point {
+                                font-weight: 700;
+                                font-size: 28px;
+                                line-height: 32px;
+                                color: #42B844;
                             }
 
                         }
-                    }
-                }
-            }
-        }
 
-        &_boxes {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 39px;
+                        &.pending {
+                            & .user_data-item_avatar {
+                                width: 63px;
+                                height: 66px;
+                                border-radius: 16px;
+                                background: #FFE5BF;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
 
-            & .box_item {
-                width: 395px;
-                height: 380px;
-                background: #FFFFFF;
-                border: 1.55215px solid #EAEAEA;
-                box-shadow: 0px 6.2086px 15.5215px rgba(0, 0, 0, 0.04);
-                border-radius: 23.2823px;
-                padding: 36px;
-                display: flex;
-                flex-direction: column;
+                                & .small_avatar {
+                                    width: 30px;
+                                    height: 30px;
+                                    background: url("/images/pending_small.svg");
+                                    background-position: center;
+                                    background-repeat: no-repeat;
+                                    background-size: contain;
+                                }
+                            }
 
-                &-title {
-                    font-weight: 500;
-                    font-size: 34px;
-                    line-height: 44px;
-                    color: #4F5D64;
-                    letter-spacing: -1px;
-                }
+                            & .item_point {
+                                font-weight: 700;
+                                font-size: 28px;
+                                line-height: 32px;
+                                color: #FF9900;
+                            }
+                        }
 
-                &-icon {
-                    width: 89px;
-                    height: 94px;
-                    border-radius: 26px;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                }
+                        &.waiting {
+                            & .user_data-item_avatar {
+                                width: 63px;
+                                height: 66px;
+                                border-radius: 16px;
+                                background: #EEDEFE;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
 
-                &.completed {
-                    & .box_item-icon {
-                        background: #DAF7EB;
-                    }
+                                & .small_avatar {
+                                    width: 30px;
+                                    height: 30px;
+                                    background: url("/images/waiting_small.svg");
+                                    background-position: center;
+                                    background-repeat: no-repeat;
+                                    background-size: contain;
+                                }
+                            }
 
-                    & .icon {
-                        width: 42px;
-                        height: 42px;
-                        background: url("/images/completed_small.svg");
-                        background-position: center;
-                        background-repeat: no-repeat;
-                        background-size: contain;
-                    }
+                            & .item_point {
+                                font-weight: 700;
+                                font-size: 28px;
+                                line-height: 32px;
+                                color: #A958FC;
+                            }
+                        }
 
-                    & .point {
-                        padding: 53px 0 20px;
-                        font-family: 'Helvetica', sans-serif;
-                        font-weight: 400;
-                        font-size: 65px;
-                        line-height: 75px;
-                        color: #42B844;
-                    }
-                }
+                        &.collection {
+                            & .user_data-item_avatar {
+                                width: 63px;
+                                height: 66px;
+                                border-radius: 16px;
+                                background: #CFF3FF;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
 
-                &.pending {
-                    & .box_item-icon {
-                        background: #FFE5BF;
-                    }
+                                & .small_avatar {
+                                    width: 30px;
+                                    height: 30px;
+                                    background: url("/images/collection_small.svg");
+                                    background-position: center;
+                                    background-repeat: no-repeat;
+                                    background-size: contain;
+                                }
+                            }
 
-                    & .icon {
-                        width: 42px;
-                        height: 42px;
-                        background: url("/images/pending_small.svg");
-                        background-position: center;
-                        background-repeat: no-repeat;
-                        background-size: contain;
-                    }
+                            & .item_point {
+                                font-weight: 700;
+                                font-size: 28px;
+                                line-height: 32px;
+                                color: #40D1FD;
+                            }
 
-                    & .point {
-                        padding: 53px 0 20px;
-                        font-family: 'Helvetica';
-                        font-weight: 400;
-                        font-size: 65px;
-                        line-height: 75px;
-                        color: #FF9900;
-                    }
-                }
+                        }
 
-                &.waiting {
-                    & .box_item-icon {
-                        background: #EEDEFE;
-                    }
-
-                    & .icon {
-                        width: 42px;
-                        height: 42px;
-                        background: url("/images/waiting_small.svg");
-                        background-position: center;
-                        background-repeat: no-repeat;
-                        background-size: contain;
-                    }
-
-                    & .point {
-                        padding: 53px 0 20px;
-                        font-family: 'Helvetica';
-                        font-weight: 400;
-                        font-size: 65px;
-                        line-height: 75px;
-                        color: #A958FC;
-                    }
-                }
-
-                &.collection {
-                    & .box_item-icon {
-                        background: #CFF3FF;
-                    }
-
-                    & .icon {
-                        width: 42px;
-                        height: 42px;
-                        background: url("/images/collection_small.svg");
-                        background-position: center;
-                        background-repeat: no-repeat;
-                        background-size: contain;
-                    }
-
-                    & .point {
-                        padding: 53px 0 20px;
-                        font-family: 'Helvetica', sans-serif;
-                        font-weight: 400;
-                        font-size: 65px;
-                        line-height: 75px;
-                        color: #40D1FD;
                     }
                 }
             }
         }
     }
+
+    &_boxes {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 39px;
+
+        & .box_item {
+            width: 395px;
+            height: 380px;
+            background: #FFFFFF;
+            border: 1.55215px solid #EAEAEA;
+            box-shadow: 0px 6.2086px 15.5215px rgba(0, 0, 0, 0.04);
+            border-radius: 23.2823px;
+            padding: 36px;
+            display: flex;
+            flex-direction: column;
+
+            &-title {
+                font-weight: 500;
+                font-size: 34px;
+                line-height: 44px;
+                color: #4F5D64;
+                letter-spacing: -1px;
+            }
+
+            &-icon {
+                width: 89px;
+                height: 94px;
+                border-radius: 26px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            &.completed {
+                & .box_item-icon {
+                    background: #DAF7EB;
+                }
+
+                & .icon {
+                    width: 42px;
+                    height: 42px;
+                    background: url("/images/completed_small.svg");
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                }
+
+                & .point {
+                    padding: 53px 0 20px;
+                    font-family: 'Helvetica', sans-serif;
+                    font-weight: 400;
+                    font-size: 65px;
+                    line-height: 75px;
+                    color: #42B844;
+                }
+            }
+
+            &.pending {
+                & .box_item-icon {
+                    background: #FFE5BF;
+                }
+
+                & .icon {
+                    width: 42px;
+                    height: 42px;
+                    background: url("/images/pending_small.svg");
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                }
+
+                & .point {
+                    padding: 53px 0 20px;
+                    font-family: 'Helvetica';
+                    font-weight: 400;
+                    font-size: 65px;
+                    line-height: 75px;
+                    color: #FF9900;
+                }
+            }
+
+            &.waiting {
+                & .box_item-icon {
+                    background: #EEDEFE;
+                }
+
+                & .icon {
+                    width: 42px;
+                    height: 42px;
+                    background: url("/images/waiting_small.svg");
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                }
+
+                & .point {
+                    padding: 53px 0 20px;
+                    font-family: 'Helvetica';
+                    font-weight: 400;
+                    font-size: 65px;
+                    line-height: 75px;
+                    color: #A958FC;
+                }
+            }
+
+            &.collection {
+                & .box_item-icon {
+                    background: #CFF3FF;
+                }
+
+                & .icon {
+                    width: 42px;
+                    height: 42px;
+                    background: url("/images/collection_small.svg");
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                }
+
+                & .point {
+                    padding: 53px 0 20px;
+                    font-family: 'Helvetica', sans-serif;
+                    font-weight: 400;
+                    font-size: 65px;
+                    line-height: 75px;
+                    color: #40D1FD;
+                }
+            }
+        }
+    }
+}
 </style>
