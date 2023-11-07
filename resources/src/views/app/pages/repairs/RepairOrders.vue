@@ -405,9 +405,21 @@
         }, //end Methods
 
         //-----------------------------Created function-------------------
-
         created() {
-            this.getOrders()
+            if(!this.$route.query.id) {
+                this.getOrders()
+            } else {
+                NProgress.start();
+                NProgress.set(0.1);
+                let query = this.$route.query
+                axios.get(`/reaper/order/repair-order-filter/${query.id}/${query.status}`)
+                    .then(response => {
+                        this.orders = response.data.items
+                        NProgress.done();
+                        this.isLoading = false;
+                    })
+            }
+
         }
     }
 </script>
