@@ -26,28 +26,28 @@
         </b-row>
         <div class="page_container">
             <div class="page_boxes">
-                <div class="box_item completed">
+                <div class="box_item completed" @click="getTechnicData(allData, 'done')">
                     <div class="box_item-icon">
                         <div class="icon"></div>
                     </div>
                     <div v-if="allData" class="point">{{allData.done || 0}}</div>
                     <div class="box_item-title">Complete Repairs</div>
                 </div>
-                <div class="box_item pending">
+                <div class="box_item pending" @click="getTechnicData(allData, 'pending')">
                     <div class="box_item-icon">
                         <div class="icon"></div>
                     </div>
                     <div v-if="allData" class="point">{{allData.pending || 0}}</div>
                     <div class="box_item-title">Pending Repairs</div>
                 </div>
-                <div class="box_item waiting">
+                <div class="box_item waiting" @click="getTechnicData(allData, 'waiting_for_parts')">
                     <div class="box_item-icon">
                         <div class="icon"></div>
                     </div>
                     <div v-if="allData" class="point">{{allData.waiting_for_parts || 0}}</div>
                     <div class="box_item-title">Waiting For Parts</div>
                 </div>
-                <div class="box_item collection">
+                <div class="box_item collection" @click="getTechnicData(allData, 'waiting_for_collection')">
                     <div class="box_item-icon">
                         <div class="icon"></div>
                     </div>
@@ -192,14 +192,21 @@ export default {
                 })
         },
         getTechnicData(item, status) {
-            if (item[status] != 0) {
-                console.log(item)
-                console.log(status)
+            if(item.id && item[status] != 0) {
                 this.$router.push({path: `/app/repairs/repair_orders`, query: { id: item.id, status: status }})
-
+            } else if(item[status] != 0) {
+                this.$router.push({path: `/app/repairs/repair_orders`, query: { id: null, status: status }})
             } else {
 
             }
+            // if (item[status] != 0) {
+            //     console.log(item)
+            //     console.log(status)
+            //     this.$router.push({path: `/app/repairs/repair_orders`, query: { id: item.id, status: status }})
+            //
+            // } else {
+            //
+            // }
 
 
         }
