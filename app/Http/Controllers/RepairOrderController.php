@@ -355,11 +355,19 @@ class RepairOrderController extends Controller
         foreach ($products[0]['service'] as $s) {
             $s['subService'] = SubService::query()->whereIn('id', explode(',', $s['subservice_id']))->get();
         }
-        $data = CustomProductResource::collection($products->items())->toArray('collection');
-        foreach ($data as $d) {
-            if (!is_null($tecId)?$d['technician']['id'] == $tecId:true && $d['status'] == $status) {
-                $latestData[] = $d;
+        $arr = CustomProductResource::collection($products->items())->toArray('collection');
+        $arr = collect($arr);
+        $filtered = $arr->filter(function ($value) use($status) {
+            return $value['status'] == $status;
+        });
+        $latestData = $filtered;
+        if (!is_null($tecId)) {
+            foreach ($filtered as $f) {
+                if ($f['technician']['id'] == $tecId) {
+                    $data[] = $f;
+                }
             }
+            $latestData = $data;
         }
         return response()->json(
             [
