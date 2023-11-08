@@ -99,8 +99,6 @@ class RepairOrderController extends Controller
      */
     public function update(CreateUpdateRequest $request, $id)
     {
-        //CreateUpdateRequest
-//        dd($request->all());
         $product = $this->customProductService->storeOrUpdateCustomProduct($request->all(), $id);
         return response()->json([
             'message' => $product['message'],
@@ -291,7 +289,7 @@ class RepairOrderController extends Controller
 
     public function repairSystem($filter = false, $date = null, $days = null, $warehouseId = 'null')
     {
-        $statuses = ['done', 'pending', 'cancelled', 'waiting_for_parts', 'waiting_for_collection'];
+        $statuses = ['done', 'pending', 'cancelled', 'waiting_for_parts', 'waiting_for_collection'];//todo:
         $user = Auth::user();
         $role = $user->roles[0]->name;
         $latestData = [];
@@ -359,7 +357,7 @@ class RepairOrderController extends Controller
         }
         $data = CustomProductResource::collection($products->items())->toArray('collection');
         foreach ($data as $d) {
-            if ($d['technician']['id'] == $tecId && $d['status'] == $status) {
+            if (!is_null($tecId)?$d['technician']['id'] == $tecId:true && $d['status'] == $status) {
                 $latestData[] = $d;
             }
         }
