@@ -406,7 +406,7 @@
 
         //-----------------------------Created function-------------------
         created() {
-            if(!this.$route.query.id) {
+            if(!this.$route.query.id && this.$route.query.id !== null) {
                 this.getOrders()
             } else {
                 NProgress.start();
