@@ -348,31 +348,17 @@ class RepairOrderController extends Controller
 
     public function repairOrderFilter($tecId, $status)
     {
-        $products = RepairOrder::query()
-            ->with('images', 'customService', 'user', 'service.subService')
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
-        foreach ($products[0]['service'] as $s) {
-            $s['subService'] = SubService::query()->whereIn('id', explode(',', $s['subservice_id']))->get();
+        $repairOrders = RepairOrder::query();
+        $repairOrders->where('status', $status);
+        if ($tecId != 'null') {
+            $repairOrders->where('tech_id', $tecId);
         }
-        $arr = CustomProductResource::collection($products->items())->toArray('collection');
-        $arr = collect($arr);
-        $filtered = $arr->filter(function ($value) use($status) {
-            return $value['status'] == $status;
-        });
-        $latestData = $filtered;
-        if (!is_null($tecId)) {
-            foreach ($filtered as $f) {
-                if ($f['technician']['id'] == $tecId) {
-                    $data[] = $f;
-                }
-            }
-            $latestData = $data;
-        }
+        $repairOrders->orderBy('created_at', 'desc');
+        $repairOrders->paginate(10);
+        $arr = CustomProductResource::collection($repairOrders->get());
         return response()->json(
             [
-                'items' => $latestData,
-                'pagination' => $this->pagination($products),
+                'items' => $arr,
             ]
         );
     }
