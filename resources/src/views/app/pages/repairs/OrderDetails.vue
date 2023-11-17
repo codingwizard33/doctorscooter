@@ -257,7 +257,7 @@
                                     </div>
                                     <div class="detail_item-text">
                                         <div class="detail_item-name">Pictures of the Issues: &nbsp;</div>
-                                        <div class="img_container" v-for="item of order_details.images">
+                                        <div class="img_container" id="img_content" @click="openImg(item, 'path')" v-for="item of order_details.images">
                                             <img :src="item.path" alt="">
                                         </div>
                                     </div>
@@ -280,9 +280,9 @@
                                             <div class="up_text">Upload from Photos</div>
                                         </div>
                                         <div v-for="item of order_details.details.images" class="upload_img">
-                                            <img :src="'https://doctorscootercrm.co.uk/'+item.path" alt="">
+                                            <img :src="'https://doctorscootercrm.co.uk/'+item.path" alt="" @click="openImg(item, 'url')">
                                         </div>
-                                        <div v-for="item of images" class="upload_img">
+                                        <div v-for="item of images" class="upload_img" @click="openImg(item, 'upload')">
                                             <img :src="item" alt="">
                                         </div>
                                     </div>
@@ -351,6 +351,12 @@
 
                 </b-col>
             </b-row>
+<!--    img modal   -->
+            <b-modal ref="img-modal" centered size="lg" hide-header hide-footer>
+                <div class="modal_content" @mousemove="mouseMove" @mouseleave="mouseLeave">
+                    <img :src="selected_img" alt="" id="modal_img">
+                </div>
+            </b-modal>
 
         </div>
     </div>
@@ -371,7 +377,8 @@
                 selected: 'pending',
                 image: img1,
                 uploadFiles: [],
-                images: []
+                images: [],
+                selected_img: null
                 // options: [
                 //     { value: 'Done', text: 'Done' },
                 //     { value: 'Pending', text: 'Pending' },
@@ -395,6 +402,30 @@
             getDate(date) {
                 let d = new Date(date).toLocaleString()
                 return d
+            },
+            mouseMove(event) {
+                const x = event.clientX - (event.target.offsetLeft + 550)
+                const y = event.clientY - (event.target.offsetTop + 150)
+                const img = document.getElementById('modal_img')
+                img.style.cursor = 'zoom-in'
+                img.style.transformOrigin = `${x}px ${y}px`
+                img.style.transform = `scale(1.7)`
+            },
+            mouseLeave(event) {
+                const img = document.getElementById('modal_img')
+                img.style.transformOrigin = `center`
+                img.style.transform = `scale(1)`
+            },
+            openImg(item, imgUrl) {
+                this.selected_img = null
+                this.$refs['img-modal'].toggle('#img_content')
+                if(item.path && imgUrl == 'path') {
+                    this.selected_img = item.path
+                } else if (item.path && imgUrl == 'url'){
+                    this.selected_img = 'https://doctorscootercrm.co.uk/'+item.path
+                } else {
+                    this.selected_img = item
+                }
             },
             getDetails(id) {
                 NProgress.start();
@@ -678,6 +709,27 @@
 </script>
 
 <style scoped lang="scss">
+.modal-body {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+}
+.modal_content {
+    width: 500px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    margin: 0 auto;
+    & img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        transform-origin: center;
+    }
+}
     .main-content {
         position: relative;
         & .order_details-date {
@@ -874,6 +926,15 @@
                     img {
                         width: 55px;
                         height: 45px;
+                        //transition: .7s;
+                        object-fit: contain;
+                        //position: absolute;
+                        //&:hover {
+                        //    z-index: 11;
+                        //    cursor: zoom-in;
+                        //    transition: .7s;
+                        //    transform: scale(8);
+                        //}
                     }
 
                 }
@@ -921,6 +982,13 @@
                         width: 100%;
                         height: 100%;
                         border-radius: 11px;
+                        //transition: .7s;
+                        //&:hover {
+                        //    z-index: 11;
+                        //    cursor: zoom-in;
+                        //    transition: .7s;
+                        //    transform: scale(3);
+                        //}
                     }
                 }
             }
